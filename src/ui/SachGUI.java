@@ -258,7 +258,6 @@ public class SachGUI extends javax.swing.JPanel {
 
         jTextField9.setBackground(new java.awt.Color(238, 242, 240));
         jTextField9.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jTextField9.setText("jTextField9");
 
         btnTimkiem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
         btnTimkiem.setForeground(new java.awt.Color(0, 122, 77));
@@ -293,7 +292,7 @@ public class SachGUI extends javax.swing.JPanel {
         tbSach.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tbSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"123", "Không biết", null, null, null, null, null, null, null, null},
+                {"", "", null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
