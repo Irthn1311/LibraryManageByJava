@@ -38,4 +38,8 @@ public class NhanVienBUS {
     public ArrayList<NhanVienDTO> timKiemNhanVien(String tuKhoa) throws SQLException {
         return nhanVienDAO.timKiemNhanVien(tuKhoa);
     }
+    
+    public void capNhatTrangThai(int maNhanVien, String trangThai) throws SQLException {
+        nhanVienDAO.capNhatTrangThai(maNhanVien, trangThai);
+}
 }

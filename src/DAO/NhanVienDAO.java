@@ -132,4 +132,19 @@ public class NhanVienDAO {
         }
         return ketQua;
     }
+    
+    public void capNhatTrangThai(int maNhanVien, String trangThai) throws SQLException {
+        String sql = "UPDATE NhanVien SET TrangThai = ? WHERE ID_NhanVien = ?";
+        try (Connection conn = SQLServerConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, trangThai);
+            stmt.setInt(2, maNhanVien);
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.err.println("Lỗi khi cập nhật trạng thái nhân viên: " + ex.getMessage());
+            throw ex;
+        }
+    }
 }

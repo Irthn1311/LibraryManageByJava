@@ -148,13 +148,11 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel5" max="32767" attributes="0"/>
                                   <Component id="jLabel7" pref="97" max="32767" attributes="0"/>
-                                  <Component id="jLabel9" alignment="0" pref="97" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtEmail" max="32767" attributes="0"/>
                                   <Component id="txtVaiTro" max="32767" attributes="0"/>
-                                  <Component id="txtTrangThai" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -192,8 +190,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtDiaChi" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtTrangThai" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="25" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -336,25 +332,6 @@
             <Component class="com.toedter.calendar.JDateChooser" name="dcNgayVaoLam">
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="dcNgaySinh">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel9">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Arial" size="14" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="Tr&#x1ea1;ng th&#xe1;i:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtTrangThai">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Arial" size="14" style="0"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTrangThaiActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

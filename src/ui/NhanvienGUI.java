@@ -132,8 +132,6 @@ public class NhanvienGUI extends javax.swing.JPanel {
         cbGioiTinh = new javax.swing.JComboBox<>();
         dcNgayVaoLam = new com.toedter.calendar.JDateChooser();
         dcNgaySinh = new com.toedter.calendar.JDateChooser();
-        jLabel9 = new javax.swing.JLabel();
-        txtTrangThai = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
@@ -201,17 +199,6 @@ public class NhanvienGUI extends javax.swing.JPanel {
         cbGioiTinh.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbGioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "_", "Nam", "Nữ" }));
 
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Trạng thái:");
-
-        txtTrangThai.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtTrangThai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTrangThaiActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -247,13 +234,11 @@ public class NhanvienGUI extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtEmail)
-                            .addComponent(txtVaiTro)
-                            .addComponent(txtTrangThai))))
+                            .addComponent(txtVaiTro))))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -281,9 +266,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel9)
-                    .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -480,14 +463,23 @@ public class NhanvienGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtVaiTroActionPerformed
 
-    private void txtTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTrangThaiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTrangThaiActionPerformed
-
     private void btnResertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResertActionPerformed
-        txtTimKiem.setText("");  
-        model.setRowCount(0);    
-        loadData(); 
+        try {
+            int selectedRow = tblDSNhanvien.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần khôi phục.");
+                return;
+            }
+
+            int maNhanVien = (int) model.getValueAt(selectedRow, 0);
+
+            nhanVienBUS.capNhatTrangThai(maNhanVien, "Đang làm");
+            JOptionPane.showMessageDialog(this, "Đã cập nhật trạng thái thành 'Đang làm'.");
+            loadData(); // Cập nhật lại bảng
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+        }
+
     }//GEN-LAST:event_btnResertActionPerformed
 
     private void btnTimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimkiemActionPerformed
@@ -536,12 +528,12 @@ public class NhanvienGUI extends javax.swing.JPanel {
             String email = txtEmail.getText().trim();
             String vaiTro = txtVaiTro.getText().trim();
             java.util.Date ngayVaoLamUtil = dcNgayVaoLam.getDate();
-            String trangThai = txtTrangThai.getText().trim();
+            String trangThai = "Đang làm";
 
             // Kiểm tra rỗng
             if (tenNhanVien.isEmpty() || gioiTinh.equals("_") || ngaySinhUtil == null ||
                 diaChi.isEmpty() || soDienThoai.isEmpty() || email.isEmpty() ||
-                vaiTro.isEmpty() || trangThai.isEmpty() || ngayVaoLamUtil == null) {
+                vaiTro.isEmpty() || ngayVaoLamUtil == null) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
                 return;
             }
@@ -593,12 +585,12 @@ public class NhanvienGUI extends javax.swing.JPanel {
             String email = txtEmail.getText().trim();
             String vaiTro = txtVaiTro.getText().trim();
             java.util.Date ngayVaoLamUtil = dcNgayVaoLam.getDate();
-            String trangThai = txtTrangThai.getText().trim();
+            String trangThai = "Trạng thái";
 
             // Kiểm tra rỗng
             if (tenNhanVien.isEmpty() || gioiTinh.equals("_") || ngaySinhUtil == null ||
                 diaChi.isEmpty() || soDienThoai.isEmpty() || email.isEmpty() ||
-                vaiTro.isEmpty() || trangThai.isEmpty() || ngayVaoLamUtil == null) {
+                vaiTro.isEmpty() || ngayVaoLamUtil == null) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
                 return;
             }
@@ -634,7 +626,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
             model.setValueAt(email, selectedRow, 6);
             model.setValueAt(vaiTro, selectedRow, 7);
             model.setValueAt(ngayVaoLam, selectedRow, 8);
-            model.setValueAt(trangThai.toString(), selectedRow, 9);
+            model.setValueAt(trangThai, selectedRow, 9);
 
             JOptionPane.showMessageDialog(this, "Cập nhật nhân viên thành công!");
         } catch (Exception e) {
@@ -652,13 +644,16 @@ public class NhanvienGUI extends javax.swing.JPanel {
 
             int maNhanVien = (int) model.getValueAt(selectedRow, 0);
 
-            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa nhân viên có mã nhân viên: " + maNhanVien + "?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc chắn muốn đánh dấu nghỉ cho nhân viên có mã: " + maNhanVien + "?",
+                "Xác nhận", JOptionPane.YES_NO_OPTION);
+
             if (confirm == JOptionPane.YES_OPTION) {
-                // Thực hiện xóa nhân viên
-                BUS.NhanVienBUS nhanvienBUS = new BUS.NhanVienBUS();
-                nhanvienBUS.xoaNhanVien(maNhanVien);  
-                JOptionPane.showMessageDialog(this, "Xóa nhân viên thành công!");
-                loadData();
+                // Gọi hàm cập nhật trạng thái
+                nhanVienBUS.capNhatTrangThai(maNhanVien, "Đã nghỉ");
+
+                JOptionPane.showMessageDialog(this, "Đã cập nhật trạng thái thành 'Đã nghỉ'.");
+                loadData(); // Cập nhật lại bảng
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
@@ -715,7 +710,6 @@ public class NhanvienGUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -726,7 +720,6 @@ public class NhanvienGUI extends javax.swing.JPanel {
     private javax.swing.JTextField txtSoDienThoai;
     private javax.swing.JTextField txtTenNhanVien;
     private javax.swing.JTextField txtTimKiem;
-    private javax.swing.JTextField txtTrangThai;
     private javax.swing.JTextField txtVaiTro;
     // End of variables declaration//GEN-END:variables
     private final DefaultTableModel model;
