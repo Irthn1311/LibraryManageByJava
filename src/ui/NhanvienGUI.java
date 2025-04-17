@@ -57,8 +57,8 @@ public class NhanvienGUI extends javax.swing.JPanel {
                     String soDienThoai = (tblDSNhanvien.getValueAt(selectedRow, 5) != null) ? tblDSNhanvien.getValueAt(selectedRow, 5).toString() : "";
                     String email = (tblDSNhanvien.getValueAt(selectedRow, 6) != null) ? tblDSNhanvien.getValueAt(selectedRow, 6).toString() : "";
                     String vaiTro = (tblDSNhanvien.getValueAt(selectedRow, 7) != null) ? tblDSNhanvien.getValueAt(selectedRow, 7).toString() : "";
-                    String luong = (tblDSNhanvien.getValueAt(selectedRow, 8) != null) ? tblDSNhanvien.getValueAt(selectedRow, 8).toString() : "";
-                    String ngayVaoLam = (tblDSNhanvien.getValueAt(selectedRow, 9) != null) ? tblDSNhanvien.getValueAt(selectedRow, 9).toString() : "";
+                    String ngayVaoLam = (tblDSNhanvien.getValueAt(selectedRow, 8) != null) ? tblDSNhanvien.getValueAt(selectedRow, 8).toString() : "";
+                    String trangThai = (tblDSNhanvien.getValueAt(selectedRow, 9) != null) ? tblDSNhanvien.getValueAt(selectedRow, 9).toString() : "";
 
                     // Gán dữ liệu vào TextField
                     txtTenNhanVien.setText(tenNhanVien);
@@ -66,7 +66,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
                     txtSoDienThoai.setText(soDienThoai);
                     txtEmail.setText(email);
                     txtVaiTro.setText(vaiTro);
-                    txtLuong.setText(luong);
+                    txtTrangThai.setText(trangThai);
 
                     cbGioiTinh.setSelectedItem(gioiTinh);
 
@@ -91,17 +91,18 @@ public class NhanvienGUI extends javax.swing.JPanel {
     private void loadData() {
         try {
             model.setRowCount(0); // Xóa dữ liệu cũ
+            model.setColumnCount(0);
 
             // Đảm bảo rằng bảng đã có các cột cần thiết
             model.setColumnIdentifiers(new String[] {
-                "Mã nhân viên", "Tên nhân viên", "Giới tính", "Ngày sinh", "Địa chỉ", "Số điện thoại", "Email", "Vai trò", "Lương ", "Ngày vào làm"
+                "Mã nhân viên", "Tên nhân viên", "Giới tính", "Ngày sinh", "Địa chỉ", "Số điện thoại", "Email", "Vai trò", "Ngày vào làm","Trạng thái"
             });
 
             // Lấy lại dữ liệu từ cơ sở dữ liệu
             danhSachNhanVien = nhanVienBUS.layDanhSachNhanVien();
             for (DTO.NhanVienDTO nhanvien : danhSachNhanVien) {
                 model.addRow(new Object[] {
-                    nhanvien.getIdNhanVien(), nhanvien.getTenNhanVien(), nhanvien.getGioiTinh(), nhanvien.getNgaySinh(),nhanvien.getDiaChi(), nhanvien.getSoDienThoai(), nhanvien.getEmail(),nhanvien.getVaiTro(), nhanvien.getLuong(),nhanvien.getNgayVaoLam()
+                    nhanvien.getIdNhanVien(), nhanvien.getTenNhanVien(), nhanvien.getGioiTinh(), nhanvien.getNgaySinh(),nhanvien.getDiaChi(), nhanvien.getSoDienThoai(), nhanvien.getEmail(),nhanvien.getVaiTro(),nhanvien.getNgayVaoLam(),nhanvien.getTrangThai()
                 });
             }
         } catch (SQLException e) {
@@ -132,7 +133,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         dcNgayVaoLam = new com.toedter.calendar.JDateChooser();
         dcNgaySinh = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
-        txtLuong = new javax.swing.JTextField();
+        txtTrangThai = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
@@ -202,12 +203,12 @@ public class NhanvienGUI extends javax.swing.JPanel {
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Lương:");
+        jLabel9.setText("Trạng thái:");
 
-        txtLuong.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtLuong.addActionListener(new java.awt.event.ActionListener() {
+        txtTrangThai.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtTrangThai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLuongActionPerformed(evt);
+                txtTrangThaiActionPerformed(evt);
             }
         });
 
@@ -252,7 +253,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtEmail)
                             .addComponent(txtVaiTro)
-                            .addComponent(txtLuong))))
+                            .addComponent(txtTrangThai))))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -282,7 +283,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
                     .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel9)
-                    .addComponent(txtLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -393,11 +394,11 @@ public class NhanvienGUI extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã nhân viên ", "Tên nhân viên", "Giới tính", "Ngày Sinh", "Địa chỉ", "Số điện thoại", "Email", "Vai trò", "Lương", "Ngày vào làm"
+                "Mã nhân viên ", "Tên nhân viên", "Giới tính", "Ngày Sinh", "Địa chỉ", "Số điện thoại", "Email", "Vai trò", "Ngày vào làm", "Trạng thái"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false
@@ -479,9 +480,9 @@ public class NhanvienGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtVaiTroActionPerformed
 
-    private void txtLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLuongActionPerformed
+    private void txtTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTrangThaiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLuongActionPerformed
+    }//GEN-LAST:event_txtTrangThaiActionPerformed
 
     private void btnResertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResertActionPerformed
         txtTimKiem.setText("");  
@@ -515,8 +516,8 @@ public class NhanvienGUI extends javax.swing.JPanel {
                     nv.getSoDienThoai(),
                     nv.getEmail(),
                     nv.getVaiTro(),
-                    nv.getLuong(),
-                    sdf.format(nv.getNgayVaoLam())
+                    sdf.format(nv.getNgayVaoLam()),
+                    nv.getTrangThai(),
                 });
             }
         } catch (Exception e) {
@@ -534,13 +535,13 @@ public class NhanvienGUI extends javax.swing.JPanel {
             String soDienThoai = txtSoDienThoai.getText().trim();
             String email = txtEmail.getText().trim();
             String vaiTro = txtVaiTro.getText().trim();
-            String luongStr = txtLuong.getText().trim();
             java.util.Date ngayVaoLamUtil = dcNgayVaoLam.getDate();
+            String trangThai = txtTrangThai.getText().trim();
 
             // Kiểm tra rỗng
             if (tenNhanVien.isEmpty() || gioiTinh.equals("_") || ngaySinhUtil == null ||
                 diaChi.isEmpty() || soDienThoai.isEmpty() || email.isEmpty() ||
-                vaiTro.isEmpty() || luongStr.isEmpty() || ngayVaoLamUtil == null) {
+                vaiTro.isEmpty() || trangThai.isEmpty() || ngayVaoLamUtil == null) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
                 return;
             }
@@ -558,21 +559,17 @@ public class NhanvienGUI extends javax.swing.JPanel {
             java.sql.Date ngaySinh = new java.sql.Date(ngaySinhUtil.getTime());
             java.sql.Date ngayVaoLam = new java.sql.Date(ngayVaoLamUtil.getTime());
 
-            double luong = Double.parseDouble(luongStr);
-
             // Tạo đối tượng DTO
             DTO.NhanVienDTO nv = new DTO.NhanVienDTO(
                 0, // ID tự động
                 tenNhanVien, gioiTinh, ngaySinh, diaChi,
-                soDienThoai, email, vaiTro, luong, ngayVaoLam
+                soDienThoai, email, vaiTro, ngayVaoLam, trangThai
             );
 
             // Gọi BLL thêm
             nhanVienBUS.themNhanVien(nv);
             loadData(); // Cập nhật lại bảng
             JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Lương phải là một số hợp lệ.");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
         } 
@@ -595,13 +592,13 @@ public class NhanvienGUI extends javax.swing.JPanel {
             String soDienThoai = txtSoDienThoai.getText().trim();
             String email = txtEmail.getText().trim();
             String vaiTro = txtVaiTro.getText().trim();
-            String luongStr = txtLuong.getText().trim();
             java.util.Date ngayVaoLamUtil = dcNgayVaoLam.getDate();
+            String trangThai = txtTrangThai.getText().trim();
 
             // Kiểm tra rỗng
             if (tenNhanVien.isEmpty() || gioiTinh.equals("_") || ngaySinhUtil == null ||
                 diaChi.isEmpty() || soDienThoai.isEmpty() || email.isEmpty() ||
-                vaiTro.isEmpty() || luongStr.isEmpty() || ngayVaoLamUtil == null) {
+                vaiTro.isEmpty() || trangThai.isEmpty() || ngayVaoLamUtil == null) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
                 return;
             }
@@ -619,13 +616,11 @@ public class NhanvienGUI extends javax.swing.JPanel {
             java.sql.Date ngaySinh = new java.sql.Date(ngaySinhUtil.getTime());
             java.sql.Date ngayVaoLam = new java.sql.Date(ngayVaoLamUtil.getTime());
 
-            double luong = Double.parseDouble(luongStr);
-
             // Tạo đối tượng DTO
             DTO.NhanVienDTO nv = new DTO.NhanVienDTO(
                 idNhanVien,
                 tenNhanVien, gioiTinh, ngaySinh, diaChi,
-                soDienThoai, email, vaiTro, luong, ngayVaoLam
+                soDienThoai, email, vaiTro, ngayVaoLam, trangThai
             );
             nhanVienBUS.suaNhanVien(nv);
             
@@ -638,8 +633,8 @@ public class NhanvienGUI extends javax.swing.JPanel {
             model.setValueAt(soDienThoai, selectedRow, 5);
             model.setValueAt(email, selectedRow, 6);
             model.setValueAt(vaiTro, selectedRow, 7);
-            model.setValueAt(luong, selectedRow, 8);
-            model.setValueAt(ngayVaoLam.toString(), selectedRow, 9);
+            model.setValueAt(ngayVaoLam, selectedRow, 8);
+            model.setValueAt(trangThai.toString(), selectedRow, 9);
 
             JOptionPane.showMessageDialog(this, "Cập nhật nhân viên thành công!");
         } catch (Exception e) {
@@ -728,10 +723,10 @@ public class NhanvienGUI extends javax.swing.JPanel {
     private javax.swing.JTable tblDSNhanvien;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtLuong;
     private javax.swing.JTextField txtSoDienThoai;
     private javax.swing.JTextField txtTenNhanVien;
     private javax.swing.JTextField txtTimKiem;
+    private javax.swing.JTextField txtTrangThai;
     private javax.swing.JTextField txtVaiTro;
     // End of variables declaration//GEN-END:variables
     private final DefaultTableModel model;

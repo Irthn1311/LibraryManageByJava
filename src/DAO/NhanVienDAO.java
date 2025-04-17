@@ -1,11 +1,10 @@
-
 package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class NhanVienDAO {
-    
+
     public boolean kiemTraSuTonTai(int idNhanVien) throws SQLException {
         String sql = "SELECT COUNT(*) FROM NhanVien WHERE ID_NhanVien = ?";
         try (Connection conn = SQLServerConnect.getConnection();
@@ -13,12 +12,11 @@ public class NhanVienDAO {
             stmt.setInt(1, idNhanVien);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0;  // Trả về true nếu có nhân viên với ID_NhanVien
+                return rs.getInt(1) > 0;
             }
         }
         return false;
     }
-
 
     public ArrayList<DTO.NhanVienDTO> layDanhSachNhanVien() throws SQLException {
         ArrayList<DTO.NhanVienDTO> dsnv = new ArrayList<>();
@@ -36,9 +34,8 @@ public class NhanVienDAO {
                     rs.getString("SoDienThoai"),
                     rs.getString("Email"),
                     rs.getString("VaiTro"),
-                    rs.getDouble("Luong"),
-                    rs.getDate("NgayVaoLam")    
-                      
+                    rs.getDate("NgayVaoLam"),
+                    rs.getString("TrangThai")
                 );
                 dsnv.add(nv);
             }
@@ -47,27 +44,7 @@ public class NhanVienDAO {
     }
 
     public void themNhanVien(DTO.NhanVienDTO nv) throws SQLException {
-        String sql = "INSERT INTO NhanVien (TenNhanVien, GioiTinh, NgaySinh, DiaChi, SoDienThoai, Email, VaiTro, Luong, NgayVaoLam) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
-        try (Connection conn = SQLServerConnect.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, nv.getTenNhanVien());
-            stmt.setString(2, nv.getGioiTinh());
-            stmt.setDate(3, nv.getNgaySinh());
-            stmt.setString(4, nv.getDiaChi());
-            stmt.setString(5, nv.getSoDienThoai());
-            stmt.setString(6, nv.getEmail());
-            stmt.setString(7, nv.getVaiTro());
-            stmt.setDouble(8, nv.getLuong());
-            stmt.setDate(9, nv.getNgayVaoLam());
-            stmt.executeUpdate();
-        } catch (SQLException ex) {
-            System.err.println("Lỗi khi thêm nhân viên: " + ex.getMessage());
-            throw ex;
-        }
-    }
-
-    public void suaNhanVien(DTO.NhanVienDTO nv) throws SQLException {
-        String sql = "UPDATE NhanVien SET TenNhanVien = ?, GioiTinh = ?, NgaySinh = ?, DiaChi = ?, SoDienThoai = ?, Email = ?, VaiTro = ?, Luong = ?, NgayVaoLam = ? WHERE ID_NhanVien = ?";
+        String sql = "INSERT INTO NhanVien (TenNhanVien, GioiTinh, NgaySinh, DiaChi, SoDienThoai, Email, VaiTro, NgayVaoLam, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = SQLServerConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, nv.getTenNhanVien());
@@ -77,8 +54,28 @@ public class NhanVienDAO {
             stmt.setString(5, nv.getSoDienThoai());
             stmt.setString(6, nv.getEmail());
             stmt.setString(7, nv.getVaiTro());
-            stmt.setDouble(8, nv.getLuong());
-            stmt.setDate(9, nv.getNgayVaoLam());
+            stmt.setDate(8, nv.getNgayVaoLam());
+            stmt.setString(9, nv.getTrangThai()); 
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println("Lỗi khi thêm nhân viên: " + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public void suaNhanVien(DTO.NhanVienDTO nv) throws SQLException {
+        String sql = "UPDATE NhanVien SET TenNhanVien = ?, GioiTinh = ?, NgaySinh = ?, DiaChi = ?, SoDienThoai = ?, Email = ?, VaiTro = ?, NgayVaoLam = ?, TrangThai = ? WHERE ID_NhanVien = ?";
+        try (Connection conn = SQLServerConnect.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nv.getTenNhanVien());
+            stmt.setString(2, nv.getGioiTinh());
+            stmt.setDate(3, nv.getNgaySinh());
+            stmt.setString(4, nv.getDiaChi());
+            stmt.setString(5, nv.getSoDienThoai());
+            stmt.setString(6, nv.getEmail());
+            stmt.setString(7, nv.getVaiTro());
+            stmt.setDate(8, nv.getNgayVaoLam());
+            stmt.setString(9, nv.getTrangThai()); 
             stmt.setInt(10, nv.getIdNhanVien());
             stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -110,8 +107,8 @@ public class NhanVienDAO {
                      "SoDienThoai LIKE ? OR " +
                      "Email LIKE ? OR " +
                      "VaiTro LIKE ? OR " +
-                     "CAST(Luong AS NVARCHAR) LIKE ? OR " +
-                     "CAST(NgayVaoLam AS NVARCHAR) LIKE ? ";
+                     "CAST(NgayVaoLam AS NVARCHAR) LIKE ? OR " +
+                     "TrangThai LIKE ?";
         try (Connection conn = SQLServerConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             for (int i = 1; i <= 10; i++) {
@@ -128,12 +125,11 @@ public class NhanVienDAO {
                     rs.getString("SoDienThoai"),
                     rs.getString("Email"),
                     rs.getString("VaiTro"),
-                    rs.getDouble("Luong"),
-                    rs.getDate("NgayVaoLam")    
+                    rs.getDate("NgayVaoLam"),
+                    rs.getString("TrangThai") 
                 ));
             }
         }
         return ketQua;
     }
 }
-

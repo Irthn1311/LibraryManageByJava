@@ -11,8 +11,8 @@ public class NhanVienDTO {
     private String soDienThoai;
     private String email;
     private String vaiTro;
-    private double luong;
     private java.sql.Date ngayVaoLam;
+    private String trangThai;
 
 
     // Constructor không tham số
@@ -20,7 +20,7 @@ public class NhanVienDTO {
 
     // Constructor đầy đủ
     public NhanVienDTO(int idNhanVien, String tenNhanVien, String gioiTinh, java.sql.Date ngaySinh,
-                       String diaChi, String soDienThoai, String email, String vaiTro, double luong,java.sql.Date ngayVaoLam) {
+                       String diaChi, String soDienThoai, String email, String vaiTro, java.sql.Date ngayVaoLam, String trangThai) {
         this.idNhanVien = idNhanVien;
         this.tenNhanVien = tenNhanVien;
         this.gioiTinh = gioiTinh;
@@ -29,8 +29,8 @@ public class NhanVienDTO {
         this.soDienThoai = soDienThoai;
         this.email = email;
         this.vaiTro = vaiTro;
-        this.luong = luong;
         this.ngayVaoLam = ngayVaoLam;
+        this.trangThai = trangThai;
     }
 
     // Getters và Setters
@@ -98,12 +98,12 @@ public class NhanVienDTO {
         this.vaiTro = vaiTro;
     }
 
-    public double getLuong() {
-        return luong;
+    public String getTrangThai() {
+        return trangThai;
     }
 
-    public void setLuong(double luong) {
-        this.luong = luong;
+    public void setLuong(String trangThai) {
+        this.trangThai = trangThai;
     }
     
     public java.sql.Date getNgayVaoLam() {
