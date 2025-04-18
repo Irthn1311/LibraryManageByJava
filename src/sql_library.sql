@@ -69,9 +69,24 @@ CREATE TABLE lbr.ChiTietPhieuNhap (
 CREATE TABLE lbr.DocGia (
     ma_doc_gia varchar(255) PRIMARY KEY,
     ten_doc_gia VARCHAR(255) NOT NULL,
+    gioi_tinh VARCHAR(10),
+    so_dien_thoai VARCHAR(15),
     ngay_sinh DATE,
     dia_chi VARCHAR(255)
 );
+
+INSERT INTO lbr.DocGia (ma_doc_gia, ten_doc_gia, gioi_tinh, so_dien_thoai, ngay_sinh, dia_chi) VALUES
+('DG001', 'Nguyễn Văn A', 'Nam', '0901000001', '1995-01-10', 'Hà Nội'),
+('DG002', 'Trần Thị B', 'Nữ', '0901000002', '1997-05-20', 'TP. Hồ Chí Minh'),
+('DG003', 'Lê Văn C', 'Nam', '0901000003', '1990-12-15', 'Đà Nẵng'),
+('DG004', 'Phạm Thị D', 'Nữ', '0901000004', '2000-07-30', 'Hải Phòng'),
+('DG005', 'Hoàng Văn E', 'Nam', '0901000005', '1988-09-22', 'Cần Thơ'),
+('DG006', 'Đặng Thị F', 'Nữ', '0901000006', '1993-03-11', 'Huế'),
+('DG007', 'Ngô Văn G', 'Nam', '0901000007', '1998-06-17', 'Nha Trang'),
+('DG008', 'Bùi Thị H', 'Nữ', '0901000008', '1996-04-08', 'Vũng Tàu'),
+('DG009', 'Vũ Văn I', 'Nam', '0901000009', '1992-11-25', 'Quảng Ninh'),
+('DG010', 'Lý Thị J', 'Nữ', '0901000010', '1994-08-05', 'Bình Dương');
+
 
 
 CREATE TABLE lbr.TheThanhVien (
@@ -80,9 +95,21 @@ CREATE TABLE lbr.TheThanhVien (
     ngay_cap DATE,
     ngay_het_han DATE,
     trang_thai BOOLEAN DEFAULT TRUE,
-
     FOREIGN KEY (ma_doc_gia) REFERENCES DocGia(ma_doc_gia)
 );
+
+INSERT INTO lbr.TheThanhVien (ma_the, ma_doc_gia, ngay_cap, ngay_het_han, trang_thai) VALUES
+('THE001', 'DG001', '2023-01-01', '2026-01-01', TRUE),
+('THE002', 'DG002', '2023-02-01', '2026-02-01', TRUE),
+('THE003', 'DG003', '2023-03-01', '2026-03-01', TRUE),
+('THE004', 'DG004', '2023-04-01', '2026-04-01', TRUE),
+('THE005', 'DG005', '2023-05-01', '2026-05-01', TRUE),
+('THE006', 'DG006', '2023-06-01', '2026-06-01', TRUE),
+('THE007', 'DG007', '2023-07-01', '2026-07-01', TRUE),
+('THE008', 'DG008', '2023-08-01', '2026-08-01', TRUE),
+('THE009', 'DG009', '2023-09-01', '2026-09-01', TRUE),
+('THE010', 'DG010', '2023-10-01', '2026-10-01', TRUE);
+
 
 CREATE TABLE lbr.TaiKhoan (
     ma_the varchar(255) PRIMARY KEY,

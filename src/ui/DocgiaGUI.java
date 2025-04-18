@@ -4,17 +4,31 @@
  */
 package ui;
 
+import DAO.DocGiaDAO;
+import DTO.DocGiaDTO;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author dinhp
  */
 public class DocgiaGUI extends javax.swing.JPanel {
-
+    private DocGiaDAO docGiaDAO;
+    private ArrayList<DocGiaDTO> listDocGia;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
     /**
      * Creates new form Intro
      */
     public DocgiaGUI() {
         initComponents();
+        setupComponents();
+        loadDataToTable();
     }
 
     /**
@@ -53,6 +67,8 @@ public class DocgiaGUI extends javax.swing.JPanel {
         btnTimkiem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDocgia = new javax.swing.JTable();
+        DiaChi = new javax.swing.JLabel();
+        txtDiaChi = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(1210, 640));
 
@@ -102,6 +118,13 @@ public class DocgiaGUI extends javax.swing.JPanel {
         Ngayhethan.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         Ngayhethan.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         Ngayhethan.setText("Ngày hết hạn:");
+
+        DiaChi.setFont(new java.awt.Font("Arial", 1, 14));
+        DiaChi.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        DiaChi.setText("Địa chỉ:");
+
+        txtDiaChi.setFont(new java.awt.Font("Arial", 0, 14));
+        txtDiaChi.setText("");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -243,36 +266,21 @@ public class DocgiaGUI extends javax.swing.JPanel {
         tbDocgia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tbDocgia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"123", "Không biết", null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã ĐG", "Tên độc giả", "Số điện thoại", "Tuổi", "Mã thẻ", "Ngày cấp", "Ngày hết hạn", "Trạng thái"
+                "Mã ĐG", "Tên độc giả", "Giới tính", "Số điện thoại", "Tuổi", "Địa chỉ", "Mã thẻ", "Ngày cấp", "Ngày hết hạn", "Trạng thái"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, 
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class,
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, 
+                java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -360,6 +368,246 @@ public class DocgiaGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setupComponents() {
+        // Khởi tạo DAO
+        docGiaDAO = new DocGiaDAO();
+        
+        // Xóa text mặc định
+        txtTenDG.setText("");
+        txtSdt.setText("");
+        txtMa_ttv.setText("");
+        txtTimkiem.setText("");
+        
+        // Thêm sự kiện cho các nút
+        btnThem.addActionListener(e -> themDocGia());
+        btnCapnhat.addActionListener(e -> capNhatDocGia());
+        btnXoa.addActionListener(e -> xoaDocGia());
+        btnKhoiphuc.addActionListener(e -> khoiPhucDocGia());
+        btnTimkiem.addActionListener(e -> timKiemDocGia());
+        
+        // Thêm sự kiện cho bảng
+        tbDocgia.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                hienThiChiTietDocGia();
+            }
+        });
+    }
+    
+    private void loadDataToTable() {
+        listDocGia = docGiaDAO.getList();
+        DefaultTableModel model = (DefaultTableModel) tbDocgia.getModel();
+        model.setRowCount(0);
+        
+        for (DocGiaDTO dg : listDocGia) {
+            model.addRow(new Object[]{
+                dg.getMaDG(),
+                dg.getTenDG(),
+                dg.getGioiTinh(),
+                dg.getSoDienThoai(),
+                tinhTuoi(dg.getNgaySinh()),
+                dg.getDiaChi(),
+                dg.getMaThe(),
+                dg.getNgayCap() != null ? sdf.format(dg.getNgayCap()) : "",
+                dg.getNgayHetHan() != null ? sdf.format(dg.getNgayHetHan()) : "",
+                dg.isTrangThai() ? "Hoạt động" : "Đã khóa"
+            });
+        }
+    }
+    
+    private int tinhTuoi(Date ngaySinh) {
+        if (ngaySinh == null) return 0;
+        return java.time.LocalDate.now().getYear() - 
+               (ngaySinh.getYear() + 1900);
+    }
+    
+    private void hienThiChiTietDocGia() {
+        int selectedRow = tbDocgia.getSelectedRow();
+        if (selectedRow >= 0) {
+            DocGiaDTO dg = listDocGia.get(selectedRow);
+            txtTenDG.setText(dg.getTenDG());
+            cbGioitinh.setSelectedItem(dg.getGioiTinh());
+            txtSdt.setText(dg.getSoDienThoai());
+            txtDiaChi.setText(dg.getDiaChi());
+            txtMa_ttv.setText(dg.getMaThe());
+            txtNgaysinh.setDate(dg.getNgaySinh());
+            txtNgaycap.setDate(dg.getNgayCap());
+            txtNgayhethan.setDate(dg.getNgayHetHan());
+        }
+    }
+    
+    private void themDocGia() {
+        try {
+            DocGiaDTO dg = layThongTinForm();
+            if (dg == null) return;
+            
+            // Tạo mã độc giả mới
+            dg.setMaDG("DG" + System.currentTimeMillis());
+            dg.setTrangThai(true);
+            
+            if (docGiaDAO.add(dg)) {
+                JOptionPane.showMessageDialog(this, "Thêm độc giả thành công!");
+                loadDataToTable();
+                xoaForm();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm độc giả thất bại!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+        }
+    }
+    
+    private void capNhatDocGia() {
+        try {
+            int selectedRow = tbDocgia.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn độc giả cần cập nhật!");
+                return;
+            }
+            
+            DocGiaDTO dg = layThongTinForm();
+            if (dg == null) return;
+            
+            dg.setMaDG(listDocGia.get(selectedRow).getMaDG());
+            dg.setTrangThai(listDocGia.get(selectedRow).isTrangThai());
+            
+            if (docGiaDAO.update(dg)) {
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+                loadDataToTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+        }
+    }
+    
+    private void xoaDocGia() {
+        int selectedRow = tbDocgia.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn độc giả cần xóa!");
+            return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(this, 
+                "Bạn có chắc muốn xóa độc giả này?", 
+                "Xác nhận xóa", 
+                JOptionPane.YES_NO_OPTION);
+                
+        if (confirm == JOptionPane.YES_OPTION) {
+            String maDG = listDocGia.get(selectedRow).getMaDG();
+            if (docGiaDAO.delete(maDG)) {
+                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                // Cập nhật trạng thái trong listDocGia
+                listDocGia.get(selectedRow).setTrangThai(false);
+                // Cập nhật hiển thị trong bảng
+                DefaultTableModel model = (DefaultTableModel) tbDocgia.getModel();
+                model.setValueAt("Đã khóa", selectedRow, 9); // 9 là cột trạng thái
+                xoaForm();
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+            }
+        }
+    }
+    
+    private void khoiPhucDocGia() {
+        String maCanKhoiPhuc = JOptionPane.showInputDialog(this, 
+                "Nhập mã độc giả cần khôi phục:");
+        if (maCanKhoiPhuc != null && !maCanKhoiPhuc.trim().isEmpty()) {
+            if (docGiaDAO.restore(maCanKhoiPhuc)) {
+                JOptionPane.showMessageDialog(this, "Khôi phục thành công!");
+                // Tải lại toàn bộ dữ liệu
+                loadDataToTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Khôi phục thất bại!");
+            }
+        }
+    }
+    
+    private void timKiemDocGia() {
+        String keyword = txtTimkiem.getText().trim();
+        if (!keyword.isEmpty()) {
+            listDocGia = docGiaDAO.search(keyword);
+            DefaultTableModel model = (DefaultTableModel) tbDocgia.getModel();
+            model.setRowCount(0);
+            
+            for (DocGiaDTO dg : listDocGia) {
+                model.addRow(new Object[]{
+                    dg.getMaDG(),
+                    dg.getTenDG(),
+                    dg.getGioiTinh(),
+                    dg.getSoDienThoai(),
+                    tinhTuoi(dg.getNgaySinh()),
+                    dg.getDiaChi(),
+                    dg.getMaThe(),
+                    dg.getNgayCap() != null ? sdf.format(dg.getNgayCap()) : "",
+                    dg.getNgayHetHan() != null ? sdf.format(dg.getNgayHetHan()) : "",
+                    dg.isTrangThai() ? "Hoạt động" : "Đã khóa"
+                });
+            }
+        } else {
+            loadDataToTable();
+        }
+    }
+    
+    private DocGiaDTO layThongTinForm() {
+        String tenDG = txtTenDG.getText().trim();
+        String gioiTinh = (String) cbGioitinh.getSelectedItem();
+        String sdt = txtSdt.getText().trim();
+        String diaChi = txtDiaChi.getText().trim();
+        String maThe = txtMa_ttv.getText().trim();
+        Date ngaySinh = txtNgaysinh.getDate();
+        Date ngayCap = txtNgaycap.getDate();
+        Date ngayHetHan = txtNgayhethan.getDate();
+        
+        if (tenDG.isEmpty() || ngaySinh == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin bắt buộc (Tên và Ngày sinh)!");
+            return null;
+        }
+        
+        // Nếu có mã thẻ thì phải có ngày cấp và ngày hết hạn
+        if (maThe != null && !maThe.trim().isEmpty()) {
+            if (ngayCap == null || ngayHetHan == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin thẻ (Ngày cấp và Ngày hết hạn)!");
+                return null;
+            }
+        }
+        
+        return new DocGiaDTO("", tenDG, gioiTinh, sdt, ngaySinh, diaChi, 
+                maThe, ngayCap, ngayHetHan, true);
+    }
+    
+    private void xoaForm() {
+        txtTenDG.setText("");
+        cbGioitinh.setSelectedIndex(0);
+        txtSdt.setText("");
+        txtDiaChi.setText("");
+        txtMa_ttv.setText("");
+        txtNgaysinh.setDate(null);
+        txtNgaycap.setDate(null);
+        txtNgayhethan.setDate(null);
+    }
+
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DocgiaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        java.awt.EventQueue.invokeLater(() -> {
+            JFrame frame = new JFrame("Quản lý độc giả");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(new DocgiaGUI());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Gioitinh;
@@ -389,5 +637,7 @@ public class DocgiaGUI extends javax.swing.JPanel {
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtTenDG;
     private javax.swing.JTextField txtTimkiem;
+    private javax.swing.JLabel DiaChi;
+    private javax.swing.JTextField txtDiaChi;
     // End of variables declaration//GEN-END:variables
 }

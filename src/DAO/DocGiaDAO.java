@@ -7,14 +7,17 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 import DTO.DocGiaDTO;
+import DTO.TheThanhVienDTO;
 
 import java.text.SimpleDateFormat;
 
 public class DocGiaDAO {
     private mySQLConnect mySQL;
+    private TheThanhVienDAO theThanhVienDAO;
     
     public DocGiaDAO() {
         mySQL = new mySQLConnect();
+        theThanhVienDAO = new TheThanhVienDAO();
     }
     
     // Lấy danh sách tất cả độc giả
@@ -22,35 +25,49 @@ public class DocGiaDAO {
         ArrayList<DocGiaDTO> list = new ArrayList<>();
         
         try {
-            String sql = "SELECT * FROM docgia WHERE trangthai = 1";
-            System.out.println("Executing SQL: " + sql); // Debug
+            // Kiểm tra kết nối
+            if (!mySQL.isConnected()) {
+                throw new SQLException("Không có kết nối database!");
+            }
+            
+            String sql = "SELECT dg.ma_doc_gia, dg.ten_doc_gia, dg.gioi_tinh, dg.so_dien_thoai, " +
+                        "dg.ngay_sinh, dg.dia_chi, " +
+                        "ttv.ma_the, ttv.ngay_cap, ttv.ngay_het_han, COALESCE(ttv.trang_thai, true) as trang_thai " +
+                        "FROM DocGia dg " +
+                        "LEFT JOIN TheThanhVien ttv ON dg.ma_doc_gia = ttv.ma_doc_gia";
+            System.out.println("Executing SQL: " + sql);
             
             ResultSet rs = mySQL.executeQuery(sql);
             if (rs == null) {
-                System.out.println("ResultSet is null"); // Debug
-                return list;
+                throw new SQLException("Không thể lấy dữ liệu từ database!");
             }
             
             while(rs.next()) {
                 DocGiaDTO dg = new DocGiaDTO(
-                    rs.getString("madg"),
-                    rs.getString("tendg"),
-                    rs.getString("gioitinh"),
-                    rs.getDate("ngaysinh"),
-                    rs.getString("sdt"),
-                    rs.getString("ma_ttv"),
-                    rs.getDate("ngaycap"),
-                    rs.getDate("ngayhethan"),
-                    rs.getInt("trangthai")
+                    rs.getString("ma_doc_gia"),
+                    rs.getString("ten_doc_gia"),
+                    rs.getString("gioi_tinh"),
+                    rs.getString("so_dien_thoai"),
+                    rs.getDate("ngay_sinh"),
+                    rs.getString("dia_chi"),
+                    rs.getString("ma_the"),
+                    rs.getDate("ngay_cap"),
+                    rs.getDate("ngay_het_han"),
+                    rs.getBoolean("trang_thai")
                 );
                 list.add(dg);
             }
+            
+            rs.close();
+            
         } catch(SQLException ex) {
+            System.out.println("Lỗi SQL: " + ex.getMessage());
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi khi đọc dữ liệu từ database: " + ex.getMessage());
-            ex.printStackTrace(); // In stack trace để debug
         } catch(Exception ex) {
+            System.out.println("Lỗi: " + ex.getMessage());
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi không xác định: " + ex.getMessage());
-            ex.printStackTrace(); // In stack trace để debug
         }
         
         return list;
@@ -60,23 +77,39 @@ public class DocGiaDAO {
     public boolean add(DocGiaDTO dg) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String sql = "INSERT INTO docgia(madg, tendg, gioitinh, ngaysinh, sdt, ma_ttv, ngaycap, ngayhethan, trangthai) VALUES(";
-            sql += "'" + dg.getMaDG()+ "',";
-            sql += "'" + dg.getTenDG()+ "',";
-            sql += "'" + dg.getGioiTinh()+ "',";
-            sql += "'" + sdf.format(dg.getNgaySinh())+ "',";
-            sql += "'" + dg.getSDT()+ "',";
-            sql += "'" + dg.getMaThe()+ "',";
-            sql += "'" + sdf.format(dg.getNgayCap())+ "',";
-            sql += "'" + sdf.format(dg.getNgayHetHan())+ "',";
-            sql += "1)";
             
-            System.out.println("Executing SQL: " + sql); // Debug
-            return mySQL.executeUpdate(sql) > 0;
+            // Thêm độc giả
+            String sql = "INSERT INTO DocGia(ma_doc_gia, ten_doc_gia, gioi_tinh, so_dien_thoai, ngay_sinh, dia_chi) VALUES(";
+            sql += "'" + dg.getMaDG() + "',";
+            sql += "'" + dg.getTenDG() + "',";
+            sql += "'" + dg.getGioiTinh() + "',";
+            sql += (dg.getSoDienThoai() != null ? "'" + dg.getSoDienThoai() + "'" : "NULL") + ",";
+            sql += "'" + sdf.format(dg.getNgaySinh()) + "',";
+            sql += (dg.getDiaChi() != null ? "'" + dg.getDiaChi() + "'" : "NULL") + ")";
+            
+            System.out.println("Executing SQL: " + sql);
+            if (mySQL.executeUpdate(sql) <= 0) {
+                return false;
+            }
+            
+            // Thêm thẻ thành viên nếu có
+            if (dg.getMaThe() != null) {
+                TheThanhVienDTO the = new TheThanhVienDTO(
+                    dg.getMaThe(),
+                    dg.getMaDG(),
+                    dg.getNgayCap(),
+                    dg.getNgayHetHan(),
+                    true
+                );
+                return theThanhVienDAO.add(the);
+            }
+            
+            return true;
             
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi khi thêm độc giả: " + ex.getMessage());
+            System.out.println("Lỗi thêm độc giả: " + ex.getMessage());
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi thêm độc giả: " + ex.getMessage());
             return false;
         }
     }
@@ -85,48 +118,86 @@ public class DocGiaDAO {
     public boolean update(DocGiaDTO dg) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String sql = "UPDATE docgia SET ";
-            sql += "tendg = '" + dg.getTenDG()+ "',";
-            sql += "gioitinh = '" + dg.getGioiTinh()+ "',";
-            sql += "ngaysinh = '" + sdf.format(dg.getNgaySinh())+ "',";
-            sql += "sdt = '" + dg.getSDT()+ "',";
-            sql += "ma_ttv = '" + dg.getMaThe()+ "',";
-            sql += "ngaycap = '" + sdf.format(dg.getNgayCap())+ "',";
-            sql += "ngayhethan = '" + sdf.format(dg.getNgayHetHan())+ "'";
-            sql += " WHERE madg = '" + dg.getMaDG()+ "'";
             
-            System.out.println("Executing SQL: " + sql); // Debug
-            return mySQL.executeUpdate(sql) > 0;
+            // Cập nhật độc giả
+            String sql = "UPDATE DocGia SET ";
+            sql += "ten_doc_gia = '" + dg.getTenDG() + "',";
+            sql += "gioi_tinh = '" + dg.getGioiTinh() + "',";
+            sql += "so_dien_thoai = " + (dg.getSoDienThoai() != null ? "'" + dg.getSoDienThoai() + "'" : "NULL") + ",";
+            sql += "ngay_sinh = '" + sdf.format(dg.getNgaySinh()) + "',";
+            sql += "dia_chi = " + (dg.getDiaChi() != null ? "'" + dg.getDiaChi() + "'" : "NULL");
+            sql += " WHERE ma_doc_gia = '" + dg.getMaDG() + "'";
+            
+            System.out.println("Executing SQL: " + sql);
+            if (mySQL.executeUpdate(sql) <= 0) {
+                return false;
+            }
+            
+            // Cập nhật thẻ thành viên nếu có
+            if (dg.getMaThe() != null) {
+                TheThanhVienDTO the = new TheThanhVienDTO(
+                    dg.getMaThe(),
+                    dg.getMaDG(),
+                    dg.getNgayCap(),
+                    dg.getNgayHetHan(),
+                    dg.isTrangThai()
+                );
+                return theThanhVienDAO.update(the);
+            }
+            
+            return true;
             
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi khi cập nhật độc giả: " + ex.getMessage());
+            System.out.println("Lỗi cập nhật độc giả: " + ex.getMessage());
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi cập nhật độc giả: " + ex.getMessage());
             return false;
         }
     }
     
-    // Xóa độc giả (cập nhật trạng thái = 0)
-    public boolean delete(String madg) {
+    // Xóa độc giả (cập nhật trạng thái = false trong thẻ thành viên)
+    public boolean delete(String maDG) {
         try {
-            String sql = "UPDATE docgia SET trangthai = 0 WHERE madg = '" + madg + "'";
-            System.out.println("Executing SQL: " + sql); // Debug
-            return mySQL.executeUpdate(sql) > 0;
+            // Kiểm tra xem độc giả có thẻ thành viên không
+            String checkSql = "SELECT ma_the FROM TheThanhVien WHERE ma_doc_gia = '" + maDG + "'";
+            ResultSet rs = mySQL.executeQuery(checkSql);
+            
+            if (rs != null && rs.next()) {
+                // Nếu có thẻ thành viên thì cập nhật trạng thái
+                String sql = "UPDATE TheThanhVien SET trang_thai = false " +
+                           "WHERE ma_doc_gia = '" + maDG + "'";
+                System.out.println("Executing SQL: " + sql);
+                boolean result = mySQL.executeUpdate(sql) > 0;
+                rs.close();
+                return result;
+            } else {
+                // Nếu không có thẻ thành viên thì thêm mới với trạng thái false
+                String sql = "INSERT INTO TheThanhVien(ma_the, ma_doc_gia, trang_thai) " +
+                           "VALUES('THE" + System.currentTimeMillis() + "', '" + maDG + "', false)";
+                System.out.println("Executing SQL: " + sql);
+                boolean result = mySQL.executeUpdate(sql) > 0;
+                if (rs != null) rs.close();
+                return result;
+            }
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi khi xóa độc giả: " + ex.getMessage());
+            System.out.println("Lỗi xóa độc giả: " + ex.getMessage());
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi xóa độc giả: " + ex.getMessage());
             return false;
         }
     }
     
     // Khôi phục độc giả đã xóa
-    public boolean restore(String madg) {
+    public boolean restore(String maDG) {
         try {
-            String sql = "UPDATE docgia SET trangthai = 1 WHERE madg = '" + madg + "'";
-            System.out.println("Executing SQL: " + sql); // Debug
+            String sql = "UPDATE TheThanhVien SET trang_thai = true " +
+                        "WHERE ma_doc_gia = '" + maDG + "'";
+            System.out.println("Executing SQL: " + sql);
             return mySQL.executeUpdate(sql) > 0;
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi khi khôi phục độc giả: " + ex.getMessage());
+            System.out.println("Lỗi khôi phục độc giả: " + ex.getMessage());
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi khôi phục độc giả: " + ex.getMessage());
             return false;
         }
     }
@@ -136,39 +207,50 @@ public class DocGiaDAO {
         ArrayList<DocGiaDTO> list = new ArrayList<>();
         
         try {
-            String sql = "SELECT * FROM docgia WHERE trangthai = 1 AND (madg LIKE '%" + keyword + "%' "
-                    + "OR tendg LIKE '%" + keyword + "%' "
-                    + "OR sdt LIKE '%" + keyword + "%' "
-                    + "OR ma_ttv LIKE '%" + keyword + "%')";
+            String sql = "SELECT dg.ma_doc_gia, dg.ten_doc_gia, dg.gioi_tinh, dg.so_dien_thoai, " +
+                        "dg.ngay_sinh, dg.dia_chi, " +
+                        "ttv.ma_the, ttv.ngay_cap, ttv.ngay_het_han, ttv.trang_thai " +
+                        "FROM DocGia dg " +
+                        "LEFT JOIN TheThanhVien ttv ON dg.ma_doc_gia = ttv.ma_doc_gia " +
+                        "WHERE dg.ma_doc_gia LIKE '%" + keyword + "%' OR " +
+                        "dg.ten_doc_gia LIKE '%" + keyword + "%' OR " +
+                        "dg.so_dien_thoai LIKE '%" + keyword + "%' OR " +
+                        "dg.dia_chi LIKE '%" + keyword + "%' OR " +
+                        "ttv.ma_the LIKE '%" + keyword + "%'";
                     
-            System.out.println("Executing SQL: " + sql); // Debug
+            System.out.println("Executing SQL: " + sql);
             ResultSet rs = mySQL.executeQuery(sql);
             
             if (rs == null) {
-                System.out.println("ResultSet is null in search"); // Debug
-                return list;
+                throw new SQLException("Không thể lấy dữ liệu từ database!");
             }
             
             while(rs.next()) {
                 DocGiaDTO dg = new DocGiaDTO(
-                    rs.getString("madg"),
-                    rs.getString("tendg"),
-                    rs.getString("gioitinh"),
-                    rs.getDate("ngaysinh"),
-                    rs.getString("sdt"),
-                    rs.getString("ma_ttv"),
-                    rs.getDate("ngaycap"),
-                    rs.getDate("ngayhethan"),
-                    rs.getInt("trangthai")
+                    rs.getString("ma_doc_gia"),
+                    rs.getString("ten_doc_gia"),
+                    rs.getString("gioi_tinh"),
+                    rs.getString("so_dien_thoai"),
+                    rs.getDate("ngay_sinh"),
+                    rs.getString("dia_chi"),
+                    rs.getString("ma_the"),
+                    rs.getDate("ngay_cap"),
+                    rs.getDate("ngay_het_han"),
+                    rs.getBoolean("trang_thai")
                 );
                 list.add(dg);
             }
+            
+            rs.close();
+            
         } catch(SQLException ex) {
+            System.out.println("Lỗi SQL: " + ex.getMessage());
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi khi tìm kiếm dữ liệu: " + ex.getMessage());
-            ex.printStackTrace();
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, "Lỗi không xác định khi tìm kiếm: " + ex.getMessage());
+            System.out.println("Lỗi: " + ex.getMessage());
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi không xác định khi tìm kiếm: " + ex.getMessage());
         }
         
         return list;
