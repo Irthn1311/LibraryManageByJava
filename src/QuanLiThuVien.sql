@@ -1,18 +1,31 @@
-﻿CREATE DATABASE QuanLiThuVien;
+CREATE DATABASE QuanLiThuVien;
 GO
 
 USE QuanLiThuVien;
 GO
 
+SELECT name FROM sys.sql_logins;
+CREATE USER tnptp FOR LOGIN tnptp;
+EXEC sp_addrolemember 'db_owner', 'tnptp';
+ALTER LOGIN tnptp WITH PASSWORD = '123';
+EXEC sp_addrolemember 'db_owner', 'tnptp';
+
 -- Bảng Nhân viên
 CREATE TABLE NhanVien (
-    ID_NhanVien INT PRIMARY KEY,
+    ID_NhanVien INT IDENTITY(1,1) PRIMARY KEY,
     TenNhanVien NVARCHAR(100),
     GioiTinh NVARCHAR(10),
-    Tuoi INT,
+    NgaySinh DATE,
+    DiaChi NVARCHAR(50),
+    SoDienThoai NVARCHAR(15),
+    Email NVARCHAR(30),
     VaiTro NVARCHAR(50),
-    TrangThai NVARCHAR(20)
+	Luong DECIMAL(18, 2),
+	NgayVaoLam DATE
 );
+
+select * from NhanVien
+
 
 -- Bảng Tài khoản trực tuyến
 CREATE TABLE TaiKhoanTrucTuyen (

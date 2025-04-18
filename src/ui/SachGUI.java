@@ -293,7 +293,7 @@ public class SachGUI extends javax.swing.JPanel {
         tbSach.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tbSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"123", "Không biết", null, null, null, null, null, null, null, null},
+                {"", "", null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
