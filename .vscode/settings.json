@@ -1,0 +1,11 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": [
+        "dist\\lib\\AbsoluteLayout.jar",
+        "dist\\lib\\jcalendar-1.4.jar",
+        "dist\\lib\\My_Component.jar",
+        "dist\\lib\\mysql-connector-j-9.2.0.jar"
+    ]
+}

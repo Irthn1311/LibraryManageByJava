@@ -475,7 +475,6 @@
                                               </Group>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="Quanlyphanquyen" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                                       <Group type="102" alignment="1" attributes="0">
                                                           <Component id="qlpq_capnhat" min="-2" max="-2" attributes="0"/>
@@ -483,9 +482,12 @@
                                                       </Group>
                                                       <Component id="qlpm_capnhat" alignment="1" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="qlpq_xoa_kp" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="Quanlyphanquyen" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="qlpq_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
@@ -777,255 +779,263 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="PanTruyxuat_Phanquyen" alignment="0" pref="1176" max="32767" attributes="0"/>
+                      <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="PanTruyxuat_Phanquyen" min="-2" pref="433" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="77" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="PanTruyxuat_Phanquyen">
+                <Container class="javax.swing.JPanel" name="jPanel2">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                        <LineBorder thickness="3">
-                          <Color PropertyName="color" blue="99" green="99" red="99" type="rgb"/>
-                        </LineBorder>
+                        <LineBorder/>
                       </Border>
-                    </Property>
-                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[930, 270]"/>
                     </Property>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSeparator4" alignment="1" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
                                       <Component id="Tenquyen" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="truyxuatTenquyen" min="-2" pref="665" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="-2" max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="txTen" min="-2" pref="665" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="393" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="Quanlysach1" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="Quanlychucnang1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="Quanlynhanvien1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                          <Component id="Quanlyphieunhapsach1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                          <Component id="Quanlydocgia1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                          <Component id="Quanlyphanquyen1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                          <Component id="Quanlyphieumuon1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                          <Component id="Quanlytaikhoan1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                          <Component id="Quanlythongke1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                          <Component id="Quanlynguonnhap1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                  <Component id="jSeparator3" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="Quanlysach1" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txQuyanly" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="Xem1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
-                                              <Component id="Capnhat1" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
-                                              <Component id="Xoa_Khoiphuc1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="Quanlynhanvien1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <Component id="Quanlyphieunhapsach1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <Component id="Quanlydocgia1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <Component id="Quanlyphanquyen1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <Component id="Quanlyphieumuon1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <Component id="Quanlytaikhoan1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <Component id="Quanlythongke1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <Component id="Quanlynguonnhap1" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="Xem1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Component id="Capnhat1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Component id="Xoa_Khoiphuc1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="txqlnv_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqls_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqldg_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqlpns_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqlpm_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqlpq_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqltke_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqltk_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqlnn_xem" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txqlnv_xem" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqls_xem" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqldg_xem" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlpns_xem" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlpm_xem" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlpq_xem" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqltke_xem" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqltk_xem" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlnn_xem" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="txqlnv_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqls_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqldg_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqlpm_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqlpq_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqltke_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqltk_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqlnn_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="txqlpq_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txqldg_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txqlpns_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txqlnv_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txqls_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace min="0" pref="403" max="32767" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txqlnv_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqls_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqldg_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlpm_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlpq_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqltke_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqltk_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlnn_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="txqltk_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txqlnn_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txqltke_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace min="-2" pref="399" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txqlpq_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqldg_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlpns_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlnv_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqls_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqltk_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqlnn_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txqltke_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="txqlpq_xem" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="Quanlyphieumuon1" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="txqlpm_xem" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="truyxuatTenquyen" alignment="1" min="-2" pref="21" max="-2" attributes="0"/>
-                                                  <Component id="Tenquyen" alignment="1" min="-2" pref="21" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Group type="102" alignment="1" attributes="0">
-                                                              <Component id="jSeparator4" min="-2" pref="5" max="-2" attributes="0"/>
-                                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                                  <Component id="Quanlychucnang1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="Xem1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="Capnhat1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="Xoa_Khoiphuc1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <Component id="Quanlysach1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                                                      <Group type="102" alignment="1" attributes="0">
-                                                                          <Component id="txqls_capnhat" min="-2" max="-2" attributes="0"/>
-                                                                          <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
-                                                                      </Group>
-                                                                      <Component id="txqlnv_capnhat" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                                                      <Group type="102" alignment="1" attributes="0">
-                                                                          <Component id="txqls_xoa_kp" min="-2" max="-2" attributes="0"/>
-                                                                          <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
-                                                                      </Group>
-                                                                      <Component id="txqlnv_xoa_kp" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                              </Group>
-                                                          </Group>
-                                                          <Group type="102" alignment="1" attributes="0">
-                                                              <Component id="txqls_xem" min="-2" max="-2" attributes="0"/>
-                                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                              <Component id="Quanlynhanvien1" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Component id="txqlnv_xem" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="Quanlyphieunhapsach1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                                              <Component id="txqldg_capnhat" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                                              <Group type="102" alignment="1" attributes="0">
-                                                                  <Component id="txqlpns_xoa_kp" min="-2" max="-2" attributes="0"/>
-                                                                  <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <Component id="txqldg_xoa_kp" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                  </Group>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="txqlpns_xem" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                      <Component id="Quanlydocgia1" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="txqldg_xem" alignment="1" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <Component id="txqlpq_capnhat" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Component id="txqlpm_capnhat" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="Quanlyphanquyen1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="txqlpq_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="Quanlytaikhoan1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="Tenquyen" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Component id="txTen" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="jSeparator3" min="-2" pref="5" max="-2" attributes="0"/>
+                              <EmptySpace pref="426" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="283" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="txqltk_capnhat" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
+                                                  <Component id="txqltk_xem" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="Quanlythongke1" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="txqltke_capnhat" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqltke_xem" alignment="1" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="txqltk_xoa_kp" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="txqltke_xoa_kp" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                  <Component id="Quanlynguonnhap1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="txqlnn_xem" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="txqlnn_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txqlnn_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace pref="49" max="32767" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Component id="txqlpq_xem" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="Quanlyphieumuon1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="txqlpm_xem" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="102" alignment="1" attributes="0">
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Group type="102" alignment="1" attributes="0">
+                                                                  <Group type="103" groupAlignment="3" attributes="0">
+                                                                      <Component id="txQuyanly" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                      <Component id="Xem1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                      <Component id="Capnhat1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                      <Component id="Xoa_Khoiphuc1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                                  </Group>
+                                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                                      <Component id="Quanlysach1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                                          <Group type="102" alignment="1" attributes="0">
+                                                                              <Component id="txqls_capnhat" min="-2" max="-2" attributes="0"/>
+                                                                              <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
+                                                                          </Group>
+                                                                          <Component id="txqlnv_capnhat" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                                      </Group>
+                                                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                                          <Group type="102" alignment="1" attributes="0">
+                                                                              <Component id="txqls_xoa_kp" min="-2" max="-2" attributes="0"/>
+                                                                              <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
+                                                                          </Group>
+                                                                          <Component id="txqlnv_xoa_kp" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                                      </Group>
+                                                                  </Group>
+                                                              </Group>
+                                                              <Group type="102" alignment="1" attributes="0">
+                                                                  <Component id="txqls_xem" min="-2" max="-2" attributes="0"/>
+                                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                                  <Component id="Quanlynhanvien1" min="-2" max="-2" attributes="0"/>
+                                                              </Group>
+                                                              <Component id="txqlnv_xem" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                          </Group>
+                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Component id="Quanlyphieunhapsach1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                              <Group type="102" alignment="0" attributes="0">
+                                                                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                                                  <Component id="txqldg_capnhat" min="-2" max="-2" attributes="0"/>
+                                                              </Group>
+                                                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                                  <Group type="102" alignment="1" attributes="0">
+                                                                      <Component id="txqlpns_xoa_kp" min="-2" max="-2" attributes="0"/>
+                                                                      <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
+                                                                  </Group>
+                                                                  <Component id="txqldg_xoa_kp" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                              </Group>
+                                                          </Group>
+                                                      </Group>
+                                                      <Group type="102" alignment="1" attributes="0">
+                                                          <Component id="txqlpns_xem" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                          <Component id="Quanlydocgia1" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Component id="txqldg_xem" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                          <Group type="102" alignment="1" attributes="0">
+                                                              <Component id="txqlpq_capnhat" min="-2" max="-2" attributes="0"/>
+                                                              <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
+                                                          </Group>
+                                                          <Component id="txqlpm_capnhat" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Component id="Quanlyphanquyen1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                              <Component id="txqlpq_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          </Group>
+                                                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="Quanlytaikhoan1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <Component id="txqltk_capnhat" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="36" pref="36" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="txqltke_capnhat" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="txqltk_xoa_kp" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="txqltke_xoa_kp" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="316" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="txqltk_xem" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="Quanlythongke1" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="txqltke_xem" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                              <Component id="Quanlynguonnhap1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txqlnn_xem" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="txqlnn_capnhat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txqlnn_xoa_kp" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace pref="12" max="32767" attributes="0"/>
-                                  </Group>
+                                  <EmptySpace pref="49" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1038,10 +1048,10 @@
                           <Font name="Arial" size="16" style="1"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="4"/>
-                        <Property name="text" type="java.lang.String" value="Nh&#x1ead;p t&#xea;n quy&#x1ec1;n:"/>
+                        <Property name="text" type="java.lang.String" value="T&#xea;n quy&#x1ec1;n:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="truyxuatTenquyen">
+                    <Component class="javax.swing.JTextField" name="txTen">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="14" style="0"/>
@@ -1054,7 +1064,17 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Quanlychucnang1">
+                    <Component class="javax.swing.JSeparator" name="jSeparator3">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="txQuyanly">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial" size="18" style="1"/>
@@ -1074,16 +1094,6 @@
                           <Font name="Arial" size="15" style="0"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; s&#xe1;ch"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSeparator" name="jSeparator4">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" red="0" type="rgb"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" red="0" type="rgb"/>
-                        </Property>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="Quanlynhanvien1">
@@ -1150,6 +1160,24 @@
                         <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; ngu&#x1ed3;n nh&#x1ead;p"/>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqlnn_xem">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqltke_xem">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqltk_xem">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqlpm_xem">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqlpq_xem">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqldg_xem">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqlpns_xem">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqlnv_xem">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqls_xem">
+                    </Component>
                     <Component class="javax.swing.JLabel" name="Xem1">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1165,32 +1193,6 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t"/>
                       </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="Xoa_Khoiphuc1">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="15" style="0"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="X&#xf3;a/ Kh&#xf4;i ph&#x1ee5;c"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqls_xem">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqlnv_xem">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqlpns_xem">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqldg_xem">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqlpq_xem">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqlpm_xem">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqltk_xem">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqltke_xem">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqlnn_xem">
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="txqls_capnhat">
                     </Component>
@@ -1208,21 +1210,29 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="txqlnn_capnhat">
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqls_xoa_kp">
+                    <Component class="javax.swing.JCheckBox" name="txqlnn_xoa_kp">
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqlnv_xoa_kp">
+                    <Component class="javax.swing.JCheckBox" name="txqltke_xoa_kp">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqltk_xoa_kp">
+                    </Component>
+                    <Component class="javax.swing.JCheckBox" name="txqlpq_xoa_kp">
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="txqldg_xoa_kp">
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="txqlpns_xoa_kp">
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqlpq_xoa_kp">
+                    <Component class="javax.swing.JCheckBox" name="txqlnv_xoa_kp">
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqltk_xoa_kp">
+                    <Component class="javax.swing.JCheckBox" name="txqls_xoa_kp">
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqltke_xoa_kp">
-                    </Component>
-                    <Component class="javax.swing.JCheckBox" name="txqlnn_xoa_kp">
+                    <Component class="javax.swing.JLabel" name="Xoa_Khoiphuc1">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Arial" size="15" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="X&#xf3;a/ Kh&#xf4;i ph&#x1ee5;c"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>

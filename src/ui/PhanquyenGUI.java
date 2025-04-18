@@ -93,12 +93,12 @@ public class PhanquyenGUI extends javax.swing.JPanel {
         btnCapnhat = new javax.swing.JButton();
         btnThemquyen = new javax.swing.JButton();
         Chitiet = new javax.swing.JPanel();
-        PanTruyxuat_Phanquyen = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         Tenquyen = new javax.swing.JLabel();
-        truyxuatTenquyen = new javax.swing.JTextField();
-        Quanlychucnang1 = new javax.swing.JLabel();
+        txTen = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
+        txQuyanly = new javax.swing.JLabel();
         Quanlysach1 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
         Quanlynhanvien1 = new javax.swing.JLabel();
         Quanlyphieunhapsach1 = new javax.swing.JLabel();
         Quanlydocgia1 = new javax.swing.JLabel();
@@ -107,18 +107,17 @@ public class PhanquyenGUI extends javax.swing.JPanel {
         Quanlytaikhoan1 = new javax.swing.JLabel();
         Quanlythongke1 = new javax.swing.JLabel();
         Quanlynguonnhap1 = new javax.swing.JLabel();
+        txqlnn_xem = new javax.swing.JCheckBox();
+        txqltke_xem = new javax.swing.JCheckBox();
+        txqltk_xem = new javax.swing.JCheckBox();
+        txqlpm_xem = new javax.swing.JCheckBox();
+        txqlpq_xem = new javax.swing.JCheckBox();
+        txqldg_xem = new javax.swing.JCheckBox();
+        txqlpns_xem = new javax.swing.JCheckBox();
+        txqlnv_xem = new javax.swing.JCheckBox();
+        txqls_xem = new javax.swing.JCheckBox();
         Xem1 = new javax.swing.JLabel();
         Capnhat1 = new javax.swing.JLabel();
-        Xoa_Khoiphuc1 = new javax.swing.JLabel();
-        txqls_xem = new javax.swing.JCheckBox();
-        txqlnv_xem = new javax.swing.JCheckBox();
-        txqlpns_xem = new javax.swing.JCheckBox();
-        txqldg_xem = new javax.swing.JCheckBox();
-        txqlpq_xem = new javax.swing.JCheckBox();
-        txqlpm_xem = new javax.swing.JCheckBox();
-        txqltk_xem = new javax.swing.JCheckBox();
-        txqltke_xem = new javax.swing.JCheckBox();
-        txqlnn_xem = new javax.swing.JCheckBox();
         txqls_capnhat = new javax.swing.JCheckBox();
         txqlnv_capnhat = new javax.swing.JCheckBox();
         txqldg_capnhat = new javax.swing.JCheckBox();
@@ -127,14 +126,15 @@ public class PhanquyenGUI extends javax.swing.JPanel {
         txqltk_capnhat = new javax.swing.JCheckBox();
         txqltke_capnhat = new javax.swing.JCheckBox();
         txqlnn_capnhat = new javax.swing.JCheckBox();
-        txqls_xoa_kp = new javax.swing.JCheckBox();
-        txqlnv_xoa_kp = new javax.swing.JCheckBox();
+        txqlnn_xoa_kp = new javax.swing.JCheckBox();
+        txqltke_xoa_kp = new javax.swing.JCheckBox();
+        txqltk_xoa_kp = new javax.swing.JCheckBox();
+        txqlpq_xoa_kp = new javax.swing.JCheckBox();
         txqldg_xoa_kp = new javax.swing.JCheckBox();
         txqlpns_xoa_kp = new javax.swing.JCheckBox();
-        txqlpq_xoa_kp = new javax.swing.JCheckBox();
-        txqltk_xoa_kp = new javax.swing.JCheckBox();
-        txqltke_xoa_kp = new javax.swing.JCheckBox();
-        txqlnn_xoa_kp = new javax.swing.JCheckBox();
+        txqlnv_xoa_kp = new javax.swing.JCheckBox();
+        txqls_xoa_kp = new javax.swing.JCheckBox();
+        Xoa_Khoiphuc1 = new javax.swing.JLabel();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1210, 640));
 
@@ -466,14 +466,15 @@ public class PhanquyenGUI extends javax.swing.JPanel {
                                     .addComponent(qldg_xem, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(18, 18, 18)
                                 .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Quanlyphanquyen)
                                     .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(PanPhanquyenLayout.createSequentialGroup()
                                             .addComponent(qlpq_capnhat)
                                             .addGap(36, 36, 36))
                                         .addComponent(qlpm_capnhat))
                                     .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                        .addComponent(qlpq_xoa_kp)
+                                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(Quanlyphanquyen)
+                                            .addComponent(qlpq_xoa_kp))
                                         .addGap(36, 36, 36)))))
                         .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanPhanquyenLayout.createSequentialGroup()
@@ -517,28 +518,27 @@ public class PhanquyenGUI extends javax.swing.JPanel {
 
         Giaodien.add(ThemPhanquyen, "Them");
 
-        PanTruyxuat_Phanquyen.setBackground(new java.awt.Color(255, 255, 255));
-        PanTruyxuat_Phanquyen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
-        PanTruyxuat_Phanquyen.setPreferredSize(new java.awt.Dimension(930, 270));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         Tenquyen.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         Tenquyen.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Tenquyen.setText("Nhập tên quyền:");
+        Tenquyen.setText("Tên quyền:");
 
-        truyxuatTenquyen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        truyxuatTenquyen.setText("jTextField1");
-        truyxuatTenquyen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txTen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txTen.setText("jTextField1");
+        txTen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        Quanlychucnang1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        Quanlychucnang1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Quanlychucnang1.setText("Quản lý chức năng");
-        Quanlychucnang1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jSeparator3.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+
+        txQuyanly.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        txQuyanly.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txQuyanly.setText("Quản lý chức năng");
+        txQuyanly.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         Quanlysach1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         Quanlysach1.setText("Quản lý sách");
-
-        jSeparator4.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
 
         Quanlynhanvien1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         Quanlynhanvien1.setText("Quản lý nhân viên");
@@ -573,191 +573,198 @@ public class PhanquyenGUI extends javax.swing.JPanel {
         Xoa_Khoiphuc1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         Xoa_Khoiphuc1.setText("Xóa/ Khôi phục");
 
-        javax.swing.GroupLayout PanTruyxuat_PhanquyenLayout = new javax.swing.GroupLayout(PanTruyxuat_Phanquyen);
-        PanTruyxuat_Phanquyen.setLayout(PanTruyxuat_PhanquyenLayout);
-        PanTruyxuat_PhanquyenLayout.setHorizontalGroup(
-            PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(Tenquyen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(truyxuatTenquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
-                    .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(Quanlysach1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Quanlychucnang1, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(Quanlynhanvien1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlyphieunhapsach1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlydocgia1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlyphanquyen1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlyphieumuon1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlytaikhoan1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlythongke1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlynguonnhap1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(100, 100, 100)
-                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                .addComponent(Xem1)
-                                .addGap(150, 150, 150)
-                                .addComponent(Capnhat1)
-                                .addGap(150, 150, 150)
-                                .addComponent(Xoa_Khoiphuc1))
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txqlnv_xem)
-                                    .addComponent(txqls_xem)
-                                    .addComponent(txqldg_xem)
-                                    .addComponent(txqlpns_xem)
-                                    .addComponent(txqlpm_xem)
-                                    .addComponent(txqlpq_xem)
-                                    .addComponent(txqltke_xem)
-                                    .addComponent(txqltk_xem)
-                                    .addComponent(txqlnn_xem))
-                                .addGap(179, 179, 179)
-                                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txqlnv_capnhat)
-                                    .addComponent(txqls_capnhat)
-                                    .addComponent(txqldg_capnhat)
-                                    .addComponent(txqlpm_capnhat)
-                                    .addComponent(txqlpq_capnhat)
-                                    .addComponent(txqltke_capnhat)
-                                    .addComponent(txqltk_capnhat)
-                                    .addComponent(txqlnn_capnhat))
-                                .addGap(212, 212, 212)
-                                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txqlpq_xoa_kp)
-                                    .addComponent(txqldg_xoa_kp)
-                                    .addComponent(txqlpns_xoa_kp)
-                                    .addComponent(txqlnv_xoa_kp)
-                                    .addComponent(txqls_xoa_kp)
-                                    .addComponent(txqltk_xoa_kp)
-                                    .addComponent(txqlnn_xoa_kp)
-                                    .addComponent(txqltke_xoa_kp))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(18, 18, 18)
+                        .addComponent(txTen, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 393, Short.MAX_VALUE))
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
-        );
-        PanTruyxuat_PhanquyenLayout.setVerticalGroup(
-            PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(53, 53, 53)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Quanlysach1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txQuyanly, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(Quanlynhanvien1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Quanlyphieunhapsach1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Quanlydocgia1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Quanlyphanquyen1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Quanlyphieumuon1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Quanlytaikhoan1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Quanlythongke1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Quanlynguonnhap1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(100, 100, 100)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(Xem1)
+                            .addGap(150, 150, 150)
+                            .addComponent(Capnhat1)
+                            .addGap(150, 150, 150)
+                            .addComponent(Xoa_Khoiphuc1))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txqlnv_xem)
+                                .addComponent(txqls_xem)
+                                .addComponent(txqldg_xem)
+                                .addComponent(txqlpns_xem)
+                                .addComponent(txqlpm_xem)
                                 .addComponent(txqlpq_xem)
-                                .addGap(18, 18, 18)
-                                .addComponent(Quanlyphieumuon1))
-                            .addComponent(txqlpm_xem)
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(truyxuatTenquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Tenquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                    .addComponent(Quanlychucnang1)
-                                                    .addComponent(Xem1)
-                                                    .addComponent(Capnhat1)
-                                                    .addComponent(Xoa_Khoiphuc1))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(Quanlysach1)
-                                                    .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                                            .addComponent(txqls_capnhat)
-                                                            .addGap(36, 36, 36))
-                                                        .addComponent(txqlnv_capnhat))
-                                                    .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                                            .addComponent(txqls_xoa_kp)
-                                                            .addGap(36, 36, 36))
-                                                        .addComponent(txqlnv_xoa_kp))))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                                .addComponent(txqls_xem)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(Quanlynhanvien1))
-                                            .addComponent(txqlnv_xem, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Quanlyphieunhapsach1)
-                                            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                                .addGap(36, 36, 36)
-                                                .addComponent(txqldg_capnhat))
-                                            .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                                    .addComponent(txqlpns_xoa_kp)
-                                                    .addGap(36, 36, 36))
-                                                .addComponent(txqldg_xoa_kp))))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                        .addComponent(txqlpns_xem)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(Quanlydocgia1))
-                                    .addComponent(txqldg_xem, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGap(18, 18, 18)
-                                .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                            .addComponent(txqlpq_capnhat)
-                                            .addGap(36, 36, 36))
-                                        .addComponent(txqlpm_capnhat))
-                                    .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Quanlyphanquyen1)
-                                            .addComponent(txqlpq_xoa_kp))
-                                        .addGap(36, 36, 36)))))
-                        .addGap(18, 18, 18)
-                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Quanlytaikhoan1)
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                    .addComponent(txqltk_capnhat)
-                                    .addGap(36, 36, 36))
-                                .addComponent(txqltke_capnhat))
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                                .addComponent(txqltk_xoa_kp)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txqltke_xoa_kp)))
-                        .addContainerGap(49, Short.MAX_VALUE))
-                    .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
-                        .addGap(316, 316, 316)
-                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createSequentialGroup()
+                                .addComponent(txqltke_xem)
                                 .addComponent(txqltk_xem)
-                                .addGap(18, 18, 18)
-                                .addComponent(Quanlythongke1))
-                            .addComponent(txqltke_xem))
-                        .addGap(18, 18, 18)
-                        .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanTruyxuat_PhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(Quanlynguonnhap1)
                                 .addComponent(txqlnn_xem))
-                            .addComponent(txqlnn_capnhat)
-                            .addComponent(txqlnn_xoa_kp))
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                            .addGap(179, 179, 179)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txqlnv_capnhat)
+                                .addComponent(txqls_capnhat)
+                                .addComponent(txqldg_capnhat)
+                                .addComponent(txqlpm_capnhat)
+                                .addComponent(txqlpq_capnhat)
+                                .addComponent(txqltke_capnhat)
+                                .addComponent(txqltk_capnhat)
+                                .addComponent(txqlnn_capnhat))
+                            .addGap(212, 212, 212)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txqlpq_xoa_kp)
+                                        .addComponent(txqldg_xoa_kp)
+                                        .addComponent(txqlpns_xoa_kp)
+                                        .addComponent(txqlnv_xoa_kp)
+                                        .addComponent(txqls_xoa_kp))
+                                    .addGap(0, 403, Short.MAX_VALUE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txqltk_xoa_kp)
+                                        .addComponent(txqlnn_xoa_kp)
+                                        .addComponent(txqltke_xoa_kp))
+                                    .addGap(399, 399, 399)))))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Tenquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txTen, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(426, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(84, 84, 84)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(283, 283, 283)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(txqltk_xem)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(Quanlythongke1))
+                                .addComponent(txqltke_xem))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Quanlynguonnhap1)
+                                    .addComponent(txqlnn_xem))
+                                .addComponent(txqlnn_capnhat)
+                                .addComponent(txqlnn_xoa_kp)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(txqlpq_xem)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(Quanlyphieumuon1))
+                                .addComponent(txqlpm_xem)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(23, 23, 23)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(txQuyanly)
+                                                        .addComponent(Xem1)
+                                                        .addComponent(Capnhat1)
+                                                        .addComponent(Xoa_Khoiphuc1))
+                                                    .addGap(18, 18, 18)
+                                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(Quanlysach1)
+                                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                                .addComponent(txqls_capnhat)
+                                                                .addGap(36, 36, 36))
+                                                            .addComponent(txqlnv_capnhat))
+                                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                                .addComponent(txqls_xoa_kp)
+                                                                .addGap(36, 36, 36))
+                                                            .addComponent(txqlnv_xoa_kp))))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                                    .addComponent(txqls_xem)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(Quanlynhanvien1))
+                                                .addComponent(txqlnv_xem, javax.swing.GroupLayout.Alignment.TRAILING))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(Quanlyphieunhapsach1)
+                                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                                    .addGap(36, 36, 36)
+                                                    .addComponent(txqldg_capnhat))
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                                        .addComponent(txqlpns_xoa_kp)
+                                                        .addGap(36, 36, 36))
+                                                    .addComponent(txqldg_xoa_kp))))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                            .addComponent(txqlpns_xem)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(Quanlydocgia1))
+                                        .addComponent(txqldg_xem, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(txqlpq_capnhat)
+                                                .addGap(36, 36, 36))
+                                            .addComponent(txqlpm_capnhat))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(Quanlyphanquyen1)
+                                                .addComponent(txqlpq_xoa_kp))
+                                            .addGap(36, 36, 36)))))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(Quanlytaikhoan1)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txqltk_capnhat)
+                                        .addGap(36, 36, 36))
+                                    .addComponent(txqltke_capnhat))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(txqltk_xoa_kp)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txqltke_xoa_kp)))))
+                    .addContainerGap(49, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout ChitietLayout = new javax.swing.GroupLayout(Chitiet);
         Chitiet.setLayout(ChitietLayout);
         ChitietLayout.setHorizontalGroup(
             ChitietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanTruyxuat_Phanquyen, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ChitietLayout.setVerticalGroup(
             ChitietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ChitietLayout.createSequentialGroup()
-                .addComponent(PanTruyxuat_Phanquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 77, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         Giaodien.add(Chitiet, "Chitiet");
@@ -822,9 +829,7 @@ public class PhanquyenGUI extends javax.swing.JPanel {
     private javax.swing.JPanel Giaodien;
     private javax.swing.JLabel Nhapten;
     private javax.swing.JPanel PanPhanquyen;
-    private javax.swing.JPanel PanTruyxuat_Phanquyen;
     private javax.swing.JLabel Quanlychucnang;
-    private javax.swing.JLabel Quanlychucnang1;
     private javax.swing.JLabel Quanlydocgia;
     private javax.swing.JLabel Quanlydocgia1;
     private javax.swing.JLabel Quanlynguonnhap;
@@ -858,9 +863,10 @@ public class PhanquyenGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnXem;
     private javax.swing.JButton btnXoaphieu;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JCheckBox qldg_capnhat;
     private javax.swing.JCheckBox qldg_xem;
     private javax.swing.JCheckBox qldg_xoa_kp;
@@ -887,7 +893,8 @@ public class PhanquyenGUI extends javax.swing.JPanel {
     private javax.swing.JCheckBox qltke_xem;
     private javax.swing.JCheckBox qltke_xoa_kp;
     private javax.swing.JTable tbPhanquyen;
-    private javax.swing.JTextField truyxuatTenquyen;
+    private javax.swing.JLabel txQuyanly;
+    private javax.swing.JTextField txTen;
     private javax.swing.JCheckBox txqldg_capnhat;
     private javax.swing.JCheckBox txqldg_xem;
     private javax.swing.JCheckBox txqldg_xoa_kp;
