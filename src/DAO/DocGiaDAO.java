@@ -118,6 +118,7 @@ public class DocGiaDAO {
     public boolean update(DocGiaDTO dg) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            boolean success = true;
             
             // Cập nhật độc giả
             String sql = "UPDATE DocGia SET ";
@@ -128,24 +129,82 @@ public class DocGiaDAO {
             sql += "dia_chi = " + (dg.getDiaChi() != null ? "'" + dg.getDiaChi() + "'" : "NULL");
             sql += " WHERE ma_doc_gia = '" + dg.getMaDG() + "'";
             
-            System.out.println("Executing SQL: " + sql);
-            if (mySQL.executeUpdate(sql) <= 0) {
+            System.out.println("Executing SQL DocGia update: " + sql);
+            int docGiaResult = mySQL.executeUpdate(sql);
+            if (docGiaResult < 0) {
+                System.out.println("Lỗi khi cập nhật DocGia");
                 return false;
             }
             
             // Cập nhật thẻ thành viên nếu có
-            if (dg.getMaThe() != null) {
-                TheThanhVienDTO the = new TheThanhVienDTO(
-                    dg.getMaThe(),
-                    dg.getMaDG(),
-                    dg.getNgayCap(),
-                    dg.getNgayHetHan(),
-                    dg.isTrangThai()
-                );
-                return theThanhVienDAO.update(the);
+            if (dg.getMaThe() != null && !dg.getMaThe().trim().isEmpty()) {
+                // Kiểm tra xem thẻ đã tồn tại chưa
+                String checkSql = "SELECT ma_the FROM TheThanhVien WHERE ma_doc_gia = '" + dg.getMaDG() + "'";
+                ResultSet rs = mySQL.executeQuery(checkSql);
+                
+                if (rs != null && rs.next()) {
+                    String oldMaThe = rs.getString("ma_the");
+                    // Nếu mã thẻ thay đổi, kiểm tra xem mã thẻ mới có tồn tại không
+                    if (!oldMaThe.equals(dg.getMaThe())) {
+                        String checkNewCardSql = "SELECT ma_the FROM TheThanhVien WHERE ma_the = '" + dg.getMaThe() + "'";
+                        ResultSet rsNewCard = mySQL.executeQuery(checkNewCardSql);
+                        
+                        if (rsNewCard != null && rsNewCard.next()) {
+                            // Nếu mã thẻ đã tồn tại, thông báo lỗi
+                            JOptionPane.showMessageDialog(null, "Mã thẻ " + dg.getMaThe() + " đã tồn tại trong hệ thống!");
+                            if (rsNewCard != null) rsNewCard.close();
+                            if (rs != null) rs.close();
+                            return false;
+                        }
+                        if (rsNewCard != null) rsNewCard.close();
+                    }
+                    
+                    // Cập nhật thông tin thẻ
+                    sql = "UPDATE TheThanhVien SET ";
+                    sql += "ma_the = '" + dg.getMaThe() + "',";
+                    if (dg.getNgayCap() != null) {
+                        sql += "ngay_cap = '" + sdf.format(dg.getNgayCap()) + "',";
+                    }
+                    if (dg.getNgayHetHan() != null) {
+                        sql += "ngay_het_han = '" + sdf.format(dg.getNgayHetHan()) + "',";
+                    }
+                    sql += "trang_thai = " + dg.isTrangThai();
+                    sql += " WHERE ma_doc_gia = '" + dg.getMaDG() + "'";
+                } else {
+                    // Kiểm tra xem mã thẻ mới có tồn tại không
+                    String checkNewCardSql = "SELECT ma_the FROM TheThanhVien WHERE ma_the = '" + dg.getMaThe() + "'";
+                    ResultSet rsNewCard = mySQL.executeQuery(checkNewCardSql);
+                    
+                    if (rsNewCard != null && rsNewCard.next()) {
+                        // Nếu mã thẻ đã tồn tại, thông báo lỗi
+                        JOptionPane.showMessageDialog(null, "Mã thẻ " + dg.getMaThe() + " đã tồn tại trong hệ thống!");
+                        if (rsNewCard != null) rsNewCard.close();
+                        if (rs != null) rs.close();
+                        return false;
+                    }
+                    
+                    // Nếu chưa có thẻ và mã thẻ mới chưa tồn tại thì thêm mới
+                    sql = "INSERT INTO TheThanhVien(ma_the, ma_doc_gia, ngay_cap, ngay_het_han, trang_thai) VALUES(";
+                    sql += "'" + dg.getMaThe() + "',";
+                    sql += "'" + dg.getMaDG() + "',";
+                    sql += (dg.getNgayCap() != null ? "'" + sdf.format(dg.getNgayCap()) + "'" : "NULL") + ",";
+                    sql += (dg.getNgayHetHan() != null ? "'" + sdf.format(dg.getNgayHetHan()) + "'" : "NULL") + ",";
+                    sql += dg.isTrangThai() + ")";
+                    
+                    if (rsNewCard != null) rsNewCard.close();
+                }
+                
+                System.out.println("Executing SQL TheThanhVien update/insert: " + sql);
+                if (rs != null) rs.close();
+                
+                int theThanhVienResult = mySQL.executeUpdate(sql);
+                if (theThanhVienResult < 0) {
+                    System.out.println("Lỗi khi cập nhật TheThanhVien");
+                    success = false;
+                }
             }
             
-            return true;
+            return success;
             
         } catch(Exception ex) {
             System.out.println("Lỗi cập nhật độc giả: " + ex.getMessage());

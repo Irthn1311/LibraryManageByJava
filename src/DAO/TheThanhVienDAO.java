@@ -22,7 +22,7 @@ public class TheThanhVienDAO {
                 throw new SQLException("Không có kết nối database!");
             }
             
-            String sql = "SELECT * FROM thethanhvien WHERE ma_doc_gia = '" + maDocGia + "'";
+            String sql = "SELECT * FROM TheThanhVien WHERE ma_doc_gia = '" + maDocGia + "'";
             System.out.println("Executing SQL: " + sql);
             
             ResultSet rs = mySQL.executeQuery(sql);
@@ -54,11 +54,13 @@ public class TheThanhVienDAO {
     public boolean add(TheThanhVienDTO the) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String sql = "INSERT INTO thethanhvien(ma_the, ma_doc_gia, ngay_cap, ngay_het_han, trang_thai) VALUES(";
+            String sql = "INSERT INTO TheThanhVien(ma_the, ma_doc_gia, ngay_cap, ngay_het_han, trang_thai) VALUES(";
             sql += "'" + the.getMaThe() + "',";
             sql += "'" + the.getMaDocGia() + "',";
-            sql += "'" + sdf.format(the.getNgayCap()) + "',";
-            sql += "'" + sdf.format(the.getNgayHetHan()) + "',";
+            sql += the.getNgayCap() != null ? "'" + sdf.format(the.getNgayCap()) + "'" : "NULL";
+            sql += ",";
+            sql += the.getNgayHetHan() != null ? "'" + sdf.format(the.getNgayHetHan()) + "'" : "NULL";
+            sql += ",";
             sql += the.isTrangThai() + ")";
             
             System.out.println("Executing SQL: " + sql);
@@ -75,9 +77,9 @@ public class TheThanhVienDAO {
     public boolean update(TheThanhVienDTO the) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String sql = "UPDATE thethanhvien SET ";
-            sql += "ngay_cap = '" + sdf.format(the.getNgayCap()) + "',";
-            sql += "ngay_het_han = '" + sdf.format(the.getNgayHetHan()) + "',";
+            String sql = "UPDATE TheThanhVien SET ";
+            sql += "ngay_cap = " + (the.getNgayCap() != null ? "'" + sdf.format(the.getNgayCap()) + "'" : "NULL") + ",";
+            sql += "ngay_het_han = " + (the.getNgayHetHan() != null ? "'" + sdf.format(the.getNgayHetHan()) + "'" : "NULL") + ",";
             sql += "trang_thai = " + the.isTrangThai();
             sql += " WHERE ma_the = '" + the.getMaThe() + "'";
             
@@ -94,7 +96,7 @@ public class TheThanhVienDAO {
     
     public boolean delete(String maThe) {
         try {
-            String sql = "UPDATE thethanhvien SET trang_thai = false WHERE ma_the = '" + maThe + "'";
+            String sql = "UPDATE TheThanhVien SET trang_thai = false WHERE ma_the = '" + maThe + "'";
             System.out.println("Executing SQL: " + sql);
             return mySQL.executeUpdate(sql) > 0;
         } catch (Exception ex) {
@@ -107,7 +109,7 @@ public class TheThanhVienDAO {
     
     public boolean restore(String maThe) {
         try {
-            String sql = "UPDATE thethanhvien SET trang_thai = true WHERE ma_the = '" + maThe + "'";
+            String sql = "UPDATE TheThanhVien SET trang_thai = true WHERE ma_the = '" + maThe + "'";
             System.out.println("Executing SQL: " + sql);
             return mySQL.executeUpdate(sql) > 0;
         } catch (Exception ex) {
