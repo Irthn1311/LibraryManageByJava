@@ -53,8 +53,8 @@ public class NhanvienGUI extends javax.swing.JPanel {
         btnSach2 = new javax.swing.JButton();
         btnSach3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        Timkiem = new javax.swing.JLabel();
+        txtTimkiem = new javax.swing.JTextField();
         btnTimkiem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbNhanvien = new javax.swing.JTable();
@@ -142,9 +142,8 @@ public class NhanvienGUI extends javax.swing.JPanel {
                         .addGap(27, 27, 27)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)))))
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -215,13 +214,13 @@ public class NhanvienGUI extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(0, 122, 77));
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Tìm kiếm:");
+        Timkiem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
+        Timkiem.setForeground(new java.awt.Color(255, 255, 255));
+        Timkiem.setText("Tìm kiếm:");
 
-        jTextField9.setBackground(new java.awt.Color(238, 242, 240));
-        jTextField9.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jTextField9.setText("jTextField9");
+        txtTimkiem.setBackground(new java.awt.Color(238, 242, 240));
+        txtTimkiem.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtTimkiem.setText("jTextField9");
 
         btnTimkiem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
         btnTimkiem.setForeground(new java.awt.Color(0, 122, 77));
@@ -233,9 +232,9 @@ public class NhanvienGUI extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addComponent(Timkiem)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(btnTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -245,8 +244,8 @@ public class NhanvienGUI extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(7, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Timkiem)
+                    .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTimkiem))
                 .addGap(10, 10, 10))
         );
@@ -387,6 +386,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Timkiem;
     private javax.swing.JButton btnSach;
     private javax.swing.JButton btnSach1;
     private javax.swing.JButton btnSach2;
@@ -395,7 +395,6 @@ public class NhanvienGUI extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -413,7 +412,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tbNhanvien;
+    private javax.swing.JTextField txtTimkiem;
     // End of variables declaration//GEN-END:variables
 }

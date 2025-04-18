@@ -18,6 +18,7 @@ public class UIa extends javax.swing.JFrame {
         initComponents();
         Giaodien.setLayout(card);
         Giaodien.add(new Intro(), "Intro");
+        Giaodien.add(new DocgiaGUI(), "DocgiaGUI");
         Giaodien.add(new SachGUI(), "SachGUI");
         Giaodien.add(new PhieunhapGUI(), "PhieunhapGUI");
         Giaodien.add(new PhieumuonGUI(), "PhieumuonGUI");
@@ -299,7 +300,6 @@ public class UIa extends javax.swing.JFrame {
 
     private void ChuyenSach(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChuyenSach
         card.show(Giaodien, "SachGUI");
-        btnSach.setBackground(new Color(0,122,77));
     }//GEN-LAST:event_ChuyenSach
 
     private void ChuyenPhieunhap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChuyenPhieunhap
