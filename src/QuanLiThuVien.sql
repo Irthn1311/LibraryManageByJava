@@ -20,164 +20,164 @@ CREATE TABLE NhanVien (
     SoDienThoai NVARCHAR(15),
     Email NVARCHAR(30),
     VaiTro NVARCHAR(50),
-	Luong DECIMAL(18, 2),
-	NgayVaoLam DATE
+	NgayVaoLam DATE,
+	TrangThai NVARCHAR(20)
 );
 
 select * from NhanVien
 
-
--- Bảng Tài khoản trực tuyến
-CREATE TABLE TaiKhoanTrucTuyen (
-    ID_TKTT INT PRIMARY KEY,
-    VaiTro NVARCHAR(50) CHECK (VaiTro IN ('Admin', 'NhanVien', 'DocGia')),
-    TaiKhoan NVARCHAR(100) NOT NULL,
-    MatKhau NVARCHAR(100) NOT NULL,
-    Email NVARCHAR(100),
-    ID_NhanVien INT NULL,
-    ID_DocGia INT NULL,
-    FOREIGN KEY (ID_NhanVien) REFERENCES NhanVien(ID_NhanVien),
-    FOREIGN KEY (ID_DocGia) REFERENCES DocGia(ID_DocGia)
-);
-
-
--- Bảng Độc giả
-CREATE TABLE DocGia (
-    ID_DocGia INT PRIMARY KEY,
-    TenDocGia NVARCHAR(100),
-    GioiTinh NVARCHAR(10),
-    Tuoi INT,
-    DiaChi NVARCHAR(200)
-);
-
--- Bảng Thẻ thành viên
-CREATE TABLE TheThanhVien (
-    ID_TheTV INT PRIMARY KEY,
-    NgayCap DATE,
-    NgayHetHan DATE,
-    TrangThai NVARCHAR(20),
-    ID_DocGia INT UNIQUE,
-    FOREIGN KEY (ID_DocGia) REFERENCES DocGia(ID_DocGia)
-);
-
--- Bảng Sách
 CREATE TABLE Sach (
-    ID_Sach INT PRIMARY KEY,
-    TenSach NVARCHAR(200),
-    TacGia NVARCHAR(100),
-    TheLoai NVARCHAR(100),
-    NhaXuatBan NVARCHAR(100),
-    NamXuatBan INT,
-    NgonNgu NVARCHAR(50),
-    FilePDF NVARCHAR(200),
-    ChinhSachMuon NVARCHAR(200),
-    SoLuong INT,
-    TrangThai NVARCHAR(20)
+    maSach VARCHAR(255) PRIMARY KEY,
+    tenSach VARCHAR(255) NOT NULL,
+    tacGia VARCHAR(255),
+    theLoai VARCHAR(100),
+    ngonNgu VARCHAR(50),
+    soLuong INT DEFAULT 0,
+    nhaXuatBan VARCHAR(255),
+    namXuatBan INT,
+    filePdf VARCHAR(255),
+    trangThai INT,
+    chinhSachMuon INT
 );
 
--- Bảng Phiếu mượn
-CREATE TABLE PhieuMuon (
-    ID_PhieuMuon INT PRIMARY KEY,
-    NgayMuon DATE,
-    HanTra DATE,
-    NgayTraThucTe DATE,
-    ID_TheTV INT,
-    FOREIGN KEY (ID_TheTV) REFERENCES TheThanhVien(ID_TheTV)
+CREATE TABLE CoSoNhap (
+    maCoSo VARCHAR(255) PRIMARY KEY,
+    tenCoSo VARCHAR(255) NOT NULL,
+    hinhThucChuyeu INT, 
+    diaChi VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    ngayHoptac DATE,
+    sdt VARCHAR(20),
+    trangThai BIT DEFAULT 1
 );
 
--- Bảng Chi tiết phiếu mượn (sách trong mỗi phiếu)
-CREATE TABLE ChiTietPhieuMuon (
-    ID_PhieuMuon INT,
-    ID_Sach INT,
-    PRIMARY KEY (ID_PhieuMuon, ID_Sach),
-    FOREIGN KEY (ID_PhieuMuon) REFERENCES PhieuMuon(ID_PhieuMuon),
-    FOREIGN KEY (ID_Sach) REFERENCES Sach(ID_Sach)
+
+CREATE TABLE PhieuNhap (
+    maPhieuNhap VARCHAR(255) PRIMARY KEY,
+    loaiNhap VARCHAR(100),
+    soLuongSach INT,
+    tongTien INT,
+    ngayNhap DATE DEFAULT GETDATE(),
+    maNhanVienXacNhan INT,
+    maCoSo VARCHAR(255),
+    FOREIGN KEY (maNhanVienXacNhan) REFERENCES NhanVien(maNhanVien),
+    FOREIGN KEY (maCoSo) REFERENCES CoSoNhap(maCoSo)
 );
 
--- Bảng Phiếu phạt
-CREATE TABLE PhieuPhat (
-    ID_PhieuPhat INT PRIMARY KEY,
-    SoTienPhat DECIMAL(10, 2),
-    LyDo NVARCHAR(200),
-    TrangThai NVARCHAR(20),
-    NgayBiPhat DATE,
-    ID_PhieuMuon INT,
-    FOREIGN KEY (ID_PhieuMuon) REFERENCES PhieuMuon(ID_PhieuMuon)
-);
-
--- Bảng Đánh giá
-CREATE TABLE DanhGia (
-    ID_DanhGia INT PRIMARY KEY,
-    SoSao INT CHECK (SoSao BETWEEN 1 AND 5),
-    NhanXet NVARCHAR(500),
-    NgayDanhGia DATE,
-    ID_Sach INT,
-    FOREIGN KEY (ID_Sach) REFERENCES Sach(ID_Sach)
-);
-
--- Bảng Yêu cầu nhập sách mới
-CREATE TABLE YeuCauNhapSachMoi (
-    ID_YeuCau INT PRIMARY KEY,
-    TenSachYeuCau NVARCHAR(200),
-    NgayYeuCau DATE,
-    LyDoYeuCau NVARCHAR(200),
-    TrangThai NVARCHAR(20),
-    ID_TKTT INT,
-    FOREIGN KEY (ID_TKTT) REFERENCES TaiKhoanTrucTuyen(ID_TKTT)
-);
-
--- Bảng Thông báo
-CREATE TABLE ThongBao (
-    ID_ThongBao INT PRIMARY KEY,
-    LoaiThongBao NVARCHAR(200),
-    NgayGui DATE,
-    ID_TKTT INT,
-    FOREIGN KEY (ID_TKTT) REFERENCES TaiKhoanTrucTuyen(ID_TKTT)
-);
-
--- Bảng Nguồn nhập sách
-CREATE TABLE NguonNhapSach (
-    ID_NguonNhap INT PRIMARY KEY,
-    TenNguonNhap NVARCHAR(200),
-    LoaiNhap NVARCHAR(100),
-    DiaChi NVARCHAR(200),
-    SDT NVARCHAR(20),
-    Email NVARCHAR(100)
-);
-
--- Bảng Phiếu nhập sách
-CREATE TABLE PhieuNhapSach (
-    ID_PhieuNhap INT PRIMARY KEY,
-    NgayNhap DATE,
-    TongSoLuong INT,
-    TongTien DECIMAL(18, 2),
-    ID_NguonNhap INT,
-    FOREIGN KEY (ID_NguonNhap) REFERENCES NguonNhapSach(ID_NguonNhap)
-);
-
--- Bảng Chi tiết phiếu nhập
 CREATE TABLE ChiTietPhieuNhap (
-    ID_PhieuNhap INT,
-    ID_Sach INT,
-    SoLuongNhap INT,
-    PRIMARY KEY (ID_PhieuNhap, ID_Sach),
-    FOREIGN KEY (ID_PhieuNhap) REFERENCES PhieuNhapSach(ID_PhieuNhap),
-    FOREIGN KEY (ID_Sach) REFERENCES Sach(ID_Sach)
+    maCtpn VARCHAR(255) PRIMARY KEY,
+    maPhieuNhap VARCHAR(255),
+    loaiSach VARCHAR(100),
+    donGia DECIMAL(12, 2),
+    soLuong INT,
+    thanhTien AS (donGia * soLuong) PERSISTED,
+    hinhThucNhap VARCHAR(50),
+    FOREIGN KEY (maPhieuNhap) REFERENCES PhieuNhap(maPhieuNhap)
 );
 
--- Bảng Đặt trước sách
+
+CREATE TABLE DocGia (
+    maDocGia VARCHAR(255) PRIMARY KEY,
+    tenDocGia VARCHAR(255) NOT NULL,
+    ngaySinh DATE,
+    diaChi VARCHAR(255)
+);
+
+CREATE TABLE TheThanhVien (
+    maThe VARCHAR(255) PRIMARY KEY,
+    maDocGia VARCHAR(255) UNIQUE,
+    ngayCap DATE,
+    ngayHetHan DATE,
+    trangThai BIT DEFAULT 1,
+    FOREIGN KEY (maDocGia) REFERENCES DocGia(maDocGia)
+);
+
+CREATE TABLE TaiKhoan (
+    maThe VARCHAR(255) PRIMARY KEY,
+    matKhau VARCHAR(255) DEFAULT '123456789',
+    vaiTro VARCHAR(50) DEFAULT 'DocGia',
+    FOREIGN KEY (maThe) REFERENCES TheThanhVien(maThe)
+);
+
+CREATE TABLE ThongBao (
+    maThongBao INT IDENTITY(1,1) PRIMARY KEY,
+    maThe VARCHAR(255),
+    loaiThongBao VARCHAR(100),
+    noiDung TEXT,
+    ngayTao DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (maThe) REFERENCES TaiKhoan(maThe)
+);
+
+CREATE TABLE PhieuMuon (
+    maPhieuMuon VARCHAR(255) PRIMARY KEY,
+    maDocGia VARCHAR(255),
+    maSach VARCHAR(255),
+    ngayMuon DATE,
+    hanTra DATE,
+    ngayTraThucTe DATE,
+    trangThai VARCHAR(50),
+    FOREIGN KEY (maDocGia) REFERENCES DocGia(maDocGia),
+    FOREIGN KEY (maSach) REFERENCES Sach(maSach)
+);
+
+CREATE TABLE PhieuPhat (
+    maPhieuPhat VARCHAR(255) PRIMARY KEY,
+    maPhieuMuon VARCHAR(255) UNIQUE,
+    maDocGia VARCHAR(255),
+    tenDocGia VARCHAR(255),
+    maSach VARCHAR(255),
+    tenSach VARCHAR(255),
+    soNgayQuaHan INT,
+    tienPhat INT,
+    FOREIGN KEY (maPhieuMuon) REFERENCES PhieuMuon(maPhieuMuon)
+);
+
 CREATE TABLE DatTruoc (
-    ID_DocGia INT,
-    ID_Sach INT,
-    NgayDat DATE,
-    PRIMARY KEY (ID_DocGia, ID_Sach),
-    FOREIGN KEY (ID_DocGia) REFERENCES DocGia(ID_DocGia),
-    FOREIGN KEY (ID_Sach) REFERENCES Sach(ID_Sach)
+    maDatTruoc VARCHAR(255) PRIMARY KEY,
+    maDocGia VARCHAR(255),
+    maSach VARCHAR(255),
+    ngayDat DATE DEFAULT GETDATE(),
+    maPhieuMuon VARCHAR(255) UNIQUE,
+    FOREIGN KEY (maDocGia) REFERENCES DocGia(maDocGia),
+    FOREIGN KEY (maSach) REFERENCES Sach(maSach),
+    FOREIGN KEY (maPhieuMuon) REFERENCES PhieuMuon(maPhieuMuon)
 );
 
--- Bảng Gia hạn mượn sách
-CREATE TABLE YeuCauGiaHan (
-    ID_PhieuMuon INT PRIMARY KEY,
-    SoNgayGiaHan INT,
-    FOREIGN KEY (ID_PhieuMuon) REFERENCES PhieuMuon(ID_PhieuMuon)
+CREATE TABLE DanhGia (
+    maDanhGia VARCHAR(255) PRIMARY KEY,
+    maDocGia VARCHAR(255),
+    maSach VARCHAR(255),
+    soSao INT CHECK (soSao BETWEEN 1 AND 5),
+    nhanXet TEXT,
+    ngayDanhGia DATE,
+    FOREIGN KEY (maDocGia) REFERENCES DocGia(maDocGia),
+    FOREIGN KEY (maSach) REFERENCES Sach(maSach)
+);
+
+CREATE TABLE ChucNang (
+    maChucNang VARCHAR(255) PRIMARY KEY,
+    tenChucNang VARCHAR(100) NOT NULL UNIQUE
+);
+
+INSERT INTO ChucNang VALUES
+('Q1', 'QuanLySach'),
+('Q2', 'QuanLyNhanVien'),
+('Q3', 'QuanLyPhieuNhapSach'),
+('Q4', 'QuanLyDocGia'),
+('Q5', 'QuanLyPhanQuyen'),
+('Q6', 'QuanLyPhieuMuon'),
+('Q7', 'QuanLyTaiKhoan'),
+('Q8', 'QuanLyThongKe'),
+('Q9', 'QuanLyNguonNhap');
+
+CREATE TABLE PhanQuyen (
+    maPhanQuyen VARCHAR(255) PRIMARY KEY,
+    tenPhanQuyen VARCHAR(255),
+    maThe VARCHAR(255),
+    maChucNang VARCHAR(255),
+    duocXem BIT DEFAULT 0,
+    duocCapNhat BIT DEFAULT 0,
+    duocXoa BIT DEFAULT 0,
+    FOREIGN KEY (maThe) REFERENCES TaiKhoan(maThe),
+    FOREIGN KEY (maChucNang) REFERENCES ChucNang(maChucNang)
 );
