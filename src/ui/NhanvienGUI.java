@@ -66,7 +66,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
                     txtSoDienThoai.setText(soDienThoai);
                     txtEmail.setText(email);
                     txtVaiTro.setText(vaiTro);
-                    txtTrangThai.setText(trangThai);
+                    
 
                     cbGioiTinh.setSelectedItem(gioiTinh);
 
@@ -585,7 +585,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
             String email = txtEmail.getText().trim();
             String vaiTro = txtVaiTro.getText().trim();
             java.util.Date ngayVaoLamUtil = dcNgayVaoLam.getDate();
-            String trangThai = "Trạng thái";
+            String trangThai = "Đang làm";
 
             // Kiểm tra rỗng
             if (tenNhanVien.isEmpty() || gioiTinh.equals("_") || ngaySinhUtil == null ||
