@@ -27,7 +27,6 @@ public class SachGUI extends javax.swing.JPanel {
         tbSach.getColumnModel().getColumn(6).setPreferredWidth(80);
         tbSach.getColumnModel().getColumn(7).setPreferredWidth(80);
         tbSach.getColumnModel().getColumn(8).setPreferredWidth(150);
-        tbSach.getColumnModel().getColumn(9).setPreferredWidth(50);
         
     }
 
@@ -58,6 +57,7 @@ public class SachGUI extends javax.swing.JPanel {
         jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
+        btnReset = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         btnCapnhat = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
@@ -129,13 +129,13 @@ public class SachGUI extends javax.swing.JPanel {
         jLabel9.setText("Chính sách mượn:");
 
         jCheckBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jCheckBox1.setText("Đọc tại chỗ");
+        jCheckBox1.setText("Đọc tại chỗ (1)");
 
         jCheckBox2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jCheckBox2.setText("Đọc file pdf");
+        jCheckBox2.setText("Đọc file pdf (3)");
 
         jCheckBox3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jCheckBox3.setText("Mượn về");
+        jCheckBox3.setText("Mượn về (2)");
 
         jTextField6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextField6.setText("jTextField1");
@@ -145,6 +145,9 @@ public class SachGUI extends javax.swing.JPanel {
 
         jTextField8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextField8.setText("jTextField1");
+
+        btnReset.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnReset.setText("Reset");
 
         javax.swing.GroupLayout panThongtinLayout = new javax.swing.GroupLayout(panThongtin);
         panThongtin.setLayout(panThongtinLayout);
@@ -186,7 +189,8 @@ public class SachGUI extends javax.swing.JPanel {
                     .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField7)
                     .addComponent(jTextField8))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(btnReset))
         );
         panThongtinLayout.setVerticalGroup(
             panThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,6 +232,9 @@ public class SachGUI extends javax.swing.JPanel {
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addContainerGap(32, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panThongtinLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         btnThem.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
@@ -293,36 +300,36 @@ public class SachGUI extends javax.swing.JPanel {
         tbSach.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tbSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"123", "Không biết", null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {"123", "Không biết", null, null, null, null, null, null, "1,2,3"},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã sách", "Tên sách", "Thể loại", "Ngôn ngữ", "Số lượng", "NXB", "Năm XB", "File PDF", "Chính sách mượn", "TT"
+                "Mã sách", "Tên sách", "Thể loại", "Ngôn ngữ", "Số lượng", "NXB", "Năm XB", "File PDF", "Chính sách mượn"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -401,6 +408,7 @@ public class SachGUI extends javax.swing.JPanel {
     private javax.swing.JLabel Timkiem;
     private javax.swing.JButton btnCapnhat;
     private javax.swing.JButton btnKhoiphuc;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimkiem;
     private javax.swing.JButton btnXoa;

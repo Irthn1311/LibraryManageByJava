@@ -33,13 +33,14 @@ public class UIu extends javax.swing.JFrame {
         decor_background_xanh = new javax.swing.JPanel();
         phone = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        decor_nen = new javax.swing.JLabel();
+        Pan_Timkiem = new javax.swing.JPanel();
         Timkiem = new javax.swing.JLabel();
         cbTimkiem = new javax.swing.JComboBox<>();
         txtTimkiem = new javax.swing.JTextField();
         btnTimkiem = new javax.swing.JButton();
         decor = new javax.swing.JLabel();
+        FormSach = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1400, 700));
@@ -155,12 +156,12 @@ public class UIu extends javax.swing.JFrame {
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/poster.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        decor_nen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/poster.png"))); // NOI18N
+        decor_nen.setText("jLabel1");
+        decor_nen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        jPanel3.setBackground(new java.awt.Color(238, 242, 240));
-        jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 1, 3, 1, new java.awt.Color(0, 122, 77)));
+        Pan_Timkiem.setBackground(new java.awt.Color(238, 242, 240));
+        Pan_Timkiem.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 1, 3, 1, new java.awt.Color(0, 122, 77)));
 
         Timkiem.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         Timkiem.setText("Tìm kiếm");
@@ -175,29 +176,29 @@ public class UIu extends javax.swing.JFrame {
         btnTimkiem.setForeground(new java.awt.Color(255, 255, 255));
         btnTimkiem.setText("Tìm kiếm");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout Pan_TimkiemLayout = new javax.swing.GroupLayout(Pan_Timkiem);
+        Pan_Timkiem.setLayout(Pan_TimkiemLayout);
+        Pan_TimkiemLayout.setHorizontalGroup(
+            Pan_TimkiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Pan_TimkiemLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Pan_TimkiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(Pan_TimkiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Pan_TimkiemLayout.createSequentialGroup()
                             .addComponent(cbTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        Pan_TimkiemLayout.setVerticalGroup(
+            Pan_TimkiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Pan_TimkiemLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(Timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Pan_TimkiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -213,9 +214,9 @@ public class UIu extends javax.swing.JFrame {
         FormTrangchuLayout.setHorizontalGroup(
             FormTrangchuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(decor_background_xanh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, Short.MAX_VALUE)
+            .addComponent(decor_nen, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, Short.MAX_VALUE)
             .addGroup(FormTrangchuLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Pan_Timkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(decor))
         );
@@ -224,15 +225,28 @@ public class UIu extends javax.swing.JFrame {
             .addGroup(FormTrangchuLayout.createSequentialGroup()
                 .addComponent(decor_background_xanh, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(decor_nen, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(FormTrangchuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Pan_Timkiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(decor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(0, 15, Short.MAX_VALUE))
         );
 
         FormTrinhbay.add(FormTrangchu, "FormTrangchu");
+
+        javax.swing.GroupLayout FormSachLayout = new javax.swing.GroupLayout(FormSach);
+        FormSach.setLayout(FormSachLayout);
+        FormSachLayout.setHorizontalGroup(
+            FormSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1200, Short.MAX_VALUE)
+        );
+        FormSachLayout.setVerticalGroup(
+            FormSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 523, Short.MAX_VALUE)
+        );
+
+        FormTrinhbay.add(FormSach, "card3");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -243,7 +257,7 @@ public class UIu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(FormTrinhbay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,8 +322,10 @@ public class UIu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel FormSach;
     private javax.swing.JPanel FormTrangchu;
     private javax.swing.JPanel FormTrinhbay;
+    private javax.swing.JPanel Pan_Timkiem;
     private javax.swing.JLabel Timkiem;
     private javax.swing.JButton btnQuanlysachmuon;
     private javax.swing.JButton btnSach;
@@ -320,11 +336,10 @@ public class UIu extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbTimkiem;
     private javax.swing.JLabel decor;
     private javax.swing.JPanel decor_background_xanh;
+    private javax.swing.JLabel decor_nen;
     private javax.swing.JLabel email;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel phone;
     private javax.swing.JTextField txtTimkiem;

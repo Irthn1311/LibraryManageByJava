@@ -32,6 +32,9 @@ public class PhieumuonGUI extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnThem = new javax.swing.JButton();
+        btnCapnhat = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
         PanThongtin = new javax.swing.JPanel();
         MaDG = new javax.swing.JLabel();
         MaSach = new javax.swing.JLabel();
@@ -47,8 +50,7 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         txtTenDG = new javax.swing.JTextField();
         TenSach = new javax.swing.JLabel();
         txtTenSach = new javax.swing.JTextField();
-        btnTrangthai = new javax.swing.JButton();
-        btnTraphat = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         Giaodien = new javax.swing.JPanel();
         Phieumuon = new javax.swing.JPanel();
         PanTimkiem1 = new javax.swing.JPanel();
@@ -65,15 +67,32 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         btnTimkiem2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbTraphat = new javax.swing.JTable();
+        btnTrangthai = new javax.swing.JButton();
+        btnTrangthai1 = new javax.swing.JButton();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1210, 640));
+
+        btnThem.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+        btnThem.setContentAreaFilled(false);
+
+        btnCapnhat.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnCapnhat.setText("Cập nhật");
+        btnCapnhat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+        btnCapnhat.setContentAreaFilled(false);
+
+        btnXoa.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnXoa.setText("Xóa");
+        btnXoa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+        btnXoa.setContentAreaFilled(false);
 
         PanThongtin.setBackground(new java.awt.Color(255, 255, 255));
         PanThongtin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
 
         MaDG.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         MaDG.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        MaDG.setText("Mã độc giả:");
+        MaDG.setText("Mã thẻ:");
 
         MaSach.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         MaSach.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -84,7 +103,6 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         NgaytraTT.setText("Ngày trả thực tế:");
 
         txtMaDG.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtMaDG.setText("jTextField1");
 
         Ngaymuon.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         Ngaymuon.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -95,21 +113,21 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         NgaytraDK.setText("Ngày trả dự kiến:");
 
         txtMaSach.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtMaSach.setText("jTextField1");
 
         TenDG.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         TenDG.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         TenDG.setText("Tên độc giả:");
 
         txtTenDG.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtTenDG.setText("jTextField1");
 
         TenSach.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         TenSach.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         TenSach.setText("Tên sách:");
 
         txtTenSach.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtTenSach.setText("jTextField1");
+
+        btnReset.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        btnReset.setText("Reset");
 
         javax.swing.GroupLayout PanThongtinLayout = new javax.swing.GroupLayout(PanThongtin);
         PanThongtin.setLayout(PanThongtinLayout);
@@ -144,6 +162,10 @@ public class PhieumuonGUI extends javax.swing.JPanel {
                     .addComponent(txtNgaytraTT, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNgaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(92, 92, 92))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanThongtinLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnReset)
+                .addContainerGap())
         );
         PanThongtinLayout.setVerticalGroup(
             PanThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,31 +200,10 @@ public class PhieumuonGUI extends javax.swing.JPanel {
                 .addGroup(PanThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TenSach)
                     .addComponent(txtTenSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(btnReset)
+                .addContainerGap())
         );
-
-        btnTrangthai.setBackground(new java.awt.Color(255, 255, 204));
-        btnTrangthai.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        btnTrangthai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/load.png"))); // NOI18N
-        btnTrangthai.setText("\"Đã trả\"");
-        btnTrangthai.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnTrangthai.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnTrangthai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChuyenPhieumuon(evt);
-            }
-        });
-
-        btnTraphat.setBackground(new java.awt.Color(255, 102, 102));
-        btnTraphat.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        btnTraphat.setText("Tra phạt");
-        btnTraphat.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnTraphat.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnTraphat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChuyenTraphat(evt);
-            }
-        });
 
         Giaodien.setBackground(new java.awt.Color(255, 255, 255));
         Giaodien.setLayout(new java.awt.CardLayout());
@@ -215,7 +216,6 @@ public class PhieumuonGUI extends javax.swing.JPanel {
 
         txtTimkiem.setBackground(new java.awt.Color(238, 242, 240));
         txtTimkiem.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        txtTimkiem.setText("jTextField9");
 
         btnTimkiem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
         btnTimkiem.setForeground(new java.awt.Color(0, 122, 77));
@@ -223,7 +223,7 @@ public class PhieumuonGUI extends javax.swing.JPanel {
 
         cbLocTrangthai.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         cbLocTrangthai.setForeground(new java.awt.Color(0, 122, 77));
-        cbLocTrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang mượn", "Đã trả", "Đã quá hạn" }));
+        cbLocTrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đặt trước", "Đang mượn", "Đã trả", "Đã quá hạn", "Mất/ Hỏng" }));
 
         javax.swing.GroupLayout PanTimkiem1Layout = new javax.swing.GroupLayout(PanTimkiem1);
         PanTimkiem1.setLayout(PanTimkiem1Layout);
@@ -262,20 +262,19 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         tbPhieumuon.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         tbPhieumuon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"P01", null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã phiếu", "Mã ĐG", "Mã sách", "Ngày mượn", "Hẹn trả dự kiến", "Ngày trả thực tế", "Trạng thái"
+                "Mã phiếu", "Mã thẻ độc giả", "Mã sách", "Ngày mượn", "Hẹn trả dự kiến", "Ngày trả thực tế", "Trạng thái", "Tiền phạt"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -305,8 +304,8 @@ public class PhieumuonGUI extends javax.swing.JPanel {
             .addGroup(PhieumuonLayout.createSequentialGroup()
                 .addComponent(PanTimkiem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 36, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 38, Short.MAX_VALUE))
         );
 
         Giaodien.add(Phieumuon, "Phieumuon");
@@ -404,37 +403,71 @@ public class PhieumuonGUI extends javax.swing.JPanel {
 
         Giaodien.add(Traphat, "Traphat");
 
+        btnTrangthai.setBackground(new java.awt.Color(255, 255, 204));
+        btnTrangthai.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnTrangthai.setText("\"Đã trả\"");
+        btnTrangthai.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+        btnTrangthai.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnTrangthai.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnTrangthai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChuyenPhieumuon(evt);
+            }
+        });
+
+        btnTrangthai1.setBackground(new java.awt.Color(255, 102, 102));
+        btnTrangthai1.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnTrangthai1.setText("\"Hỏng\"");
+        btnTrangthai1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+        btnTrangthai1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnTrangthai1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnTrangthai1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTrangthai1ChuyenPhieumuon(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTraphat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnTraphat, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -458,10 +491,9 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         card.show(Giaodien, "Phieumuon");
     }//GEN-LAST:event_ChuyenPhieumuon
 
-    private void ChuyenTraphat(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChuyenTraphat
-        CardLayout card = (CardLayout) Giaodien.getLayout();
-        card.show(Giaodien, "Traphat");
-    }//GEN-LAST:event_ChuyenTraphat
+    private void btnTrangthai1ChuyenPhieumuon(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrangthai1ChuyenPhieumuon
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTrangthai1ChuyenPhieumuon
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -480,10 +512,14 @@ public class PhieumuonGUI extends javax.swing.JPanel {
     private javax.swing.JLabel Timkiem;
     private javax.swing.JLabel Timkiem2;
     private javax.swing.JPanel Traphat;
+    private javax.swing.JButton btnCapnhat;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimkiem;
     private javax.swing.JButton btnTimkiem2;
     private javax.swing.JButton btnTrangthai;
-    private javax.swing.JButton btnTraphat;
+    private javax.swing.JButton btnTrangthai1;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbLocTrangthai;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
