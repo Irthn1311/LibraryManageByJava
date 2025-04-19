@@ -1,9 +1,7 @@
-
 package DTO;
 
-
 public class NhanVienDTO {
-    private int idNhanVien;
+    private int idNhanVien; // Đổi từ String sang int
     private String tenNhanVien;
     private String gioiTinh;
     private java.sql.Date ngaySinh;
@@ -13,7 +11,6 @@ public class NhanVienDTO {
     private String vaiTro;
     private java.sql.Date ngayVaoLam;
     private String trangThai;
-
 
     // Constructor không tham số
     public NhanVienDTO() {}
@@ -98,14 +95,6 @@ public class NhanVienDTO {
         this.vaiTro = vaiTro;
     }
 
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setLuong(String trangThai) {
-        this.trangThai = trangThai;
-    }
-    
     public java.sql.Date getNgayVaoLam() {
         return ngayVaoLam;
     }
@@ -113,5 +102,12 @@ public class NhanVienDTO {
     public void setNgayVaoLam(java.sql.Date ngayVaoLam) {
         this.ngayVaoLam = ngayVaoLam;
     }
-}
 
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+}
