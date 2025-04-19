@@ -35,7 +35,7 @@ CREATE TABLE lbr.CoSoNhap (
     email varchar(255),
     ngay_hoptac date,
     sdt VARCHAR(20),
-    trangthai int
+    trang_thai BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE lbr.PhieuNhap (

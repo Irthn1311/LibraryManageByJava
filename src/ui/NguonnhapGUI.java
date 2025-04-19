@@ -4,9 +4,15 @@
  */
 package ui;
 
+import DAO.NguonNhapDAO;
+import DTO.NguonNhapDTO;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -14,26 +20,215 @@ import javax.swing.table.JTableHeader;
  * @author dinhp
  */
 public class NguonnhapGUI extends javax.swing.JPanel {
+    private NguonNhapDAO nguonNhapDAO;
+    private DefaultTableModel model;
 
     /**
      * Creates new form NguonnhapGUI
      */
     public NguonnhapGUI() {
         initComponents();
+        nguonNhapDAO = new NguonNhapDAO();
         
-        JTableHeader header = tbNguonnhap.getTableHeader(); 
+        // Thiết lập font cho header của bảng
+        JTableHeader header = tblNguonNhap.getTableHeader(); 
         header.setFont(new Font("Arial", Font.BOLD, 16));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         
+        // Thiết lập độ rộng cho các cột
+        tblNguonNhap.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tblNguonNhap.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblNguonNhap.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tblNguonNhap.getColumnModel().getColumn(3).setPreferredWidth(150);
+        tblNguonNhap.getColumnModel().getColumn(4).setPreferredWidth(150);
+        tblNguonNhap.getColumnModel().getColumn(5).setPreferredWidth(120);
+        tblNguonNhap.getColumnModel().getColumn(6).setPreferredWidth(120);
+        tblNguonNhap.getColumnModel().getColumn(7).setPreferredWidth(100);
         
-        tbNguonnhap.getColumnModel().getColumn(0).setPreferredWidth(80);
-        tbNguonnhap.getColumnModel().getColumn(1).setPreferredWidth(150);
-        tbNguonnhap.getColumnModel().getColumn(2).setPreferredWidth(150);
-        tbNguonnhap.getColumnModel().getColumn(3).setPreferredWidth(150);
-        tbNguonnhap.getColumnModel().getColumn(4).setPreferredWidth(150);
-        tbNguonnhap.getColumnModel().getColumn(5).setPreferredWidth(120);
-        tbNguonnhap.getColumnModel().getColumn(6).setPreferredWidth(120);
-        tbNguonnhap.getColumnModel().getColumn(7).setPreferredWidth(100);
+        // Thêm sự kiện cho các nút
+        btnThem.addActionListener(this::btnThemActionPerformed);
+        btnCapnhat.addActionListener(this::btnCapnhatActionPerformed);
+        btnXoa.addActionListener(this::btnXoaActionPerformed);
+        btnKhoiphuc.addActionListener(this::btnKhoiphucActionPerformed);
+        btnTimkiem.addActionListener(this::btnTimkiemActionPerformed);
+        tblNguonNhap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNguonNhapMouseClicked(evt);
+            }
+        });
+        
+        // Load dữ liệu vào bảng
+        loadData();
+    }
+    
+    private void loadData() {
+        model = (DefaultTableModel) tblNguonNhap.getModel();
+        model.setRowCount(0);
+        
+        ArrayList<NguonNhapDTO> list = nguonNhapDAO.getList();
+        for (NguonNhapDTO nguonNhap : list) {
+            model.addRow(new Object[]{
+                nguonNhap.getMaCoSo(),
+                nguonNhap.getTenCoSo(),
+                getHinhThucString(nguonNhap.getHinhThucChuYeu()),
+                nguonNhap.getDiaChi(),
+                nguonNhap.getEmail(),
+                nguonNhap.getSdt(),
+                nguonNhap.getNgayHopTac(),
+                nguonNhap.isTrangThai() ? "Hoạt động" : "Ngưng hợp tác"
+            });
+        }
+    }
+    
+    private String getHinhThucString(int hinhThuc) {
+        switch(hinhThuc) {
+            case 0: return "Mua bán";
+            case 1: return "Nhà xuất bản";
+            case 2: return "Quyên góp";
+            default: return "Khác";
+        }
+    }
+    
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {
+        String maCoSo = jTextField1.getText();
+        String tenCoSo = jTextField2.getText();
+        int hinhThuc = jComboBox1.getSelectedIndex();
+        String diaChi = jTextField4.getText();
+        String email = jTextField6.getText();
+        String sdt = jTextField6.getText();
+        Date ngayHopTac = jDateChooser1.getDate();
+        
+        if (maCoSo.isEmpty() || tenCoSo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+        
+        // Kiểm tra trùng mã cơ sở
+        ArrayList<NguonNhapDTO> list = nguonNhapDAO.getList();
+        for (NguonNhapDTO nguonNhap : list) {
+            if (nguonNhap.getMaCoSo().equals(maCoSo)) {
+                JOptionPane.showMessageDialog(this, "Mã cơ sở đã tồn tại!");
+                return;
+            }
+        }
+        
+        NguonNhapDTO nguonNhap = new NguonNhapDTO(maCoSo, tenCoSo, hinhThuc, diaChi, email, ngayHopTac, sdt, true);
+        if (nguonNhapDAO.add(nguonNhap)) {
+            JOptionPane.showMessageDialog(this, "Thêm thành công!");
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm thất bại!");
+        }
+    }
+    
+    private void btnCapnhatActionPerformed(java.awt.event.ActionEvent evt) {
+        int row = tblNguonNhap.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nguồn nhập cần cập nhật!");
+            return;
+        }
+        
+        String maCoSo = (String) tblNguonNhap.getValueAt(row, 0);
+        String tenCoSo = jTextField2.getText();
+        int hinhThuc = jComboBox1.getSelectedIndex();
+        String diaChi = jTextField4.getText();
+        String email = jTextField6.getText();
+        String sdt = jTextField6.getText();
+        Date ngayHopTac = jDateChooser1.getDate();
+        
+        if (tenCoSo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+        
+        NguonNhapDTO nguonNhap = new NguonNhapDTO(maCoSo, tenCoSo, hinhThuc, diaChi, email, ngayHopTac, sdt, true);
+        if (nguonNhapDAO.update(nguonNhap)) {
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+        }
+    }
+    
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {
+        int row = tblNguonNhap.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nguồn nhập cần xóa!");
+            return;
+        }
+        
+        String maCoSo = (String) tblNguonNhap.getValueAt(row, 0);
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Bạn có chắc chắn muốn xóa nguồn nhập này?", 
+            "Xác nhận xóa", 
+            JOptionPane.YES_NO_OPTION);
+            
+        if (confirm == JOptionPane.YES_OPTION) {
+            if (nguonNhapDAO.delete(maCoSo)) {
+                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                // Cập nhật trạng thái trong bảng
+                DefaultTableModel model = (DefaultTableModel) tblNguonNhap.getModel();
+                model.setValueAt("Ngưng hợp tác", row, 7); // 7 là cột trạng thái
+                // Cập nhật lại toàn bộ dữ liệu
+                loadData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+            }
+        }
+    }
+    
+    private void btnKhoiphucActionPerformed(java.awt.event.ActionEvent evt) {
+        int row = tblNguonNhap.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nguồn nhập cần khôi phục!");
+            return;
+        }
+        
+        String maCoSo = (String) tblNguonNhap.getValueAt(row, 0);
+        if (nguonNhapDAO.restore(maCoSo)) {
+            JOptionPane.showMessageDialog(this, "Khôi phục thành công!");
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Khôi phục thất bại!");
+        }
+    }
+    
+    private void btnTimkiemActionPerformed(java.awt.event.ActionEvent evt) {
+        String keyword = txtTimkiem.getText();
+        if (keyword.isEmpty()) {
+            loadData();
+            return;
+        }
+        
+        model = (DefaultTableModel) tblNguonNhap.getModel();
+        model.setRowCount(0);
+        
+        ArrayList<NguonNhapDTO> list = nguonNhapDAO.search(keyword);
+        for (NguonNhapDTO nguonNhap : list) {
+            model.addRow(new Object[]{
+                nguonNhap.getMaCoSo(),
+                nguonNhap.getTenCoSo(),
+                getHinhThucString(nguonNhap.getHinhThucChuYeu()),
+                nguonNhap.getDiaChi(),
+                nguonNhap.getEmail(),
+                nguonNhap.getSdt(),
+                nguonNhap.getNgayHopTac(),
+                nguonNhap.isTrangThai() ? "Hoạt động" : "Ngưng hợp tác"
+            });
+        }
+    }
+    
+    private void tblNguonNhapMouseClicked(java.awt.event.MouseEvent evt) {
+        int row = tblNguonNhap.getSelectedRow();
+        if (row != -1) {
+            jTextField1.setText((String) tblNguonNhap.getValueAt(row, 0));
+            jTextField2.setText((String) tblNguonNhap.getValueAt(row, 1));
+            jComboBox1.setSelectedItem((String) tblNguonNhap.getValueAt(row, 2));
+            jTextField4.setText((String) tblNguonNhap.getValueAt(row, 3));
+            jTextField6.setText((String) tblNguonNhap.getValueAt(row, 4));
+            jTextField6.setText((String) tblNguonNhap.getValueAt(row, 5));
+            jDateChooser1.setDate((Date) tblNguonNhap.getValueAt(row, 6));
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -63,7 +258,7 @@ public class NguonnhapGUI extends javax.swing.JPanel {
         txtTimkiem = new javax.swing.JTextField();
         btnTimkiem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbNguonnhap = new javax.swing.JTable();
+        tblNguonNhap = new javax.swing.JTable();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1210, 640));
 
@@ -83,10 +278,8 @@ public class NguonnhapGUI extends javax.swing.JPanel {
         jLabel4.setText("Số điện thoại:");
 
         jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField1.setText("jTextField1");
 
         jTextField6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField6.setText("jTextField1");
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mua bán", "Nhà xuất bản", "Quyên góp" }));
@@ -96,7 +289,6 @@ public class NguonnhapGUI extends javax.swing.JPanel {
         jLabel5.setText("Địa chỉ:");
 
         jTextField2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField2.setText("jTextField1");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -107,7 +299,6 @@ public class NguonnhapGUI extends javax.swing.JPanel {
         jLabel7.setText("Ngày hợp tác:");
 
         jTextField4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField4.setText("jTextField1");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -233,8 +424,8 @@ public class NguonnhapGUI extends javax.swing.JPanel {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tbNguonnhap.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tbNguonnhap.setModel(new javax.swing.table.DefaultTableModel(
+        tblNguonNhap.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tblNguonNhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"đá", null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -267,12 +458,12 @@ public class NguonnhapGUI extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tbNguonnhap.setGridColor(new java.awt.Color(0, 0, 0));
-        tbNguonnhap.setRowHeight(35);
-        tbNguonnhap.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        tbNguonnhap.setSelectionForeground(new java.awt.Color(0, 51, 51));
-        tbNguonnhap.setShowVerticalLines(true);
-        jScrollPane1.setViewportView(tbNguonnhap);
+        tblNguonNhap.setGridColor(new java.awt.Color(0, 0, 0));
+        tblNguonNhap.setRowHeight(35);
+        tblNguonNhap.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        tblNguonNhap.setSelectionForeground(new java.awt.Color(0, 51, 51));
+        tblNguonNhap.setShowVerticalLines(true);
+        jScrollPane1.setViewportView(tblNguonNhap);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -388,11 +579,11 @@ public class NguonnhapGUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblNguonNhap;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTable tbNguonnhap;
     private javax.swing.JTextField txtTimkiem;
     // End of variables declaration//GEN-END:variables
 }
