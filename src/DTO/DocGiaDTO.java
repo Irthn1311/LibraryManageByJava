@@ -6,98 +6,112 @@ public class DocGiaDTO {
     private String maDG;
     private String tenDG;
     private String gioiTinh;
+    private String soDienThoai;
     private Date ngaySinh;
-    private String sdt;
+    private String diaChi;
+    // Thông tin thẻ thành viên
     private String maThe;
     private Date ngayCap;
     private Date ngayHetHan;
-    private int trangThai;
-    
+    private boolean trangThai;
+
     public DocGiaDTO() {
     }
-    
-    public DocGiaDTO(String maDG, String tenDG, String gioiTinh, Date ngaySinh, 
-            String sdt, String maThe, Date ngayCap, Date ngayHetHan, int trangThai) {
+
+    public DocGiaDTO(String maDG, String tenDG, String gioiTinh, String soDienThoai, 
+                    Date ngaySinh, String diaChi, String maThe, Date ngayCap, 
+                    Date ngayHetHan, boolean trangThai) {
         this.maDG = maDG;
         this.tenDG = tenDG;
         this.gioiTinh = gioiTinh;
+        this.soDienThoai = soDienThoai;
         this.ngaySinh = ngaySinh;
-        this.sdt = sdt;
+        this.diaChi = diaChi;
         this.maThe = maThe;
         this.ngayCap = ngayCap;
         this.ngayHetHan = ngayHetHan;
         this.trangThai = trangThai;
     }
 
+    // Getters
     public String getMaDG() {
         return maDG;
-    }
-
-    public void setMaDG(String maDG) {
-        this.maDG = maDG;
     }
 
     public String getTenDG() {
         return tenDG;
     }
 
-    public void setTenDG(String tenDG) {
-        this.tenDG = tenDG;
-    }
-
     public String getGioiTinh() {
         return gioiTinh;
     }
 
-    public void setGioiTinh(String gioiTinh) {
-        this.gioiTinh = gioiTinh;
+    public String getSoDienThoai() {
+        return soDienThoai;
     }
 
     public Date getNgaySinh() {
         return ngaySinh;
     }
 
-    public void setNgaySinh(Date ngaySinh) {
-        this.ngaySinh = ngaySinh;
-    }
-
-    public String getSDT() {
-        return sdt;
-    }
-
-    public void setSDT(String sdt) {
-        this.sdt = sdt;
+    public String getDiaChi() {
+        return diaChi;
     }
 
     public String getMaThe() {
         return maThe;
     }
 
-    public void setMaThe(String maThe) {
-        this.maThe = maThe;
-    }
-
     public Date getNgayCap() {
         return ngayCap;
-    }
-
-    public void setNgayCap(Date ngayCap) {
-        this.ngayCap = ngayCap;
     }
 
     public Date getNgayHetHan() {
         return ngayHetHan;
     }
 
+    public boolean isTrangThai() {
+        return trangThai;
+    }
+
+    // Setters
+    public void setMaDG(String maDG) {
+        this.maDG = maDG;
+    }
+
+    public void setTenDG(String tenDG) {
+        this.tenDG = tenDG;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public void setSoDienThoai(String soDienThoai) {
+        this.soDienThoai = soDienThoai;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public void setMaThe(String maThe) {
+        this.maThe = maThe;
+    }
+
+    public void setNgayCap(Date ngayCap) {
+        this.ngayCap = ngayCap;
+    }
+
     public void setNgayHetHan(Date ngayHetHan) {
         this.ngayHetHan = ngayHetHan;
     }
 
-    public int getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(int trangThai) {
+    public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
     }
 } 
