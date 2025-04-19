@@ -42,7 +42,7 @@ public class NguonNhapDAO {
                         rs.getString("email"),
                         rs.getDate("ngay_hoptac"),
                         rs.getString("sdt"),
-                        rs.getBoolean("trang_thai")
+                        rs.getBoolean("trangthai")
                     );
                     list.add(nguonNhap);
                 }
@@ -67,7 +67,7 @@ public class NguonNhapDAO {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             
-            String sql = "INSERT INTO lbr.CoSoNhap(ma_co_so, ten_co_so, hinhthuc_chuyeu, dia_chi, email, ngay_hoptac, sdt, trang_thai) VALUES(";
+            String sql = "INSERT INTO lbr.CoSoNhap(ma_co_so, ten_co_so, hinhthuc_chuyeu, dia_chi, email, ngay_hoptac, sdt, trangthai) VALUES(";
             sql += "'" + nguonNhap.getMaCoSo() + "',";
             sql += "'" + nguonNhap.getTenCoSo() + "',";
             sql += nguonNhap.getHinhThucChuYeu() + ",";
@@ -100,7 +100,7 @@ public class NguonNhapDAO {
             sql += "email = " + (nguonNhap.getEmail() != null ? "'" + nguonNhap.getEmail() + "'" : "NULL") + ",";
             sql += "ngay_hoptac = '" + sdf.format(nguonNhap.getNgayHopTac()) + "',";
             sql += "sdt = " + (nguonNhap.getSdt() != null ? "'" + nguonNhap.getSdt() + "'" : "NULL") + ",";
-            sql += "trang_thai = " + nguonNhap.isTrangThai();
+            sql += "trangthai = " + nguonNhap.isTrangThai();
             sql += " WHERE ma_co_so = '" + nguonNhap.getMaCoSo() + "'";
             
             System.out.println("Executing SQL: " + sql);
@@ -123,7 +123,7 @@ public class NguonNhapDAO {
             
             if (rs != null && rs.next()) {
                 // Nếu tồn tại thì cập nhật trạng thái
-                String sql = "UPDATE lbr.CoSoNhap SET trang_thai = 0 " +
+                String sql = "UPDATE lbr.CoSoNhap SET trangthai = false " +
                            "WHERE ma_co_so = '" + maCoSo + "'";
                 System.out.println("Executing SQL: " + sql);
                 int result = mySQL.executeUpdate(sql);
@@ -147,7 +147,7 @@ public class NguonNhapDAO {
     // Khôi phục nguồn nhập đã xóa
     public boolean restore(String maCoSo) {
         try {
-            String sql = "UPDATE lbr.CoSoNhap SET trang_thai = true " +
+            String sql = "UPDATE lbr.CoSoNhap SET trangthai = true " +
                         "WHERE ma_co_so = '" + maCoSo + "'";
             System.out.println("Executing SQL: " + sql);
             return mySQL.executeUpdate(sql) > 0;
@@ -160,16 +160,36 @@ public class NguonNhapDAO {
     }
     
     // Tìm kiếm nguồn nhập
-    public ArrayList<NguonNhapDTO> search(String keyword) {
+    public ArrayList<NguonNhapDTO> search(String keyword, String selectedOption) {
         ArrayList<NguonNhapDTO> list = new ArrayList<>();
         
         try {
-            String sql = "SELECT * FROM lbr.CoSoNhap " +
-                        "WHERE ma_co_so LIKE '%" + keyword + "%' OR " +
-                        "ten_co_so LIKE '%" + keyword + "%' OR " +
-                        "dia_chi LIKE '%" + keyword + "%' OR " +
-                        "email LIKE '%" + keyword + "%' OR " +
-                        "sdt LIKE '%" + keyword + "%'";
+            String sql = "SELECT * FROM lbr.CoSoNhap WHERE ";
+            
+            // Thêm điều kiện tìm kiếm dựa trên option được chọn
+            switch(selectedOption) {
+                case "Mã cơ sở":
+                    sql += "ma_co_so LIKE '%" + keyword + "%'";
+                    break;
+                case "Tên cơ sở":
+                    sql += "ten_co_so LIKE '%" + keyword + "%'";
+                    break;
+                case "Địa chỉ":
+                    sql += "dia_chi LIKE '%" + keyword + "%'";
+                    break;
+                case "Email":
+                    sql += "email LIKE '%" + keyword + "%'";
+                    break;
+                case "Số điện thoại":
+                    sql += "sdt LIKE '%" + keyword + "%'";
+                    break;
+                default: // Tất cả
+                    sql += "ma_co_so LIKE '%" + keyword + "%' OR " +
+                           "ten_co_so LIKE '%" + keyword + "%' OR " +
+                           "dia_chi LIKE '%" + keyword + "%' OR " +
+                           "email LIKE '%" + keyword + "%' OR " +
+                           "sdt LIKE '%" + keyword + "%'";
+            }
                     
             System.out.println("Executing SQL: " + sql);
             ResultSet rs = mySQL.executeQuery(sql);
@@ -187,7 +207,7 @@ public class NguonNhapDAO {
                         rs.getString("email"),
                         rs.getDate("ngay_hoptac"),
                         rs.getString("sdt"),
-                        rs.getBoolean("trang_thai")
+                        rs.getBoolean("trangthai")
                     );
                     list.add(nguonNhap);
                 }

@@ -1,4 +1,4 @@
- create database lbr;
+CREATE DATABASE lbr;
 
 
 CREATE TABLE lbr.Sach (
@@ -11,20 +11,21 @@ CREATE TABLE lbr.Sach (
     nha_xuat_ban VARCHAR(255),
     nam_xuat_ban YEAR,
     file_pdf VARCHAR(255),
-    trang_thai INT,
-    chinh_sach_muon int
+    doc_tai_cho Boolean default false,
+    muon_ve Boolean default false,
+    doc_file_pdf Boolean default false
 );
 
 CREATE TABLE lbr.NhanVien (
-    ma_nhan_vien varchar(255) PRIMARY KEY,
-    ten_nhan_vien VARCHAR(255) NOT NULL,
-    tuoi INT,
-    dia_chi VARCHAR(255),
+    ma_nhan_vien INT AUTO_INCREMENT primary key,
+    ten_nhan_vien VARCHAR(100) NOT NULL,
+    gioi_tinh VARCHAR(20),
+    ngay_sinh DATE,
+    dia_chi VARCHAR(20),
+    so_dien_thoai VARCHAR(15),
+    email VARCHAR(20),
     ngay_vao_lam DATE,
-    sdt VARCHAR(20),
-    email VARCHAR(100),
-    vai_tro VARCHAR(100),
-    trang_thai BOOLEAN DEFAULT TRUE
+    trang_thai VARCHAR(20)
 );
 
 CREATE TABLE lbr.CoSoNhap (
@@ -35,31 +36,44 @@ CREATE TABLE lbr.CoSoNhap (
     email varchar(255),
     ngay_hoptac date,
     sdt VARCHAR(20),
-    trang_thai BOOLEAN DEFAULT TRUE
+    trangthai Boolean default true
 );
 
+INSERT INTO lbr.CoSoNhap (ma_co_so, ten_co_so, hinhthuc_chuyeu, dia_chi, email, ngay_hoptac, sdt, trangthai) VALUES
+('CS001', 'Công ty Sách ABC',         1, 'Hà Nội',        'abc@sach.vn',      '2020-01-15', '0901234561', TRUE),
+('CS002', 'Nhà Xuất Bản Trẻ',         2, 'TP. HCM',       'nxbtre@sach.vn',   '2019-05-10', '0901234562', TRUE),
+('CS003', 'Tổ chức Thiện nguyện A',   3, 'Đà Nẵng',        'thiennguyenA@gmail.com', '2021-03-20', '0901234563', TRUE),
+('CS004', 'Công ty Văn hóa B',        1, 'Huế',           'vanhoaB@gmail.com','2018-07-30', '0901234564', FALSE),
+('CS005', 'Nhà Xuất Bản Kim Đồng',    2, 'TP. HCM',       'kimdong@nxb.vn',   '2017-11-25', '0901234565', TRUE),
+('CS006', 'Nhóm Tình Nguyện X',       3, 'Cần Thơ',       'tnx@gmail.com',    '2022-02-18', '0901234566', TRUE),
+('CS007', 'Công ty Sách Minh Long',   1, 'Bình Dương',    'minhlong@sach.vn', '2019-08-05', '0901234567', FALSE),
+('CS008', 'Nhà Xuất Bản Giáo Dục',    2, 'Hà Nội',        'giaoduc@nxb.vn',   '2015-12-12', '0901234568', TRUE),
+('CS009', 'Tổ chức Sách Cho Em',      3, 'Quảng Ninh',    'sachem@gmail.com', '2023-06-01', '0901234569', TRUE),
+('CS010', 'Công ty Phát hành Sách Z', 1, 'Nha Trang',     'phsz@sach.vn',     '2020-09-09', '0901234570', FALSE);
+
+
 CREATE TABLE lbr.PhieuNhap (
-    ma_phieu_nhap varchar(255) PRIMARY KEY,
+    ma_phieu_nhap VARCHAR(255) primary key,
     ten_co_so VARCHAR(255),
     loai_nhap VARCHAR(100),
     so_luong_sach INT,
-    tong_tien int,
-    ngay_nhap DATE DEFAULT CURRENT_DATE,
-    ma_nhan_vien varchar(255),
-    ma_co_so varchar(255),
-
+    tong_tien INT,
+    ngay_nhap DATE,
+    ma_nhan_vien int,
+    ma_co_so VARCHAR(255),
     FOREIGN KEY (ma_nhan_vien) REFERENCES NhanVien(ma_nhan_vien),
     FOREIGN KEY (ma_co_so) REFERENCES CoSoNhap(ma_co_so)
 );
+
 
 CREATE TABLE lbr.ChiTietPhieuNhap (
     ma_ctpn varchar(255) PRIMARY KEY,
     ma_phieu_nhap varchar(255),
     loai_sach VARCHAR(100),
-    don_gia DECIMAL(12,2),
+    don_gia int,
     so_luong INT,
     thanh_tien int,
-  	tong_tien int,
+    tong_tien int,
     hinh_thuc_nhap VARCHAR(50),
 
     FOREIGN KEY (ma_phieu_nhap) REFERENCES PhieuNhap(ma_phieu_nhap)
@@ -88,13 +102,13 @@ INSERT INTO lbr.DocGia (ma_doc_gia, ten_doc_gia, gioi_tinh, so_dien_thoai, ngay_
 ('DG010', 'Lý Thị J', 'Nữ', '0901000010', '1994-08-05', 'Bình Dương');
 
 
-
 CREATE TABLE lbr.TheThanhVien (
     ma_the varchar(255) PRIMARY KEY,
     ma_doc_gia varchar(255) UNIQUE,
     ngay_cap DATE,
     ngay_het_han DATE,
     trang_thai BOOLEAN DEFAULT TRUE,
+
     FOREIGN KEY (ma_doc_gia) REFERENCES DocGia(ma_doc_gia)
 );
 
@@ -110,25 +124,6 @@ INSERT INTO lbr.TheThanhVien (ma_the, ma_doc_gia, ngay_cap, ngay_het_han, trang_
 ('THE009', 'DG009', '2023-09-01', '2026-09-01', TRUE),
 ('THE010', 'DG010', '2023-10-01', '2026-10-01', TRUE);
 
-
-CREATE TABLE lbr.TaiKhoan (
-    ma_the varchar(255) PRIMARY KEY,
-    mat_khau VARCHAR(255) DEFAULT '123456789',
-    vai_tro VARCHAR(50) DEFAULT 'DocGia',
-
-    FOREIGN KEY (ma_the) REFERENCES TheThanhVien(ma_the)
-);
-
-CREATE TABLE lbr.ThongBao (
-    ma_thong_bao INT PRIMARY KEY AUTO_INCREMENT,
-    ma_the VARCHAR(255),
-    loai_thong_bao VARCHAR(100),
-    noi_dung TEXT,
-    ngay_tao DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (ma_the) REFERENCES TaiKhoan(ma_the)
-);
-
 CREATE TABLE lbr.PhieuMuon (
     ma_phieu_muon varchar(255) PRIMARY KEY,
     ma_doc_gia varchar(255),    
@@ -137,24 +132,21 @@ CREATE TABLE lbr.PhieuMuon (
     han_tra DATE,
     ngay_tra_thuc_te DATE,
     trang_thai VARCHAR(50),
+    tien_phat int,
   
 
     FOREIGN KEY (ma_doc_gia) REFERENCES DocGia(ma_doc_gia),
     FOREIGN KEY (ma_sach) REFERENCES Sach(ma_sach)
 );
 
-CREATE TABLE lbr.PhieuPhat (
-    ma_phieu_phat varchar(255) PRIMARY KEY,
-    ma_phieu_muon varchar(255) UNIQUE,
-  	ma_doc_gia varchar(255),
-  	ten_doc_gia varchar(255),
-  	ma_sach varchar(255),
-    ten_sach VARCHAR(255),
-    so_ngay_qua_han INT,
-    tien_phat int,
-
-    FOREIGN KEY (ma_phieu_muon) REFERENCES PhieuMuon(ma_phieu_muon)
+create table lbr.PhieuPhat (
+    ma_phieu_phat varchar(255) primary key,
+    ma_phieu_muon varchar(255),
+    tienphat int,
+    foreign key (ma_phieu_muon) references PhieuMuon(ma_phieu_muon)
 );
+
+
 
 
 CREATE TABLE lbr.DatTruoc (
@@ -203,12 +195,34 @@ insert into lbr.ChucNang values
 CREATE TABLE lbr.PhanQuyen (
     ma_phan_quyen varchar(255) PRIMARY KEY,
     ten_phan_quyen varchar(255),
-    ma_the VARCHAR(255),
     ma_chuc_nang varchar(255),
     duoc_xem BOOLEAN DEFAULT FALSE,
     duoc_cap_nhat BOOLEAN DEFAULT FALSE,
     duoc_xoa BOOLEAN DEFAULT FALSE,
 
-    FOREIGN KEY (ma_the) REFERENCES TaiKhoan(ma_the),
     FOREIGN KEY (ma_chuc_nang) REFERENCES ChucNang(ma_chuc_nang)
+);
+
+CREATE TABLE lbr.TaiKhoan (
+    ma_the varchar(255),
+    ten_dang_nhap varchar(255) unique,
+    mat_khau VARCHAR(255) DEFAULT '123456789',
+    primary key (ma_the, ma_phan_quyen),
+
+    ma_phan_quyen varchar(255),
+    ma_nhan_vien int,
+
+    FOREIGN KEY (ma_the) REFERENCES TheThanhVien(ma_the),
+    FOREIGN KEY (ma_phan_quyen) REFERENCES PhanQuyen(ma_phan_quyen),
+    foreign key (ma_nhan_vien) references NhanVien(ma_nhan_vien)
+);
+
+CREATE TABLE lbr.ThongBao (
+    ma_thong_bao varchar(255) PRIMARY KEY,
+    ma_the VARCHAR(255),
+    loai_thong_bao VARCHAR(100),
+    noi_dung TEXT,
+    ngay_tao DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (ma_the) REFERENCES TaiKhoan(ma_the)
 );

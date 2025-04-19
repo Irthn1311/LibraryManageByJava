@@ -262,7 +262,7 @@ public class DocGiaDAO {
     }
     
     // Tìm kiếm độc giả
-    public ArrayList<DocGiaDTO> search(String keyword) {
+    public ArrayList<DocGiaDTO> search(String keyword, String selectedOption) {
         ArrayList<DocGiaDTO> list = new ArrayList<>();
         
         try {
@@ -271,11 +271,32 @@ public class DocGiaDAO {
                         "ttv.ma_the, ttv.ngay_cap, ttv.ngay_het_han, ttv.trang_thai " +
                         "FROM DocGia dg " +
                         "LEFT JOIN TheThanhVien ttv ON dg.ma_doc_gia = ttv.ma_doc_gia " +
-                        "WHERE dg.ma_doc_gia LIKE '%" + keyword + "%' OR " +
-                        "dg.ten_doc_gia LIKE '%" + keyword + "%' OR " +
-                        "dg.so_dien_thoai LIKE '%" + keyword + "%' OR " +
-                        "dg.dia_chi LIKE '%" + keyword + "%' OR " +
-                        "ttv.ma_the LIKE '%" + keyword + "%'";
+                        "WHERE ";
+            
+            // Thêm điều kiện tìm kiếm dựa trên option được chọn
+            switch(selectedOption) {
+                case "Mã độc giả":
+                    sql += "dg.ma_doc_gia LIKE '%" + keyword + "%'";
+                    break;
+                case "Tên độc giả":
+                    sql += "dg.ten_doc_gia LIKE '%" + keyword + "%'";
+                    break;
+                case "Số điện thoại":
+                    sql += "dg.so_dien_thoai LIKE '%" + keyword + "%'";
+                    break;
+                case "Địa chỉ":
+                    sql += "dg.dia_chi LIKE '%" + keyword + "%'";
+                    break;
+                case "Mã thẻ":
+                    sql += "ttv.ma_the LIKE '%" + keyword + "%'";
+                    break;
+                default: // Tất cả
+                    sql += "dg.ma_doc_gia LIKE '%" + keyword + "%' OR " +
+                           "dg.ten_doc_gia LIKE '%" + keyword + "%' OR " +
+                           "dg.so_dien_thoai LIKE '%" + keyword + "%' OR " +
+                           "dg.dia_chi LIKE '%" + keyword + "%' OR " +
+                           "ttv.ma_the LIKE '%" + keyword + "%'";
+            }
                     
             System.out.println("Executing SQL: " + sql);
             ResultSet rs = mySQL.executeQuery(sql);

@@ -39,19 +39,6 @@ CREATE TABLE lbr.CoSoNhap (
     trangthai Boolean default true
 );
 
-INSERT INTO lbr.CoSoNhap (ma_co_so, ten_co_so, hinhthuc_chuyeu, dia_chi, email, ngay_hoptac, sdt, trangthai) VALUES
-('CS001', 'Công ty Sách ABC',         1, 'Hà Nội',        'abc@sach.vn',      '2020-01-15', '0901234561', TRUE),
-('CS002', 'Nhà Xuất Bản Trẻ',         2, 'TP. HCM',       'nxbtre@sach.vn',   '2019-05-10', '0901234562', TRUE),
-('CS003', 'Tổ chức Thiện nguyện A',   3, 'Đà Nẵng',        'thiennguyenA@gmail.com', '2021-03-20', '0901234563', TRUE),
-('CS004', 'Công ty Văn hóa B',        1, 'Huế',           'vanhoaB@gmail.com','2018-07-30', '0901234564', FALSE),
-('CS005', 'Nhà Xuất Bản Kim Đồng',    2, 'TP. HCM',       'kimdong@nxb.vn',   '2017-11-25', '0901234565', TRUE),
-('CS006', 'Nhóm Tình Nguyện X',       3, 'Cần Thơ',       'tnx@gmail.com',    '2022-02-18', '0901234566', TRUE),
-('CS007', 'Công ty Sách Minh Long',   1, 'Bình Dương',    'minhlong@sach.vn', '2019-08-05', '0901234567', FALSE),
-('CS008', 'Nhà Xuất Bản Giáo Dục',    2, 'Hà Nội',        'giaoduc@nxb.vn',   '2015-12-12', '0901234568', TRUE),
-('CS009', 'Tổ chức Sách Cho Em',      3, 'Quảng Ninh',    'sachem@gmail.com', '2023-06-01', '0901234569', TRUE),
-('CS010', 'Công ty Phát hành Sách Z', 1, 'Nha Trang',     'phsz@sach.vn',     '2020-09-09', '0901234570', FALSE);
-
-
 CREATE TABLE lbr.PhieuNhap (
     ma_phieu_nhap VARCHAR(255) primary key,
     ten_co_so VARCHAR(255),
