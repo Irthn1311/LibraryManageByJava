@@ -54,7 +54,6 @@ INSERT INTO lbr.CoSoNhap (ma_co_so, ten_co_so, hinhthuc_chuyeu, dia_chi, email, 
 
 CREATE TABLE lbr.PhieuNhap (
     ma_phieu_nhap VARCHAR(255) primary key,
-    ten_co_so VARCHAR(255),
     loai_nhap VARCHAR(100),
     so_luong_sach INT,
     tong_tien INT,
@@ -67,16 +66,12 @@ CREATE TABLE lbr.PhieuNhap (
 
 
 CREATE TABLE lbr.ChiTietPhieuNhap (
-    ma_ctpn varchar(255) PRIMARY KEY,
+    ma_ctpn INT AUTO_INCREMENT PRIMARY KEY,
     ma_phieu_nhap varchar(255),
     loai_sach VARCHAR(100),
     don_gia int,
     so_luong INT,
-    thanh_tien int,
-    tong_tien int,
-    hinh_thuc_nhap VARCHAR(50),
-
-    FOREIGN KEY (ma_phieu_nhap) REFERENCES PhieuNhap(ma_phieu_nhap)
+    thanh_tien int
 );
 
 
