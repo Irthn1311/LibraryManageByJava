@@ -7,12 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Lớp DocGiaBUS - Business Logic Layer
- * Xử lý dữ liệu từ Presentation Layer trước khi truyền xuống Data Access Layer
- * Kiểm tra các ràng buộc, tính toàn vẹn và hợp lệ dữ liệu
- * Thực hiện tính toán và xử lý các yêu cầu nghiệp vụ
- */
+
 public class DocGiaBUS {
     private final DocGiaDAO docGiaDAO;
 
@@ -20,21 +15,10 @@ public class DocGiaBUS {
         docGiaDAO = new DocGiaDAO();
     }
 
-    /**
-     * Lấy danh sách tất cả độc giả
-     * @return ArrayList<DocGiaDTO> Danh sách độc giả
-     * @throws SQLException Nếu có lỗi khi truy vấn dữ liệu
-     */
     public ArrayList<DocGiaDTO> layDanhSachDocGia() throws SQLException {
         return docGiaDAO.getList();
     }
 
-    /**
-     * Thêm độc giả mới
-     * @param dg Đối tượng DocGiaDTO chứa thông tin độc giả
-     * @return boolean true nếu thêm thành công, false nếu thất bại
-     * @throws Exception Nếu có lỗi khi thêm độc giả
-     */
     public boolean themDocGia(DocGiaDTO dg) throws Exception {
         // Kiểm tra dữ liệu đầu vào
         if (dg == null) {
@@ -67,12 +51,6 @@ public class DocGiaBUS {
         return docGiaDAO.add(dg);
     }
 
-    /**
-     * Cập nhật thông tin độc giả
-     * @param dg Đối tượng DocGiaDTO chứa thông tin độc giả cần cập nhật
-     * @return boolean true nếu cập nhật thành công, false nếu thất bại
-     * @throws Exception Nếu có lỗi khi cập nhật độc giả
-     */
     public boolean capNhatDocGia(DocGiaDTO dg) throws Exception {
         // Kiểm tra dữ liệu đầu vào
         if (dg == null) {
@@ -112,12 +90,6 @@ public class DocGiaBUS {
         return docGiaDAO.update(dg);
     }
 
-    /**
-     * Xóa độc giả (cập nhật trạng thái = false trong thẻ thành viên)
-     * @param maDG Mã độc giả cần xóa
-     * @return boolean true nếu xóa thành công, false nếu thất bại
-     * @throws Exception Nếu có lỗi khi xóa độc giả
-     */
     public boolean xoaDocGia(String maDG) throws Exception {
         // Kiểm tra dữ liệu đầu vào
         if (maDG == null || maDG.trim().isEmpty()) {
@@ -143,12 +115,6 @@ public class DocGiaBUS {
         return docGiaDAO.delete(maDG);
     }
 
-    /**
-     * Khôi phục độc giả đã xóa (cập nhật trạng thái = true trong thẻ thành viên)
-     * @param maDG Mã độc giả cần khôi phục
-     * @return boolean true nếu khôi phục thành công, false nếu thất bại
-     * @throws Exception Nếu có lỗi khi khôi phục độc giả
-     */
     public boolean khoiPhucDocGia(String maDG) throws Exception {
         // Kiểm tra dữ liệu đầu vào
         if (maDG == null || maDG.trim().isEmpty()) {
@@ -174,13 +140,6 @@ public class DocGiaBUS {
         return docGiaDAO.restore(maDG);
     }
 
-    /**
-     * Tìm kiếm độc giả theo từ khóa và tiêu chí
-     * @param keyword Từ khóa tìm kiếm
-     * @param selectedOption Tiêu chí tìm kiếm (Mã độc giả, Tên độc giả, Số điện thoại, Địa chỉ, Mã thẻ)
-     * @return ArrayList<DocGiaDTO> Danh sách độc giả thỏa mãn điều kiện tìm kiếm
-     * @throws Exception Nếu có lỗi khi tìm kiếm độc giả
-     */
     public ArrayList<DocGiaDTO> timKiemDocGia(String keyword, String selectedOption) throws Exception {
         // Kiểm tra dữ liệu đầu vào
         if (keyword == null) {
@@ -195,14 +154,6 @@ public class DocGiaBUS {
         return docGiaDAO.search(keyword, selectedOption);
     }
 
-    /**
-     * Kiểm tra xem độc giả đã tồn tại trong hệ thống chưa
-     * @param tenDG Tên độc giả
-     * @param soDienThoai Số điện thoại
-     * @param diaChi Địa chỉ
-     * @param ngaySinh Ngày sinh
-     * @return boolean true nếu độc giả đã tồn tại, false nếu chưa
-     */
     public boolean kiemTraDocGiaTonTai(String tenDG, String soDienThoai, String diaChi, Date ngaySinh) {
         try {
             ArrayList<DocGiaDTO> danhSachDocGia = layDanhSachDocGia();
@@ -223,10 +174,6 @@ public class DocGiaBUS {
         return false;
     }
 
-    /**
-     * Tạo mã độc giả mới
-     * @return String Mã độc giả mới
-     */
     public String taoMaDocGiaMoi() {
         try {
             ArrayList<DocGiaDTO> danhSachDocGia = layDanhSachDocGia();
@@ -249,11 +196,6 @@ public class DocGiaBUS {
                (ngaySinh.getYear() + 1900);
     }
     
-    /**
-     * Kiểm tra tính hợp lệ của thông tin độc giả
-     * @param dg Đối tượng DocGiaDTO cần kiểm tra
-     * @return String Thông báo lỗi nếu có, null nếu hợp lệ
-     */
     public String kiemTraThongTinDocGia(DocGiaDTO dg) {
         if (dg == null) {
             return "Dữ liệu độc giả không hợp lệ!";
@@ -296,6 +238,6 @@ public class DocGiaBUS {
             }
         }
         
-        return null; // Không có lỗi
+        return null;
     }
 } 

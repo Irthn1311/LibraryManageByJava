@@ -131,7 +131,6 @@ public class NguonNhapDAO {
                 rs.close();
                 return result > 0;
             } else {
-                // Nếu không tồn tại thì thông báo lỗi
                 JOptionPane.showMessageDialog(null, "Không tìm thấy nguồn nhập có mã: " + maCoSo);
                 if (rs != null) rs.close();
                 return false;
@@ -166,7 +165,6 @@ public class NguonNhapDAO {
         try {
             String sql = "SELECT * FROM lbr.CoSoNhap WHERE ";
             
-            // Thêm điều kiện tìm kiếm dựa trên option được chọn
             switch(selectedOption) {
                 case "Mã cơ sở":
                     sql += "ma_co_so LIKE '%" + keyword + "%'";

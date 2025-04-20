@@ -8,17 +8,12 @@ import BUS.DocGiaBUS;
 import DTO.DocGiaDTO;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
-/**
- * Lớp DocGiaGUI - Presentation Layer
- * Hiển thị giao diện người dùng cho quản lý độc giả
- * Xử lý tương tác người dùng và hiển thị dữ liệu
- * Không chứa logic nghiệp vụ, chỉ gọi đến Business Logic Layer
- */
+
 public class DocgiaGUI extends javax.swing.JPanel {
     private DocGiaBUS docGiaBUS;
     private ArrayList<DocGiaDTO> listDocGia;
@@ -414,14 +409,10 @@ public class DocgiaGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Thiết lập các thành phần giao diện
-     */
+    
     private void setupComponents() {
-        // Khởi tạo BUS
         docGiaBUS = new DocGiaBUS();
         
-        // Xóa text mặc định
         xoaDuLieuForm();
         
         // Thêm sự kiện cho các nút
@@ -440,9 +431,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
         });
     }
     
-    /**
-     * Tải dữ liệu độc giả vào bảng
-     */
     private void loadDataToTable() {
         try {
             listDocGia = docGiaBUS.layDanhSachDocGia();
@@ -468,20 +456,19 @@ public class DocgiaGUI extends javax.swing.JPanel {
         }
     }
     
-    /**
-     * Tính tuổi của độc giả
-     * @param ngaySinh Ngày sinh của độc giả
-     * @return Tuổi của độc giả
-     */
     private int tinhTuoi(Date ngaySinh) {
         if (ngaySinh == null) return 0;
-        return java.time.LocalDate.now().getYear() - 
-               (ngaySinh.getYear() + 1900);
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(ngaySinh);
+        int birthYear = cal.get(Calendar.YEAR);
+        
+        Calendar now = Calendar.getInstance();
+        int currentYear = now.get(Calendar.YEAR);
+        
+        return currentYear - birthYear;
     }
     
-    /**
-     * Hiển thị chi tiết độc giả được chọn vào form
-     */
     private void hienThiChiTietDocGia() {
         int selectedRow = tblDocGia.getSelectedRow();
         if (selectedRow >= 0) {
@@ -497,9 +484,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
         }
     }
     
-    /**
-     * Xóa dữ liệu trong form
-     */
     private void xoaDuLieuForm() {
         txtTenDocGia.setText("");
         txtSoDienThoai.setText("");
@@ -511,9 +495,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
         dateNgayHetHan.setDate(null);
     }
 
-    /**
-     * Thêm độc giả mới
-     */
     private void themDocGia() {
         try {
             DocGiaDTO dg = layThongTinForm();
@@ -532,9 +513,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
         }
     }
     
-    /**
-     * Cập nhật thông tin độc giả
-     */
     private void capNhatDocGia() {
         try {
             int selectedRow = tblDocGia.getSelectedRow();
@@ -549,7 +527,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
             dg.setMaDG(listDocGia.get(selectedRow).getMaDG());
             dg.setTrangThai(listDocGia.get(selectedRow).isTrangThai());
             
-            // Gọi phương thức cập nhật độc giả từ BUS
             if (docGiaBUS.capNhatDocGia(dg)) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
                 loadDataToTable();
@@ -561,9 +538,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
         }
     }
     
-    /**
-     * Xóa độc giả (cập nhật trạng thái = false)
-     */
     private void xoaDocGia() {
         int selectedRow = tblDocGia.getSelectedRow();
         if (selectedRow < 0) {
@@ -594,9 +568,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
         }
     }
     
-    /**
-     * Khôi phục độc giả đã xóa (cập nhật trạng thái = true)
-     */
     private void khoiPhucDocGia() {
         int selectedRow = tblDocGia.getSelectedRow();
         if (selectedRow < 0) {
@@ -613,7 +584,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
             try {
                 String maDG = listDocGia.get(selectedRow).getMaDG();
                 
-                // Gọi phương thức khôi phục độc giả từ BUS
                 if (docGiaBUS.khoiPhucDocGia(maDG)) {
                     JOptionPane.showMessageDialog(this, "Khôi phục thành công!");
                     loadDataToTable();
@@ -627,16 +597,12 @@ public class DocgiaGUI extends javax.swing.JPanel {
         }
     }
     
-    /**
-     * Tìm kiếm độc giả
-     */
     private void timKiemDocGia() {
         try {
             String keyword = txtTimKiem.getText().trim();
             String selectedOption = (String) cboTimKiem.getSelectedItem();
             
             if (!keyword.isEmpty()) {
-                // Gọi phương thức tìm kiếm độc giả từ BUS
                 listDocGia = docGiaBUS.timKiemDocGia(keyword, selectedOption);
                 DefaultTableModel model = (DefaultTableModel) tblDocGia.getModel();
                 model.setRowCount(0);
@@ -663,10 +629,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
         }
     }
     
-    /**
-     * Lấy thông tin từ form và tạo đối tượng DocGiaDTO
-     * @return DocGiaDTO hoặc null nếu dữ liệu không hợp lệ
-     */
     private DocGiaDTO layThongTinForm() {
         String tenDG = txtTenDocGia.getText().trim();
         String gioiTinh = (String) cboGioiTinh.getSelectedItem();
@@ -682,7 +644,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
             return null;
         }
         
-        // Nếu có mã thẻ thì phải có ngày cấp và ngày hết hạn
         if (maThe != null && !maThe.trim().isEmpty()) {
             if (ngayCap == null || ngayHetHan == null) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin thẻ (Ngày cấp và Ngày hết hạn)!");
@@ -694,30 +655,6 @@ public class DocgiaGUI extends javax.swing.JPanel {
                 maThe, ngayCap, ngayHetHan, true);
     }
     
-    /**
-     * Main method để chạy ứng dụng
-     */
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DocgiaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(() -> {
-            JFrame frame = new JFrame("Quản lý độc giả");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new DocgiaGUI());
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;

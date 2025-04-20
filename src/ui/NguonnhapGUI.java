@@ -4,24 +4,19 @@
  */
 package ui;
 
-import DAO.NguonNhapDAO;
+import BUS.NguonNhapBUS;
 import DTO.NguonNhapDTO;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-/**
- *
- * @author dinhp
- */
 public class NguonnhapGUI extends javax.swing.JPanel {
-    private NguonNhapDAO nguonNhapDAO;
+    private NguonNhapBUS nguonNhapBUS;
     private ArrayList<NguonNhapDTO> listNguonNhap;
     private DefaultTableModel model;
 
@@ -346,16 +341,14 @@ public class NguonnhapGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 
+    /**
+     * Thiết lập các thành phần giao diện
+     */
     private void setupComponents(){
-        // Khởi tạo DAO
-        nguonNhapDAO = new NguonNhapDAO();
+        nguonNhapBUS = new NguonNhapBUS();
         
         // Xóa text mặc định
-        txtTenCoSo.setText("");
-        txtDiaChi.setText("");
-        txtEmail.setText("");
-        txtSoDienThoai.setText("");
-        txtTimKiem.setText("");
+        xoaDuLieuForm();
 
         // Thiết lập font cho header của bảng
         JTableHeader header = tblNguonNhap.getTableHeader(); 
@@ -380,7 +373,6 @@ public class NguonnhapGUI extends javax.swing.JPanel {
         btnKhoiPhuc.addActionListener(e -> khoiPhucNguonNhap());
         btnTimKiem.addActionListener(e -> timKiemNguonNhap());
     
-        // Thêm sự kiện cho bảng
         tblNguonNhap.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()){
                 hienThiChiTietNguonNhap();
@@ -389,20 +381,24 @@ public class NguonnhapGUI extends javax.swing.JPanel {
     }
     
     private void loadDataToTable() {
-        listNguonNhap = nguonNhapDAO.getList();
-        DefaultTableModel model = (DefaultTableModel) tblNguonNhap.getModel();
-        model.setRowCount(0);
-        for (NguonNhapDTO nguonNhap : listNguonNhap) {
-            model.addRow(new Object[]{
-                nguonNhap.getMaCoSo(),
-                nguonNhap.getTenCoSo(),
-                getHinhThucString(nguonNhap.getHinhThucChuYeu()),
-                nguonNhap.getDiaChi(),
-                nguonNhap.getEmail(),
-                nguonNhap.getSdt(),
-                nguonNhap.getNgayHopTac(),
-                nguonNhap.isTrangThai() ? "Hoạt động" : "Ngưng hợp tác"
-            });
+        try {
+            listNguonNhap = nguonNhapBUS.layDanhSachNguonNhap();
+            DefaultTableModel model = (DefaultTableModel) tblNguonNhap.getModel();
+            model.setRowCount(0);
+            for (NguonNhapDTO nguonNhap : listNguonNhap) {
+                model.addRow(new Object[]{
+                    nguonNhap.getMaCoSo(),
+                    nguonNhap.getTenCoSo(),
+                    getHinhThucString(nguonNhap.getHinhThucChuYeu()),
+                    nguonNhap.getDiaChi(),
+                    nguonNhap.getEmail(),
+                    nguonNhap.getSdt(),
+                    nguonNhap.getNgayHopTac(),
+                    nguonNhap.isTrangThai() ? "Hoạt động" : "Ngưng hợp tác"
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi tải dữ liệu: " + e.getMessage());
         }
     }
     
@@ -430,27 +426,7 @@ public class NguonnhapGUI extends javax.swing.JPanel {
             NguonNhapDTO nguonNhap = layThongTinForm();
             if (nguonNhap == null) return;
             
-            // Kiểm tra xem dữ liệu đã tồn tại chưa
-            String tenCoSo = nguonNhap.getTenCoSo();
-            String diaChi = nguonNhap.getDiaChi();
-            String email = nguonNhap.getEmail();
-            String sdt = nguonNhap.getSdt();
-            
-            // Tìm kiếm trong danh sách hiện tại
-            for (NguonNhapDTO existingNguonNhap : listNguonNhap) {
-                if (existingNguonNhap.getTenCoSo().equals(tenCoSo) && 
-                    existingNguonNhap.getDiaChi().equals(diaChi) && 
-                    existingNguonNhap.getEmail().equals(email) && 
-                    existingNguonNhap.getSdt().equals(sdt)) {
-                    JOptionPane.showMessageDialog(this, "Thông tin nguồn nhập đã tồn tại trong hệ thống!");
-                    return;
-                }
-            }
-            
-            nguonNhap.setMaCoSo("CS" + (listNguonNhap.size() + 1));
-            nguonNhap.setTrangThai(true);
-
-            if (nguonNhapDAO.add(nguonNhap)) {
+            if (nguonNhapBUS.themNguonNhap(nguonNhap)) {
                 JOptionPane.showMessageDialog(this, "Thêm cơ sở thành công!");
                 loadDataToTable();
                 xoaDuLieuForm();
@@ -475,7 +451,8 @@ public class NguonnhapGUI extends javax.swing.JPanel {
             
             nguonNhap.setMaCoSo(listNguonNhap.get(selectedRow).getMaCoSo());
             nguonNhap.setTrangThai(listNguonNhap.get(selectedRow).isTrangThai());
-            if (nguonNhapDAO.update(nguonNhap)) {
+            
+            if (nguonNhapBUS.capNhatNguonNhap(nguonNhap)) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
                 loadDataToTable();
                 xoaDuLieuForm();
@@ -499,16 +476,19 @@ public class NguonnhapGUI extends javax.swing.JPanel {
             "Xác nhận xóa", 
             JOptionPane.YES_NO_OPTION); 
         if (confirm == JOptionPane.YES_OPTION) {
-            String maCoSo = (String) tblNguonNhap.getValueAt(selectedRow, 0);
-            if (nguonNhapDAO.delete(maCoSo)) {
-                JOptionPane.showMessageDialog(this, "Xóa thành công!");
-                listNguonNhap.get(selectedRow).setTrangThai(false);
-                DefaultTableModel model = (DefaultTableModel) tblNguonNhap.getModel();
-                // Cập nhật trạng thái trong bảng
-                model.setValueAt("Ngưng hợp tác", selectedRow, 7); // 7 là cột trạng thái
-                xoaDuLieuForm();
-            } else {
-                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+            try {
+                String maCoSo = listNguonNhap.get(selectedRow).getMaCoSo();
+                
+                // Gọi phương thức xóa nguồn nhập từ BUS
+                if (nguonNhapBUS.xoaNguonNhap(maCoSo)) {
+                    JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                    loadDataToTable();
+                    xoaDuLieuForm();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
             }
         }            
     }
@@ -525,54 +505,59 @@ public class NguonnhapGUI extends javax.swing.JPanel {
             "Xác nhận khôi phục", 
             JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
-            String maCoSo = listNguonNhap.get(selectedRow).getMaCoSo();
-            if (nguonNhapDAO.restore(maCoSo)) {
-                JOptionPane.showMessageDialog(this, "Khôi phục thành công!");
-                listNguonNhap.get(selectedRow).setTrangThai(true);
-                DefaultTableModel model = (DefaultTableModel) tblNguonNhap.getModel();
-                // Cập nhật trạng thái trong bảng
-                model.setValueAt("Hoạt động", selectedRow, 7); // 7 là cột trạng thái
-                xoaDuLieuForm();
-            } else {
-                JOptionPane.showMessageDialog(this, "Khôi phục thất bại!");
+            try {
+                String maCoSo = listNguonNhap.get(selectedRow).getMaCoSo();
+                
+                if (nguonNhapBUS.khoiPhucNguonNhap(maCoSo)) {
+                    JOptionPane.showMessageDialog(this, "Khôi phục thành công!");
+                    loadDataToTable();
+                    xoaDuLieuForm();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Khôi phục thất bại!");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
             }
         }
     }
     
     private void timKiemNguonNhap() {
-        String keyword = txtTimKiem.getText();
-        String selectedOption = (String) cboTimKiem.getSelectedItem();
+        try {
+            String keyword = txtTimKiem.getText().trim();
+            String selectedOption = (String) cboTimKiem.getSelectedItem();
 
-        if (keyword.isEmpty()) {
-            listNguonNhap = nguonNhapDAO.search(keyword, selectedOption);
-            DefaultTableModel model = (DefaultTableModel) tblNguonNhap.getModel();
-            model.setRowCount(0);
-            for (NguonNhapDTO nguonNhap : listNguonNhap) {
-                model.addRow(new Object[]{
-                    nguonNhap.getMaCoSo(),
-                    nguonNhap.getTenCoSo(),
-                    getHinhThucString(nguonNhap.getHinhThucChuYeu()),
-                    nguonNhap.getDiaChi(),
-                    nguonNhap.getEmail(),
-                    nguonNhap.getSdt(),
-                    nguonNhap.getNgayHopTac(),
-                    nguonNhap.isTrangThai() ? "Hoạt động" : "Ngưng hợp tác"
-                });
+            if (!keyword.isEmpty()) {
+                // Gọi phương thức tìm kiếm nguồn nhập từ BUS
+                listNguonNhap = nguonNhapBUS.timKiemNguonNhap(keyword, selectedOption);
+                DefaultTableModel model = (DefaultTableModel) tblNguonNhap.getModel();
+                model.setRowCount(0);
+                for (NguonNhapDTO nguonNhap : listNguonNhap) {
+                    model.addRow(new Object[]{
+                        nguonNhap.getMaCoSo(),
+                        nguonNhap.getTenCoSo(),
+                        getHinhThucString(nguonNhap.getHinhThucChuYeu()),
+                        nguonNhap.getDiaChi(),
+                        nguonNhap.getEmail(),
+                        nguonNhap.getSdt(),
+                        nguonNhap.getNgayHopTac(),
+                        nguonNhap.isTrangThai() ? "Hoạt động" : "Ngưng hợp tác"
+                    });
+                }
+            } else {
+                loadDataToTable();
             }
-        } else {
-            loadDataToTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm: " + e.getMessage());
         }
     }
     
-    
     private NguonNhapDTO layThongTinForm() {
-        String tenCoSo = txtTenCoSo.getText();
+        String tenCoSo = txtTenCoSo.getText().trim();
         int hinhThucIndex = txtHinhThucChuYeu.getSelectedIndex();
-        // Convert ComboBox index to database value (0->1, 1->2, 2->3)
         int hinhThuc = hinhThucIndex + 1;
-        String diaChi = txtDiaChi.getText();
-        String email = txtEmail.getText();
-        String sdt = txtSoDienThoai.getText();
+        String diaChi = txtDiaChi.getText().trim();
+        String email = txtEmail.getText().trim();
+        String sdt = txtSoDienThoai.getText().trim();
         Date ngayHopTac = txtNgayHopTac.getDate();
 
         if (tenCoSo.isEmpty() || diaChi.isEmpty() || email.isEmpty() || sdt.isEmpty()) {
@@ -580,7 +565,12 @@ public class NguonnhapGUI extends javax.swing.JPanel {
             return null;
         }
 
-        if (ngayHopTac != null && ngayHopTac.after(new Date())) {
+        if (ngayHopTac == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày hợp tác!");
+            return null;
+        }
+
+        if (ngayHopTac.after(new Date())) {
             JOptionPane.showMessageDialog(this, "Ngày hợp tác không hợp lệ!");
             return null;
         }
@@ -588,14 +578,12 @@ public class NguonnhapGUI extends javax.swing.JPanel {
         return new NguonNhapDTO("", tenCoSo, hinhThuc, diaChi, email, ngayHopTac, sdt, true);
     }
 
-
     private void hienThiChiTietNguonNhap(){
         int selectedRow = tblNguonNhap.getSelectedRow();
         if (selectedRow >= 0) {
             NguonNhapDTO nguonNhap = listNguonNhap.get(selectedRow);
             txtTenCoSo.setText(nguonNhap.getTenCoSo());
             txtDiaChi.setText(nguonNhap.getDiaChi());
-            // Convert database value to ComboBox index (1->0, 2->1, 3->2)
             txtHinhThucChuYeu.setSelectedIndex(nguonNhap.getHinhThucChuYeu() - 1);
             txtEmail.setText(nguonNhap.getEmail());
             txtSoDienThoai.setText(nguonNhap.getSdt());
@@ -604,7 +592,6 @@ public class NguonnhapGUI extends javax.swing.JPanel {
     }
 
         
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Timkiem;
@@ -635,25 +622,4 @@ public class NguonnhapGUI extends javax.swing.JPanel {
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NguonnhapGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(() -> {
-            JFrame frame = new JFrame("Quản lý nguồn nhập");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new NguonnhapGUI());
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
-    }
 }

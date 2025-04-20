@@ -11,11 +11,7 @@ import DTO.TheThanhVienDTO;
 
 import java.text.SimpleDateFormat;
 
-/**
- * Lớp DocGiaDAO - Data Access Layer
- * Thực hiện các thao tác liên quan đến lưu trữ và truy xuất dữ liệu độc giả
- * Giao tiếp trực tiếp với hệ quản trị CSDL
- */
+
 public class DocGiaDAO {
     private mySQLConnect mySQL;
     private TheThanhVienDAO theThanhVienDAO;
@@ -25,11 +21,7 @@ public class DocGiaDAO {
         theThanhVienDAO = new TheThanhVienDAO();
     }
     
-    /**
-     * Lấy danh sách tất cả độc giả
-     * @return ArrayList<DocGiaDTO> Danh sách độc giả
-     * @throws SQLException Nếu có lỗi khi truy vấn dữ liệu
-     */
+
     public ArrayList<DocGiaDTO> getList() throws SQLException {
         ArrayList<DocGiaDTO> list = new ArrayList<>();
         
@@ -79,12 +71,6 @@ public class DocGiaDAO {
         return list;
     }
     
-    /**
-     * Thêm độc giả mới
-     * @param dg Đối tượng DocGiaDTO chứa thông tin độc giả
-     * @return boolean true nếu thêm thành công, false nếu thất bại
-     * @throws SQLException Nếu có lỗi khi thêm độc giả
-     */
     public boolean add(DocGiaDTO dg) throws SQLException {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,12 +108,6 @@ public class DocGiaDAO {
         }
     }
     
-    /**
-     * Cập nhật thông tin độc giả
-     * @param dg Đối tượng DocGiaDTO chứa thông tin độc giả cần cập nhật
-     * @return boolean true nếu cập nhật thành công, false nếu thất bại
-     * @throws SQLException Nếu có lỗi khi cập nhật độc giả
-     */
     public boolean update(DocGiaDTO dg) throws SQLException {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -219,12 +199,6 @@ public class DocGiaDAO {
         }
     }
     
-    /**
-     * Xóa độc giả (cập nhật trạng thái = false trong thẻ thành viên)
-     * @param maDG Mã độc giả cần xóa
-     * @return boolean true nếu xóa thành công, false nếu thất bại
-     * @throws SQLException Nếu có lỗi khi xóa độc giả
-     */
     public boolean delete(String maDG) throws SQLException {
         try {
             // Kiểm tra xem độc giả có thẻ thành viên không
@@ -252,12 +226,6 @@ public class DocGiaDAO {
         }
     }
     
-    /**
-     * Khôi phục độc giả đã xóa
-     * @param maDG Mã độc giả cần khôi phục
-     * @return boolean true nếu khôi phục thành công, false nếu thất bại
-     * @throws SQLException Nếu có lỗi khi khôi phục độc giả
-     */
     public boolean restore(String maDG) throws SQLException {
         try {
             String sql = "UPDATE TheThanhVien SET trang_thai = true " +
@@ -269,13 +237,6 @@ public class DocGiaDAO {
         }
     }
     
-    /**
-     * Tìm kiếm độc giả
-     * @param keyword Từ khóa tìm kiếm
-     * @param selectedOption Tiêu chí tìm kiếm (Mã độc giả, Tên độc giả, Số điện thoại, Địa chỉ, Mã thẻ)
-     * @return ArrayList<DocGiaDTO> Danh sách độc giả thỏa mãn điều kiện tìm kiếm
-     * @throws SQLException Nếu có lỗi khi tìm kiếm độc giả
-     */
     public ArrayList<DocGiaDTO> search(String keyword, String selectedOption) throws SQLException {
         ArrayList<DocGiaDTO> list = new ArrayList<>();
         
