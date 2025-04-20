@@ -4,7 +4,7 @@
  */
 package ui;
 
-import DAO.DocGiaDAO;
+import BUS.DocGiaBUS;
 import DTO.DocGiaDTO;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,11 +14,13 @@ import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 
 /**
- *
- * @author dinhp
+ * Lớp DocGiaGUI - Presentation Layer
+ * Hiển thị giao diện người dùng cho quản lý độc giả
+ * Xử lý tương tác người dùng và hiển thị dữ liệu
+ * Không chứa logic nghiệp vụ, chỉ gọi đến Business Logic Layer
  */
 public class DocgiaGUI extends javax.swing.JPanel {
-    private DocGiaDAO docGiaDAO;
+    private DocGiaBUS docGiaBUS;
     private ArrayList<DocGiaDTO> listDocGia;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
@@ -412,16 +414,15 @@ public class DocgiaGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Thiết lập các thành phần giao diện
+     */
     private void setupComponents() {
-        // Khởi tạo DAO
-        docGiaDAO = new DocGiaDAO();
+        // Khởi tạo BUS
+        docGiaBUS = new DocGiaBUS();
         
         // Xóa text mặc định
-        txtTenDocGia.setText("");
-        txtSoDienThoai.setText("");
-        txtDiaChi.setText("");
-        txtMaThe.setText("");
-        txtTimKiem.setText("");
+        xoaDuLieuForm();
         
         // Thêm sự kiện cho các nút
         btnReset.addActionListener(e -> xoaDuLieuForm());
@@ -439,183 +440,12 @@ public class DocgiaGUI extends javax.swing.JPanel {
         });
     }
     
+    /**
+     * Tải dữ liệu độc giả vào bảng
+     */
     private void loadDataToTable() {
-        listDocGia = docGiaDAO.getList();
-        DefaultTableModel model = (DefaultTableModel) tblDocGia.getModel();
-        model.setRowCount(0);
-        
-        for (DocGiaDTO dg : listDocGia) {
-            model.addRow(new Object[]{
-                dg.getMaDG(),
-                dg.getTenDG(),
-                dg.getGioiTinh(),
-                dg.getSoDienThoai(),
-                tinhTuoi(dg.getNgaySinh()),
-                dg.getDiaChi(),
-                dg.getMaThe(),
-                dg.getNgayCap() != null ? sdf.format(dg.getNgayCap()) : "",
-                dg.getNgayHetHan() != null ? sdf.format(dg.getNgayHetHan()) : "",
-                dg.isTrangThai() ? "Hoạt động" : "Đã khóa"
-            });
-        }
-    }
-    
-    private int tinhTuoi(Date ngaySinh) {
-        if (ngaySinh == null) return 0;
-        return java.time.LocalDate.now().getYear() - 
-               (ngaySinh.getYear() + 1900);
-    }
-    
-    private void hienThiChiTietDocGia() {
-        int selectedRow = tblDocGia.getSelectedRow();
-        if (selectedRow >= 0) {
-            DocGiaDTO dg = listDocGia.get(selectedRow);
-            txtTenDocGia.setText(dg.getTenDG());
-            cboGioiTinh.setSelectedItem(dg.getGioiTinh());
-            txtSoDienThoai.setText(dg.getSoDienThoai());
-            txtDiaChi.setText(dg.getDiaChi());
-            txtMaThe.setText(dg.getMaThe());
-            dateNgaySinh.setDate(dg.getNgaySinh());
-            dateNgayCap.setDate(dg.getNgayCap());
-            dateNgayHetHan.setDate(dg.getNgayHetHan());
-        }
-    }
-    
-    private void xoaDuLieuForm() {
-        txtTenDocGia.setText("");
-        txtSoDienThoai.setText("");
-        txtDiaChi.setText("");
-        txtMaThe.setText("");
-        dateNgaySinh.setDate(null);
-        dateNgayCap.setDate(null);
-        dateNgayHetHan.setDate(null);
-    }
-
-    private void themDocGia() {
         try {
-            DocGiaDTO dg = layThongTinForm();
-            if (dg == null) return;
-            
-            // Kiểm tra xem dữ liệu đã tồn tại chưa
-            String tenDG = dg.getTenDG();
-            String soDienThoai = dg.getSoDienThoai();
-            String diaChi = dg.getDiaChi();
-            Date ngaySinh = dg.getNgaySinh();
-            
-            // Tìm kiếm trong danh sách hiện tại
-            for (DocGiaDTO existingDocGia : listDocGia) {
-                if (existingDocGia.getTenDG().equals(tenDG) && 
-                    existingDocGia.getSoDienThoai().equals(soDienThoai) && 
-                    existingDocGia.getDiaChi().equals(diaChi) && 
-                    existingDocGia.getNgaySinh().equals(ngaySinh)) {
-                    JOptionPane.showMessageDialog(this, "Thông tin độc giả đã tồn tại trong hệ thống!");
-                    return;
-                }
-            }
-            
-            // Tạo mã độc giả mới
-            dg.setMaDG("DG" + (listDocGia.size() + 1));
-            dg.setTrangThai(true);
-            
-            if (docGiaDAO.add(dg)) {
-                JOptionPane.showMessageDialog(this, "Thêm độc giả thành công!");
-                loadDataToTable();
-                xoaDuLieuForm();
-            } else {
-                JOptionPane.showMessageDialog(this, "Thêm độc giả thất bại!");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
-        }
-    }
-    
-    private void capNhatDocGia() {
-        try {
-            int selectedRow = tblDocGia.getSelectedRow();
-            if (selectedRow < 0) {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn độc giả cần cập nhật!");
-                return;
-            }
-            
-            DocGiaDTO dg = layThongTinForm();
-            if (dg == null) return;
-            
-            dg.setMaDG(listDocGia.get(selectedRow).getMaDG());
-            dg.setTrangThai(listDocGia.get(selectedRow).isTrangThai());
-            
-            if (docGiaDAO.update(dg)) {
-                JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
-                loadDataToTable();
-            } else {
-                JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
-        }
-    }
-    
-    private void xoaDocGia() {
-        int selectedRow = tblDocGia.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn độc giả cần xóa!");
-            return;
-        }
-        
-        int confirm = JOptionPane.showConfirmDialog(this, 
-                "Bạn có chắc muốn xóa độc giả này?", 
-                "Xác nhận xóa", 
-                JOptionPane.YES_NO_OPTION);
-                
-        if (confirm == JOptionPane.YES_OPTION) {
-            String maDG = listDocGia.get(selectedRow).getMaDG();
-            if (docGiaDAO.delete(maDG)) {
-                JOptionPane.showMessageDialog(this, "Xóa thành công!");
-                // Cập nhật trạng thái trong listDocGia
-                listDocGia.get(selectedRow).setTrangThai(false);
-                // Cập nhật hiển thị trong bảng
-                DefaultTableModel model = (DefaultTableModel) tblDocGia.getModel();
-                model.setValueAt("Đã khóa", selectedRow, 9); // 9 là cột trạng thái
-                xoaDuLieuForm();
-            } else {
-                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
-            }
-        }
-    }
-    
-    private void khoiPhucDocGia() {
-        int selectedRow = tblDocGia.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn độc giả cần khôi phục!");
-            return;
-        }
-        
-        int confirm = JOptionPane.showConfirmDialog(this, 
-                "Bạn có chắc muốn khôi phục độc giả này?", 
-                "Xác nhận khôi phục", 
-                JOptionPane.YES_NO_OPTION);
-                
-        if (confirm == JOptionPane.YES_OPTION) {
-            String maDG = listDocGia.get(selectedRow).getMaDG();
-            if (docGiaDAO.restore(maDG)) {
-                JOptionPane.showMessageDialog(this, "Khôi phục thành công!");
-                // Cập nhật trạng thái trong listDocGia
-                listDocGia.get(selectedRow).setTrangThai(true);
-                // Cập nhật hiển thị trong bảng
-                DefaultTableModel model = (DefaultTableModel) tblDocGia.getModel();
-                model.setValueAt("Hoạt động", selectedRow, 9); // 9 là cột trạng thái
-                xoaDuLieuForm();
-            } else {
-                JOptionPane.showMessageDialog(this, "Khôi phục thất bại!");
-            }
-        }
-    }
-    
-    private void timKiemDocGia() {
-        String keyword = txtTimKiem.getText().trim();
-        String selectedOption = (String) cboTimKiem.getSelectedItem();
-        
-        if (!keyword.isEmpty()) {
-            listDocGia = docGiaDAO.search(keyword, selectedOption);
+            listDocGia = docGiaBUS.layDanhSachDocGia();
             DefaultTableModel model = (DefaultTableModel) tblDocGia.getModel();
             model.setRowCount(0);
             
@@ -633,11 +463,210 @@ public class DocgiaGUI extends javax.swing.JPanel {
                     dg.isTrangThai() ? "Hoạt động" : "Đã khóa"
                 });
             }
-        } else {
-            loadDataToTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi tải dữ liệu: " + e.getMessage());
         }
     }
     
+    /**
+     * Tính tuổi của độc giả
+     * @param ngaySinh Ngày sinh của độc giả
+     * @return Tuổi của độc giả
+     */
+    private int tinhTuoi(Date ngaySinh) {
+        if (ngaySinh == null) return 0;
+        return java.time.LocalDate.now().getYear() - 
+               (ngaySinh.getYear() + 1900);
+    }
+    
+    /**
+     * Hiển thị chi tiết độc giả được chọn vào form
+     */
+    private void hienThiChiTietDocGia() {
+        int selectedRow = tblDocGia.getSelectedRow();
+        if (selectedRow >= 0) {
+            DocGiaDTO dg = listDocGia.get(selectedRow);
+            txtTenDocGia.setText(dg.getTenDG());
+            cboGioiTinh.setSelectedItem(dg.getGioiTinh());
+            txtSoDienThoai.setText(dg.getSoDienThoai());
+            txtDiaChi.setText(dg.getDiaChi());
+            txtMaThe.setText(dg.getMaThe());
+            dateNgaySinh.setDate(dg.getNgaySinh());
+            dateNgayCap.setDate(dg.getNgayCap());
+            dateNgayHetHan.setDate(dg.getNgayHetHan());
+        }
+    }
+    
+    /**
+     * Xóa dữ liệu trong form
+     */
+    private void xoaDuLieuForm() {
+        txtTenDocGia.setText("");
+        txtSoDienThoai.setText("");
+        txtDiaChi.setText("");
+        txtMaThe.setText("");
+        txtTimKiem.setText("");
+        dateNgaySinh.setDate(null);
+        dateNgayCap.setDate(null);
+        dateNgayHetHan.setDate(null);
+    }
+
+    /**
+     * Thêm độc giả mới
+     */
+    private void themDocGia() {
+        try {
+            DocGiaDTO dg = layThongTinForm();
+            if (dg == null) return;
+            
+            // Gọi phương thức thêm độc giả từ BUS
+            if (docGiaBUS.themDocGia(dg)) {
+                JOptionPane.showMessageDialog(this, "Thêm độc giả thành công!");
+                loadDataToTable();
+                xoaDuLieuForm();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm độc giả thất bại!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Cập nhật thông tin độc giả
+     */
+    private void capNhatDocGia() {
+        try {
+            int selectedRow = tblDocGia.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn độc giả cần cập nhật!");
+                return;
+            }
+            
+            DocGiaDTO dg = layThongTinForm();
+            if (dg == null) return;
+            
+            dg.setMaDG(listDocGia.get(selectedRow).getMaDG());
+            dg.setTrangThai(listDocGia.get(selectedRow).isTrangThai());
+            
+            // Gọi phương thức cập nhật độc giả từ BUS
+            if (docGiaBUS.capNhatDocGia(dg)) {
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+                loadDataToTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Xóa độc giả (cập nhật trạng thái = false)
+     */
+    private void xoaDocGia() {
+        int selectedRow = tblDocGia.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn độc giả cần xóa!");
+            return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(this, 
+                "Bạn có chắc muốn xóa độc giả này?", 
+                "Xác nhận xóa", 
+                JOptionPane.YES_NO_OPTION);
+                
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                String maDG = listDocGia.get(selectedRow).getMaDG();
+                
+                // Gọi phương thức xóa độc giả từ BUS
+                if (docGiaBUS.xoaDocGia(maDG)) {
+                    JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                    loadDataToTable();
+                    xoaDuLieuForm();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+            }
+        }
+    }
+    
+    /**
+     * Khôi phục độc giả đã xóa (cập nhật trạng thái = true)
+     */
+    private void khoiPhucDocGia() {
+        int selectedRow = tblDocGia.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn độc giả cần khôi phục!");
+            return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(this, 
+                "Bạn có chắc muốn khôi phục độc giả này?", 
+                "Xác nhận khôi phục", 
+                JOptionPane.YES_NO_OPTION);
+                
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                String maDG = listDocGia.get(selectedRow).getMaDG();
+                
+                // Gọi phương thức khôi phục độc giả từ BUS
+                if (docGiaBUS.khoiPhucDocGia(maDG)) {
+                    JOptionPane.showMessageDialog(this, "Khôi phục thành công!");
+                    loadDataToTable();
+                    xoaDuLieuForm();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Khôi phục thất bại!");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
+            }
+        }
+    }
+    
+    /**
+     * Tìm kiếm độc giả
+     */
+    private void timKiemDocGia() {
+        try {
+            String keyword = txtTimKiem.getText().trim();
+            String selectedOption = (String) cboTimKiem.getSelectedItem();
+            
+            if (!keyword.isEmpty()) {
+                // Gọi phương thức tìm kiếm độc giả từ BUS
+                listDocGia = docGiaBUS.timKiemDocGia(keyword, selectedOption);
+                DefaultTableModel model = (DefaultTableModel) tblDocGia.getModel();
+                model.setRowCount(0);
+                
+                for (DocGiaDTO dg : listDocGia) {
+                    model.addRow(new Object[]{
+                        dg.getMaDG(),
+                        dg.getTenDG(),
+                        dg.getGioiTinh(),
+                        dg.getSoDienThoai(),
+                        tinhTuoi(dg.getNgaySinh()),
+                        dg.getDiaChi(),
+                        dg.getMaThe(),
+                        dg.getNgayCap() != null ? sdf.format(dg.getNgayCap()) : "",
+                        dg.getNgayHetHan() != null ? sdf.format(dg.getNgayHetHan()) : "",
+                        dg.isTrangThai() ? "Hoạt động" : "Đã khóa"
+                    });
+                }
+            } else {
+                loadDataToTable();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Lấy thông tin từ form và tạo đối tượng DocGiaDTO
+     * @return DocGiaDTO hoặc null nếu dữ liệu không hợp lệ
+     */
     private DocGiaDTO layThongTinForm() {
         String tenDG = txtTenDocGia.getText().trim();
         String gioiTinh = (String) cboGioiTinh.getSelectedItem();
@@ -665,8 +694,9 @@ public class DocgiaGUI extends javax.swing.JPanel {
                 maThe, ngayCap, ngayHetHan, true);
     }
     
-    
-
+    /**
+     * Main method để chạy ứng dụng
+     */
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
