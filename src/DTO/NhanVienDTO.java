@@ -8,7 +8,6 @@ public class NhanVienDTO {
     private String diaChi;
     private String soDienThoai;
     private String email;
-    private String vaiTro;
     private java.sql.Date ngayVaoLam;
     private String trangThai;
 
@@ -17,7 +16,7 @@ public class NhanVienDTO {
 
     // Constructor đầy đủ
     public NhanVienDTO(int idNhanVien, String tenNhanVien, String gioiTinh, java.sql.Date ngaySinh,
-                       String diaChi, String soDienThoai, String email, String vaiTro, java.sql.Date ngayVaoLam, String trangThai) {
+                       String diaChi, String soDienThoai, String email, java.sql.Date ngayVaoLam, String trangThai) {
         this.idNhanVien = idNhanVien;
         this.tenNhanVien = tenNhanVien;
         this.gioiTinh = gioiTinh;
@@ -25,7 +24,6 @@ public class NhanVienDTO {
         this.diaChi = diaChi;
         this.soDienThoai = soDienThoai;
         this.email = email;
-        this.vaiTro = vaiTro;
         this.ngayVaoLam = ngayVaoLam;
         this.trangThai = trangThai;
     }
@@ -85,14 +83,6 @@ public class NhanVienDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getVaiTro() {
-        return vaiTro;
-    }
-
-    public void setVaiTro(String vaiTro) {
-        this.vaiTro = vaiTro;
     }
 
     public java.sql.Date getNgayVaoLam() {

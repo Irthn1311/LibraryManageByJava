@@ -39,7 +39,7 @@ public class NhanVienBUS {
         return nhanVienDAO.timKiemNhanVien(tuKhoa);
     }
     
-    public void capNhatTrangThai(int maNhanVien, String trangThai) throws SQLException {
-        nhanVienDAO.capNhatTrangThai(maNhanVien, trangThai);
+    public void capNhatTrangThai(int maNhanVien, String trang_thai) throws SQLException {
+        nhanVienDAO.capNhatTrangThai(maNhanVien, trang_thai);
 }
 }

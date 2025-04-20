@@ -8,7 +8,7 @@ public class NhanVienDAO {
     private mySQLConnect db = new mySQLConnect();
 
     public boolean kiemTraSuTonTai(int idNhanVien) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM NhanVien WHERE ma_nhan_vien = ?";
+        String sql = "SELECT COUNT(*) FROM nhanvien WHERE ma_nhan_vien = ?";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, idNhanVien);
             ResultSet rs = stmt.executeQuery();
@@ -21,21 +21,20 @@ public class NhanVienDAO {
 
     public ArrayList<NhanVienDTO> layDanhSachNhanVien() throws SQLException {
         ArrayList<NhanVienDTO> dsnv = new ArrayList<>();
-        String sql = "SELECT * FROM NhanVien";
+        String sql = "SELECT * FROM nhanvien";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 NhanVienDTO nv = new NhanVienDTO(
                     rs.getInt("ma_nhan_vien"), 
-                    rs.getString("TenNhanVien"),
-                    rs.getString("GioiTinh"),
-                    rs.getDate("NgaySinh"),
-                    rs.getString("DiaChi"),
-                    rs.getString("SoDienThoai"),
-                    rs.getString("Email"),
-                    rs.getString("VaiTro"),
-                    rs.getDate("NgayVaoLam"),
-                    rs.getString("TrangThai")
+                    rs.getString("ten_nhan_vien"),
+                    rs.getString("gioi_tinh"),
+                    rs.getDate("ngay_sinh"),
+                    rs.getString("dia_chi"),
+                    rs.getString("so_dien_thoai"),
+                    rs.getString("email"),
+                    rs.getDate("ngay_vao_lam"),
+                    rs.getString("trang_thai")
                 );
                 dsnv.add(nv);
             }
@@ -45,8 +44,8 @@ public class NhanVienDAO {
 
 
     public void themNhanVien(NhanVienDTO nv) throws SQLException {
-        String sql = "INSERT INTO NhanVien (TenNhanVien, GioiTinh, NgaySinh, DiaChi, SoDienThoai, Email, VaiTro, NgayVaoLam, TrangThai) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO nhanvien (ten_nhan_vien, gioi_tinh, ngay_sinh, dia_chi, so_dien_thoai, email, ngay_vao_lam, trang_thai) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
             stmt.setString(1, nv.getTenNhanVien());
             stmt.setString(2, nv.getGioiTinh());
@@ -54,9 +53,8 @@ public class NhanVienDAO {
             stmt.setString(4, nv.getDiaChi());
             stmt.setString(5, nv.getSoDienThoai());
             stmt.setString(6, nv.getEmail());
-            stmt.setString(7, nv.getVaiTro());
-            stmt.setDate(8, nv.getNgayVaoLam());
-            stmt.setString(9, nv.getTrangThai());
+            stmt.setDate(7, nv.getNgayVaoLam());
+            stmt.setString(8, nv.getTrangThai());
 
             stmt.executeUpdate(); // Thực thi câu lệnh
         }
@@ -64,7 +62,7 @@ public class NhanVienDAO {
 
 
     public void suaNhanVien(NhanVienDTO nv) throws SQLException {
-        String sql = "UPDATE NhanVien SET TenNhanVien = ?, GioiTinh = ?, NgaySinh = ?, DiaChi = ?, SoDienThoai = ?, Email = ?, VaiTro = ?, NgayVaoLam = ?, TrangThai = ? WHERE ma_nhan_vien = ?";
+        String sql = "UPDATE nhanvien SET ten_nhan_vien = ?, gioi_tinh = ?, ngay_sinh = ?, dia_chi = ?, so_dien_thoai = ?, email = ?, ngay_vao_lam = ?, trang_thai = ? WHERE ma_nhan_vien = ?";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
             stmt.setString(1, nv.getTenNhanVien());
             stmt.setString(2, nv.getGioiTinh());
@@ -72,16 +70,15 @@ public class NhanVienDAO {
             stmt.setString(4, nv.getDiaChi());
             stmt.setString(5, nv.getSoDienThoai());
             stmt.setString(6, nv.getEmail());
-            stmt.setString(7, nv.getVaiTro());
-            stmt.setDate(8, nv.getNgayVaoLam());
-            stmt.setString(9, nv.getTrangThai());
-            stmt.setInt(10, nv.getIdNhanVien());
+            stmt.setDate(7, nv.getNgayVaoLam());
+            stmt.setString(8, nv.getTrangThai());
+            stmt.setInt(9, nv.getIdNhanVien());
             stmt.executeUpdate();
         }
     }
 
     public void xoaNhanVien(int idNhanVien) throws SQLException {
-        String sql = "DELETE FROM NhanVien WHERE ma_nhan_vien = ?";
+        String sql = "DELETE FROM nhanvien WHERE ma_nhan_vien = ?";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
             stmt.setInt(1, idNhanVien);
             stmt.executeUpdate();
@@ -90,34 +87,32 @@ public class NhanVienDAO {
 
     public ArrayList<NhanVienDTO> timKiemNhanVien(String tuKhoa) throws SQLException {
         ArrayList<NhanVienDTO> ketQua = new ArrayList<>();
-        String sql = "SELECT * FROM NhanVien WHERE " +
+        String sql = "SELECT * FROM nhanvien WHERE " +
                      "CAST(ma_nhan_vien AS CHAR) LIKE ? OR " +
-                     "TenNhanVien LIKE ? OR " +
-                     "GioiTinh LIKE ? OR " +
-                     "CAST(NgaySinh AS CHAR) LIKE ? OR " +
-                     "DiaChi LIKE ? OR " +
-                     "SoDienThoai LIKE ? OR " +
-                     "Email LIKE ? OR " +
-                     "VaiTro LIKE ? OR " +
-                     "CAST(NgayVaoLam AS CHAR) LIKE ? OR " +
-                     "TrangThai LIKE ?";
+                     "ten_nhan_vien LIKE ? OR " +
+                     "gioi_tinh LIKE ? OR " +
+                     "CAST(ngay_sinh AS CHAR) LIKE ? OR " +
+                     "dia_chi LIKE ? OR " +
+                     "so_dien_thoai LIKE ? OR " +
+                     "email LIKE ? OR " +
+                     "CAST(ngay_vao_lam AS CHAR) LIKE ? OR " +
+                     "trang_thai LIKE ?";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 9; i++) {
                 stmt.setString(i, "%" + tuKhoa + "%");
             }
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 ketQua.add(new NhanVienDTO(
                     rs.getInt("ma_nhan_vien"), 
-                    rs.getString("TenNhanVien"),
-                    rs.getString("GioiTinh"),
-                    rs.getDate("NgaySinh"),
-                    rs.getString("DiaChi"),
-                    rs.getString("SoDienThoai"),
-                    rs.getString("Email"),
-                    rs.getString("VaiTro"),
-                    rs.getDate("NgayVaoLam"),
-                    rs.getString("TrangThai")
+                    rs.getString("ten_nhan_vien"),
+                    rs.getString("gioi_tinh"),
+                    rs.getDate("ngay_sinh"),
+                    rs.getString("dia_chi"),
+                    rs.getString("so_dien_thoai"),
+                    rs.getString("email"),
+                    rs.getDate("ngay_vao_lam"),
+                    rs.getString("trang_thai")
                 ));
             }
         }
@@ -125,10 +120,10 @@ public class NhanVienDAO {
     }
 
 
-    public void capNhatTrangThai(int maNhanVien, String trangThai) throws SQLException {
-        String sql = "UPDATE NhanVien SET TrangThai = ? WHERE ma_nhan_vien = ?";
+    public void capNhatTrangThai(int maNhanVien, String trang_thai) throws SQLException {
+        String sql = "UPDATE nhanvien SET trang_thai = ? WHERE ma_nhan_vien = ?";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
-            stmt.setString(1, trangThai);
+            stmt.setString(1, trang_thai);
             stmt.setInt(2, maNhanVien);
             stmt.executeUpdate();
         }
