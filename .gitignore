@@ -1,9 +1,9 @@
 # Ignore all .class files
-*.class
+#*.class
 
 # Ignore build directories
-/build/
-/bin/
+#/build/
+#/bin/
 
 /# Ignore IDE-specific files
 # *.iml
