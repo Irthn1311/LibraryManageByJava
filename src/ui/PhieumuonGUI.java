@@ -1,7 +1,8 @@
 
 package ui;
 import DTO.DocGiaDTO;
-import DAO.DocGiaDAO;
+import BUS.DocGiaBUS;
+//import DAO.DocGiaDAO;
 import BUS.PhieuMuonBUS;
 import DAO.PhieuMuonDAO;
 import DAO.PhieuPhatDAO;
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
+import java.sql.SQLException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -29,8 +31,11 @@ public class PhieumuonGUI extends javax.swing.JPanel {
     PhieuMuonBUS bus = new PhieuMuonBUS();
 ArrayList<PhieuMuonDTO> danhSach = bus.getDanhSachPhieuMuon();
 PhieuMuonDTO x = new PhieuMuonDTO();
-DocGiaDAO docGiaDAO = new DocGiaDAO();
-ArrayList<DocGiaDTO> dsDocGia = docGiaDAO.getList();
+//DocGiaBUS docGiaBUS = new DocGiaBUS();
+ArrayList<DocGiaDTO> dsDocGia;
+DocGiaBUS docGiaBUS;
+//ArrayList<DocGiaDTO> dsDocGia = docGiaBUS.layDanhSachDocGia();
+//ArrayList<DocGiaDTO> dsDocGia = docGiaDAO.getList();
 
     public PhieumuonGUI() {
         initComponents();
@@ -760,8 +765,20 @@ try {
        
         String MaDG = tbPhieumuon.getValueAt(row, 1).toString();  // Cột 1 là Mã độc giả
 // lay ten doc gia tu ma doc gia
-        DocGiaDAO docGiaDAO = new DocGiaDAO();
-        ArrayList<DocGiaDTO> dsDocGia = docGiaDAO.getList();
+
+
+        //DocGiaBUS docGiaBUS = new DocGiaBUS();
+            //private ArrayList<DocGiaDTO> dsDocGia;
+            //private DocGiaBUS docGiaBUS;
+        //ArrayList<DocGiaDTO> dsDocGia = docGiaBUS.layDanhSachDocGia();
+        //ArrayList<DocGiaDTO> dsDocGia = docGiaDAO.getList();
+        docGiaBUS = new DocGiaBUS();
+        try {
+            dsDocGia = docGiaBUS.layDanhSachDocGia();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi lấy danh sách độc giả: " + e.getMessage());
+        }
         for (DocGiaDTO dg : dsDocGia) {
          if (dg.getMaDG().equals(MaDG)) {
         txtTenDG.setText(dg.getTenDG()); 
