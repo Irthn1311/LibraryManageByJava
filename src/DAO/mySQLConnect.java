@@ -42,7 +42,10 @@ public class mySQLConnect {
         return false;
     }
     
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+        if (conn == null || conn.isClosed()) {
+            conn = DriverManager.getConnection(url, user, password);
+        }
         return conn;
     }
     
