@@ -1,4 +1,4 @@
-package log_reg;
+package Helper;
 import javax.swing.*;
 import java.awt.*;
 
