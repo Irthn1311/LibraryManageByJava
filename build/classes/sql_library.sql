@@ -54,7 +54,6 @@ INSERT INTO lbr.CoSoNhap (ma_co_so, ten_co_so, hinhthuc_chuyeu, dia_chi, email, 
 
 CREATE TABLE lbr.PhieuNhap (
     ma_phieu_nhap VARCHAR(255) primary key,
-    ten_co_so VARCHAR(255),
     loai_nhap VARCHAR(100),
     so_luong_sach INT,
     tong_tien INT,
@@ -67,16 +66,12 @@ CREATE TABLE lbr.PhieuNhap (
 
 
 CREATE TABLE lbr.ChiTietPhieuNhap (
-    ma_ctpn varchar(255) PRIMARY KEY,
+    ma_ctpn INT AUTO_INCREMENT PRIMARY KEY,
     ma_phieu_nhap varchar(255),
     loai_sach VARCHAR(100),
     don_gia int,
     so_luong INT,
-    thanh_tien int,
-    tong_tien int,
-    hinh_thuc_nhap VARCHAR(50),
-
-    FOREIGN KEY (ma_phieu_nhap) REFERENCES PhieuNhap(ma_phieu_nhap)
+    thanh_tien int
 );
 
 
@@ -166,7 +161,6 @@ CREATE TABLE lbr.DanhGia (
     ma_doc_gia varchar(255),
     ma_sach varchar(255),
     so_sao INT CHECK (so_sao BETWEEN 1 AND 5),
-    nhan_xet TEXT,
   	ngay_danh_gia date,
 
     FOREIGN KEY (ma_doc_gia) REFERENCES DocGia(ma_doc_gia),
@@ -220,7 +214,6 @@ CREATE TABLE lbr.TaiKhoan (
 CREATE TABLE lbr.ThongBao (
     ma_thong_bao varchar(255) PRIMARY KEY,
     ma_the VARCHAR(255),
-    loai_thong_bao VARCHAR(100),
     noi_dung TEXT,
     ngay_tao DATETIME DEFAULT CURRENT_TIMESTAMP,
 
