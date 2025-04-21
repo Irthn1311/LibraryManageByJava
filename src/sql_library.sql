@@ -166,7 +166,6 @@ CREATE TABLE lbr.DanhGia (
     ma_doc_gia varchar(255),
     ma_sach varchar(255),
     so_sao INT CHECK (so_sao BETWEEN 1 AND 5),
-    nhan_xet TEXT,
   	ngay_danh_gia date,
 
     FOREIGN KEY (ma_doc_gia) REFERENCES DocGia(ma_doc_gia),
@@ -220,7 +219,6 @@ CREATE TABLE lbr.TaiKhoan (
 CREATE TABLE lbr.ThongBao (
     ma_thong_bao varchar(255) PRIMARY KEY,
     ma_the VARCHAR(255),
-    loai_thong_bao VARCHAR(100),
     noi_dung TEXT,
     ngay_tao DATETIME DEFAULT CURRENT_TIMESTAMP,
 
