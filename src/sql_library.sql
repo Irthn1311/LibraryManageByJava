@@ -16,6 +16,19 @@ CREATE TABLE lbr.Sach (
     doc_file_pdf Boolean default false
 );
 
+INSERT INTO lbr.Sach (ma_sach, ten_sach, tac_gia, the_loai, ngon_ngu, so_luong, nha_xuat_ban, nam_xuat_ban, file_pdf, doc_tai_cho, muon_ve, doc_file_pdf)
+VALUES
+('S001', 'Chuyện Xưa Tích Cũ', 'Nguyễn Văn A', 'Văn học', 'Tiếng Việt', 5, 'NXB Kim Đồng', 2020, 'chuyenxua.pdf', true, true, true),
+('S002', 'Khoa Học Vui', 'Trần B', 'Khoa học', 'Tiếng Việt', 5, 'NXB Trẻ', 2021, 'khoahocvui.pdf', true, false, true),
+('S003', 'Câu Chuyện Thiếu Nhi', 'Nguyễn C', 'Thiếu nhi', 'Tiếng Việt', 4, 'NXB Kim Đồng', 2019, 'thieunhi.pdf', true, true, false),
+('S004', 'Lược Sử Thế Giới', 'John Doe', 'Lịch sử', 'Tiếng Anh', 5, 'NXB Giáo Dục', 2018, 'lichsu.pdf', false, true, true),
+('S005', 'Học Tiếng Anh Cơ Bản', 'Jane Smith', 'Ngoại ngữ', 'Tiếng Anh', 5, 'NXB Ngoại Ngữ', 2022, 'tienganh.pdf', true, true, true),
+('S006', 'Tập Làm Văn', 'Nguyễn D', 'Văn học', 'Tiếng Việt', 5, 'NXB Giáo Dục', 2023, 'taplamvan.pdf', true, false, false),
+('S007', 'Toán Cho Mọi Người', 'Trần E', 'Toán học', 'Tiếng Việt', 5, 'NXB Giáo Dục', 2020, 'toan.pdf', true, true, true),
+('S008', 'Lập Trình Python', 'Nguyễn F', 'Tin học', 'Tiếng Việt', 5, 'NXB Khoa Học', 2021, 'python.pdf', true, false, true),
+('S009', 'Kinh Tế Vĩ Mô', 'Trần G', 'Kinh tế', 'Tiếng Việt', 5, 'NXB Kinh Tế', 2022, 'kinhte.pdf', true, true, false),
+('S010', 'Hiểu Luật Giao Thông', 'Nguyễn H', 'Pháp luật', 'Tiếng Việt', 5, 'NXB Tư Pháp', 2017, 'phapluat.pdf', false, true, true);
+
 CREATE TABLE lbr.NhanVien (
     ma_nhan_vien INT AUTO_INCREMENT primary key,
     ten_nhan_vien VARCHAR(100) NOT NULL,
@@ -27,6 +40,15 @@ CREATE TABLE lbr.NhanVien (
     ngay_vao_lam DATE,
     trang_thai VARCHAR(20)
 );
+
+INSERT INTO lbr.NhanVien (ten_nhan_vien, gioi_tinh, ngay_sinh, dia_chi, so_dien_thoai, email, ngay_vao_lam, trang_thai)
+VALUES
+('Nguyễn Văn A', 'Nam', '1990-05-15', 'Hà Nội', '0912345678', 'a.nguyen@example.com', '2022-01-10', 'Đang làm'),
+('Trần Thị B', 'Nữ', '1992-08-20', 'Hồ Chí Minh', '0987654321', 'b.tran@example.com', '2023-03-01', 'Đang làm'),
+('Lê Văn C', 'Nam', '1988-12-01', 'Đà Nẵng', '0909123456', 'c.le@example.com', '2021-11-15', 'Đang làm'),
+('Phạm Thị D', 'Nữ', '1995-04-22', 'Cần Thơ', '0934567890', 'd.pham@example.com', '2024-06-20', 'Đang làm'),
+('Hoàng Văn E', 'Nam', '1993-07-09', 'Hải Phòng', '0978123456', 'e.hoang@example.com', '2020-09-05', 'Đang làm');
+
 
 CREATE TABLE lbr.CoSoNhap (
     ma_co_so varchar(255) PRIMARY KEY,
@@ -73,6 +95,34 @@ CREATE TABLE lbr.ChiTietPhieuNhap (
     so_luong INT,
     thanh_tien int
 );
+
+INSERT INTO lbr.PhieuNhap (ma_phieu_nhap, loai_nhap, so_luong_sach, tong_tien, ngay_nhap, ma_nhan_vien, ma_co_so)
+VALUES 
+('PN001', 'Mua-bán', 20, 400000, '2025-04-01', 1, 'CS001'),
+('PN002', 'Nhà xuất bản tài trợ', 18, 360000, '2025-04-05', 1, 'CS001'),
+('PN003', 'Mua-bán', 22, 440000, '2025-04-10', 1, 'CS002'),
+('PN004', 'Nhà xuất bản tài trợ', 16, 320000, '2025-04-12', 1, 'CS001'),
+('PN005', 'Mua-bán', 24, 480000, '2025-04-15', 1, 'CS002');
+
+
+
+INSERT INTO lbr.ChiTietPhieuNhap (ma_phieu_nhap, loai_sach, don_gia, so_luong, thanh_tien)
+VALUES 
+-- PN001
+('PN001', 'Văn học', 10000, 10, 100000),
+('PN001', 'Khoa học', 15000, 10, 150000),
+-- PN002
+('PN002', 'Thiếu nhi', 12000, 8, 96000),
+('PN002', 'Lịch sử', 18000, 10, 180000),
+-- PN003
+('PN003', 'Ngoại ngữ', 20000, 12, 240000),
+('PN003', 'Văn học', 20000, 10, 200000),
+-- PN004
+('PN004', 'Toán học', 16000, 8, 128000),
+('PN004', 'Tin học', 16000, 8, 128000),
+-- PN005
+('PN005', 'Kinh tế', 20000, 12, 240000),
+('PN005', 'Pháp luật', 20000, 12, 240000);
 
 
 CREATE TABLE lbr.DocGia (
