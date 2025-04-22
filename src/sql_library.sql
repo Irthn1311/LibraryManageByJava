@@ -134,6 +134,28 @@ CREATE TABLE lbr.PhieuMuon (
     FOREIGN KEY (ma_sach) REFERENCES Sach(ma_sach)
 );
 
+INSERT INTO lbr.PhieuMuon (ma_phieu_muon, ma_doc_gia, ma_sach, ngay_muon, han_tra, ngay_tra_thuc_te, trang_thai, tien_phat)
+VALUES 
+-- -- 0: Đã trả (ngày trả thực tế có, trước hoặc đúng hạn)
+('PM001', 'DG001', 'S001', '2025-04-01', '2025-04-10', '2025-04-09', '0', 0),
+('PM004', 'DG004', 'S004', '2025-04-03', '2025-04-12', '2025-04-12', '0', 0),
+('PM008', 'DG008', 'S008', '2025-03-30', '2025-04-09', '2025-04-09', '0', 0),
+
+-- 1: Đang mượn (có ngày mượn và hạn trả, chưa có ngày trả thực tế)
+('PM003', 'DG003', 'S003', '2025-04-15', '2025-04-25', NULL, '1', 0),
+('PM005', 'DG005', 'S005', '2025-04-17', '2025-04-27', NULL, '1', 0),
+('PM007', 'DG007', 'S007', '2025-04-18', '2025-04-28', NULL, '1', 0),
+('PM010', 'DG010', 'S010', '2025-04-19', '2025-04-29', NULL, '1', 0),
+
+-- 3: Trả quá hạn (ngày trả thực tế lớn hơn hạn trả)
+('PM002', 'DG002', 'S002', '2025-04-02', '2025-04-11', '2025-04-13', '3', 5000),
+('PM006', 'DG006', 'S006', '2025-03-25', '2025-04-05', '2025-04-07', '3', 10000),
+('PM009', 'DG009', 'S009', '2025-04-01', '2025-04-10', '2025-04-12', '3', 5000),
+
+-- 2: Đặt trước (không có ngày mượn, hạn trả hay ngày trả thực tế)
+('PM011', 'DG001', 'S005', NULL, NULL, NULL, '2', 0),
+('PM012', 'DG004', 'S001', NULL, NULL, NULL, '2', 0);
+
 create table lbr.PhieuPhat (
     ma_phieu_phat varchar(255) primary key,
     ma_phieu_muon varchar(255),
@@ -196,6 +218,23 @@ CREATE TABLE lbr.PhanQuyen (
 
     FOREIGN KEY (ma_chuc_nang) REFERENCES ChucNang(ma_chuc_nang)
 );
+
+-- Phân quyền cho Thủ thư
+INSERT INTO lbr.PhanQuyen VALUES 
+('PQ1', 'Thủ thư', 'Q1', TRUE, TRUE, TRUE),   -- Quản lý Sách
+('PQ2', 'Thủ thư', 'Q4', TRUE, TRUE, FALSE),  -- Quản lý Độc giả
+('PQ3', 'Thủ thư', 'Q6', TRUE, TRUE, FALSE),  -- Quản lý Phiếu mượn
+('PQ4', 'Thủ thư', 'Q3', TRUE, FALSE, FALSE); -- Quản lý Phiếu nhập sách (chỉ xem)
+
+-- Phân quyền cho Admin
+INSERT INTO lbr.PhanQuyen VALUES 
+('PQ5', 'Admin', 'Q1', TRUE, TRUE, TRUE),
+('PQ6', 'Admin', 'Q2', TRUE, TRUE, TRUE),
+('PQ7', 'Admin', 'Q3', TRUE, TRUE, TRUE),
+('PQ8', 'Admin', 'Q4', TRUE, TRUE, TRUE),
+('PQ9', 'Admin', 'Q5', TRUE, TRUE, TRUE),
+('PQ10', 'Admin', 'Q6', TRUE, TRUE, TRUE);
+
 
 CREATE TABLE lbr.TaiKhoan (
     ma_the varchar(255),
