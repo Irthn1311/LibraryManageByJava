@@ -162,4 +162,25 @@ public class ChiTietPhieuNhapDAO {
 
         return ds;
     }
+    
+    public ArrayList<String> layDanhSachLoaiSach() {
+        ArrayList<String> danhSachLoaiSach = new ArrayList<>();
+        try {
+            // SQL query để lấy danh sách thể loại sách từ bảng ChiTietPhieuNhap
+            String sql = "SELECT DISTINCT loai_sach FROM ChiTietPhieuNhap"; 
+            try (PreparedStatement pst = db.getConnection().prepareStatement(sql)) {
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    // Thêm thể loại sách vào danh sách
+                    danhSachLoaiSach.add(rs.getString("loai_sach"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return danhSachLoaiSach;
+    }
+
+
 }

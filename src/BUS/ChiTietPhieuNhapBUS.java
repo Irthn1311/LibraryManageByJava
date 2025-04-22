@@ -34,4 +34,9 @@ public class ChiTietPhieuNhapBUS {
     public ArrayList<ChiTietPhieuNhapDTO> timKiemChiTiet(String tuKhoa) throws SQLException {
         return chiTietPhieuNhapDAO.timKiemChiTiet(tuKhoa);
     }
+    
+    // Phương thức lấy danh sách thể loại sách từ DAO
+    public ArrayList<String> layDanhSachLoaiSach() {
+        return chiTietPhieuNhapDAO.layDanhSachLoaiSach();
+    }
 }
