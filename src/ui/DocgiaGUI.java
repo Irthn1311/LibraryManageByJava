@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 public class DocgiaGUI extends javax.swing.JPanel {
@@ -433,6 +435,27 @@ public class DocgiaGUI extends javax.swing.JPanel {
                 hienThiChiTietDocGia();
             }
         });
+        
+        // Thêm sự kiện cập nhật mã thẻ khi nhập số điện thoại
+        txtSoDienThoai.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                capNhatMaThe();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                capNhatMaThe();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                capNhatMaThe();
+            }
+        });
+        
+        // Đặt ô mã thẻ chỉ đọc
+        txtMaThe.setEditable(false);
     }
     
     private void loadDataToTable() {
@@ -528,21 +551,32 @@ public class DocgiaGUI extends javax.swing.JPanel {
                         true
                     );
                     
-                    if (theThanhVienBUS.themTheThanhVien(theThanhVien)) {
-                        JOptionPane.showMessageDialog(this, "Thêm độc giả và thẻ thành viên thành công!");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Thêm độc giả thành công nhưng thêm thẻ thất bại!");
+                    try {
+                        if (theThanhVienBUS.themTheThanhVien(theThanhVien)) {
+                            JOptionPane.showMessageDialog(this, "Thêm độc giả và thẻ thành viên thành công!");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Thêm độc giả thành công nhưng thêm thẻ thất bại!");
+                        }
+                    } catch (Exception e) {
+                        // Nếu thẻ đã tồn tại, vẫn hiển thị thông báo thành công cho độc giả
+                        if (e.getMessage().contains("đã tồn tại") || e.getMessage().contains("đã có thẻ")) {
+                            JOptionPane.showMessageDialog(this, "Thêm độc giả thành công!");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Thêm độc giả thành công nhưng xử lý thẻ thất bại: " + e.getMessage());
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "Thêm độc giả thành công!");
                 }
                 
+                // Luôn cập nhật lại bảng sau khi thêm thành công
                 loadDataToTable();
                 xoaDuLieuForm();
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm độc giả thất bại!");
             }
         } catch (Exception e) {
+            // Hiển thị thông báo lỗi cụ thể
             JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
         }
     }
@@ -740,6 +774,10 @@ public class DocgiaGUI extends javax.swing.JPanel {
                 maThe, ngayCap, ngayHetHan, true);
     }
     
+    private void capNhatMaThe() {
+        String soDienThoai = txtSoDienThoai.getText().trim();
+        txtMaThe.setText(soDienThoai);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;

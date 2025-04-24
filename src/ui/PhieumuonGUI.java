@@ -4,8 +4,10 @@ import DTO.DocGiaDTO;
 import BUS.DocGiaBUS;
 //import DAO.DocGiaDAO;
 import BUS.PhieuMuonBUS;
+import BUS.SachBUS;
 import DAO.PhieuMuonDAO;
 import DAO.PhieuPhatDAO;
+import DTO.SachDTO;
 import DTO.PhieuMuonDTO;
 import DTO.PhieuPhatDTO;
 import java.awt.CardLayout;
@@ -775,19 +777,27 @@ try {
             JOptionPane.showMessageDialog(this, "Lỗi khi lấy danh sách độc giả: " + e.getMessage());
         }
         for (DocGiaDTO dg : dsDocGia) {
-         if (dg.getMaDG().equals(MaDG)) {
-        txtTenDG.setText(dg.getTenDG()); 
-        break;
+            if (dg.getMaDG().equals(MaDG)) {
+                txtTenSach.setText(dg.getTenDG()); 
+            break;
     }
 }
-// lay ten sach tu ma sach
-  //      String MaS = tbPhieumuon.getValueAt(row, 2).toString();
-//        SachDAO sachDAO = new SachDAO();
-//        ArrayList<SachDTO> dsSach = SachDAO.getList();// getList
-//        for (SachDTO dg : dsSach) {
-//         if (dg.getMaS().equals(MS)) {
-//        txtTenSach.setText(dg.getTenSach()); 
-//        break;
+        //lay ten sach tu ma sach
+        String MaS = tbPhieumuon.getValueAt(row, 2).toString();
+        SachBUS sachBUS = new SachBUS();
+        ArrayList<SachDTO> dsSach = new ArrayList<>();
+        try {
+            dsSach = new ArrayList<>(sachBUS.layDanhSachSach()); // Ensure conversion to ArrayList
+            for (SachDTO dg : dsSach) {
+                if (dg.getMaSach().equals(MaS)) {
+                    txtTenSach.setText(dg.getTenSach());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi lấy danh sách sách: " + e.getMessage());
+        }
         
 
         try {
