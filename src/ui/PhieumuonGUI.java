@@ -341,7 +341,7 @@ public static void main(String[] args) {
 
         cbLocTrangthai.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         cbLocTrangthai.setForeground(new java.awt.Color(0, 122, 77));
-        cbLocTrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đặt trước", "Đang mượn", "Đã trả", "Đã quá hạn", "Mất/ Hỏng" }));
+        cbLocTrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Đặt trước", "Đang mượn", "Đã trả", "Đã quá hạn", "Mất/ Hỏng" }));
 
         javax.swing.GroupLayout PanTimkiem1Layout = new javax.swing.GroupLayout(PanTimkiem1);
         PanTimkiem1.setLayout(PanTimkiem1Layout);
@@ -760,7 +760,7 @@ try {
         String strHanTra = tbPhieumuon.getValueAt(row, 4).toString();
         String strNgayTraThucTe = tbPhieumuon.getValueAt(row, 5).toString();
        
-        String MaDG = tbPhieumuon.getValueAt(row, 1).toString();  // Cột 1 là Mã độc giả
+       
 // lay ten doc gia tu ma doc gia
 
 
@@ -769,6 +769,7 @@ try {
             //private DocGiaBUS docGiaBUS;
         //ArrayList<DocGiaDTO> dsDocGia = docGiaBUS.layDanhSachDocGia();
         //ArrayList<DocGiaDTO> dsDocGia = docGiaDAO.getList();
+         String MaDG = tbPhieumuon.getValueAt(row, 1).toString();  // Cột 1 là Mã độc giả
         docGiaBUS = new DocGiaBUS();
         try {
             dsDocGia = docGiaBUS.layDanhSachDocGia();
@@ -778,7 +779,7 @@ try {
         }
         for (DocGiaDTO dg : dsDocGia) {
             if (dg.getMaDG().equals(MaDG)) {
-                txtTenSach.setText(dg.getTenDG()); 
+                txtTenDG.setText(dg.getTenDG()); 
             break;
     }
 }
