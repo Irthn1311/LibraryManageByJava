@@ -43,32 +43,25 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="Giaodien" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="PanThongtin" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="btnTrangthai" min="-2" pref="104" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="btnTrangthai1" min="-2" pref="104" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="PanThongtin" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="btnXoa" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="btnThem" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnCapnhat" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="btnTrangthai" min="-2" pref="104" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btnTrangthai1" min="-2" pref="104" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnThem" max="32767" attributes="0"/>
+                          <Component id="btnCapnhat" pref="253" max="32767" attributes="0"/>
+                          <Component id="btnXoa" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <Component id="Giaodien" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -83,7 +76,7 @@
                           <Component id="btnCapnhat" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnXoa" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnTrangthai" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnTrangthai1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -96,7 +89,7 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="Giaodien" min="-2" pref="367" max="-2" attributes="0"/>
-                  <EmptySpace pref="8" max="32767" attributes="0"/>
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -511,12 +504,13 @@
                           <Color blue="4d" green="7a" red="0" type="rgb"/>
                         </Property>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="5">
-                            <StringItem index="0" value="&#x110;&#x1eb7;t tr&#x1b0;&#x1edb;c"/>
-                            <StringItem index="1" value="&#x110;ang m&#x1b0;&#x1ee3;n"/>
-                            <StringItem index="2" value="&#x110;&#xe3; tr&#x1ea3;"/>
-                            <StringItem index="3" value="&#x110;&#xe3; qu&#xe1; h&#x1ea1;n"/>
-                            <StringItem index="4" value="M&#x1ea5;t/ H&#x1ecf;ng"/>
+                          <StringArray count="6">
+                            <StringItem index="0" value="T&#x1ea5;t c&#x1ea3;"/>
+                            <StringItem index="1" value="&#x110;&#x1eb7;t tr&#x1b0;&#x1edb;c"/>
+                            <StringItem index="2" value="&#x110;ang m&#x1b0;&#x1ee3;n"/>
+                            <StringItem index="3" value="&#x110;&#xe3; tr&#x1ea3;"/>
+                            <StringItem index="4" value="&#x110;&#xe3; qu&#xe1; h&#x1ea1;n"/>
+                            <StringItem index="5" value="M&#x1ea5;t/ H&#x1ecf;ng"/>
                           </StringArray>
                         </Property>
                       </Properties>
