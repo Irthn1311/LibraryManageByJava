@@ -268,7 +268,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         btnSua.setContentAreaFilled(false);
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
+                btnCapNhatActionPerformed(evt);
             }
         });
 
@@ -288,7 +288,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         btnResert.setContentAreaFilled(false);
         btnResert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResertActionPerformed(evt);
+                btnKhoiPhucActionPerformed(evt);
             }
         });
 
@@ -449,7 +449,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnResertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResertActionPerformed
+    private void btnKhoiPhucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoiPhucActionPerformed
         try {
             int selectedRow = tblDSNhanvien.getSelectedRow();
             if (selectedRow == -1) {
@@ -466,7 +466,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
         }
 
-    }//GEN-LAST:event_btnResertActionPerformed
+    }//GEN-LAST:event_btnKhoiPhucActionPerformed
 
     private void btnTimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimkiemActionPerformed
         try {
@@ -550,7 +550,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         } 
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
         try {
             int selectedRow = tblDSNhanvien.getSelectedRow();
             if (selectedRow == -1) {
@@ -612,7 +612,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
         }
-    }//GEN-LAST:event_btnSuaActionPerformed
+    }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         try {
