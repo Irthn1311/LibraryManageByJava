@@ -169,7 +169,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         ThanhChucnang = new javax.swing.JPanel();
         btnLapPhieu = new javax.swing.JButton();
-        btnThemCT = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         Giaodien = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -223,10 +223,10 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             }
         });
 
-        btnThemCT.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
-        btnThemCT.setText("Thêm");
-        btnThemCT.setContentAreaFilled(false);
-        btnThemCT.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.setContentAreaFilled(false);
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Them(evt);
             }
@@ -247,7 +247,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ThanhChucnangLayout.createSequentialGroup()
                 .addContainerGap(888, Short.MAX_VALUE)
-                .addComponent(btnThemCT)
+                .addComponent(btnThem)
                 .addGap(18, 18, 18)
                 .addComponent(btnXoa)
                 .addGap(18, 18, 18)
@@ -258,7 +258,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnLapPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnThemCT, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -657,7 +657,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -881,6 +881,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             }
         });
     }
+        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Giaodien;
@@ -888,7 +889,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnLapPhieu;
     private javax.swing.JButton btnResertTimKiemChiTietPhieuNhap;
     private javax.swing.JButton btnResertTimKiemPhieuNhap;
-    private javax.swing.JButton btnThemCT;
+    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimkiemChiTietPhieuNhap;
     private javax.swing.JButton btnTimkiemPhieuNhap;
     private javax.swing.JButton btnXoa;
