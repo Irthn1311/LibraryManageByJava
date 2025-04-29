@@ -3,8 +3,40 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/CodeJava/LibraryManageByJava/src/ui/NguonnhapGUI.java</file>
-            <file>file:/D:/CodeJava/LibraryManageByJava/src/ui/DocgiaGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/UIa.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/BUS/DocGiaBUS.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/Helper/PlaceHolder.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/Helper/ImagePanel.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/Helper/RoundedButton.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/PhanquyenGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/NhanvienGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/PhieumuonGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/BUS/NhanVienBUS.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/ThongkeGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/DocgiaGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/BUS/NguonNhapBUS.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DAO/mySQLConnect.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/TaikhoanGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DAO/SQLServerConnect.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DAO/DocGiaDAO.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DAO/NhanVienDAO.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/Main.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/SachGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/Intro.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/Login.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DAO/TaiKhoanDAO.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DTO/TaiKhoanDTO.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DTO/NhanVienDTO.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/UIu.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DTO/ChucNangDTO.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DTO/PhanQuyenDTO.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/Helper/BackgroundPanel.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/Helper/RoundedPasswordField.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/Helper/RoundedTextField.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/NguonnhapGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/ui/PhieunhapGUI.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DAO/PhanQuyenDAO.java</file>
+            <file>file:/D:/sinh%20vien/DoAn_PTTKHTTT/LibraryManageByJava/src/DAO/NguonNhapDAO.java</file>
         </group>
     </open-files>
 </project-private>

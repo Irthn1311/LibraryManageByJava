@@ -1,12 +1,12 @@
 
 package ui;
 
-import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class SachGUI extends javax.swing.JPanel {
 
@@ -28,7 +28,11 @@ public class SachGUI extends javax.swing.JPanel {
         tbSach.getColumnModel().getColumn(7).setPreferredWidth(80);
         tbSach.getColumnModel().getColumn(8).setPreferredWidth(150);
         
+       
     }
+    
+        
+    
 
 
     @SuppressWarnings("unchecked")
@@ -403,7 +407,8 @@ public class SachGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    
+  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Timkiem;
     private javax.swing.JButton btnCapnhat;

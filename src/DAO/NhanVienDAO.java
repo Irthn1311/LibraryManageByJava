@@ -129,6 +129,25 @@ public class NhanVienDAO {
         }
     }
     
+    public NhanVienDTO layThongTinNhanVien(int maNhanVien) throws SQLException {
+    String sql = "SELECT * FROM nhanvien WHERE ma_nhan_vien = ?";
     
+    try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
+        stmt.setInt(1, maNhanVien);
+        ResultSet rs = stmt.executeQuery();
+        
+        if (rs.next()) {
+            NhanVienDTO nhanVien = new NhanVienDTO();
+            nhanVien.setIdNhanVien(rs.getInt("ma_nhan_vien"));
+            nhanVien.setTenNhanVien(rs.getString("ten_nhan_vien"));
+            nhanVien.setNgayVaoLam(rs.getDate("ngay_vao_lam"));
+            // Thêm các thuộc tính khác nếu cần
+            
+            return nhanVien;
+        }
+    }
+    
+    return null;
+}
 
 }
