@@ -6,6 +6,10 @@
         "dist\\lib\\AbsoluteLayout.jar",
         "dist\\lib\\jcalendar-1.4.jar",
         "dist\\lib\\My_Component.jar",
-        "dist\\lib\\mysql-connector-j-9.2.0.jar"
+        "dist\\lib\\mysql-connector-j-9.2.0.jar",
+        "c:\\Users\\TRUONG THI NGOC NHI\\Documents\\JavaProject\\LibraryManageByJava\\dist\\lib\\AbsoluteLayout.jar",
+        "c:\\Users\\TRUONG THI NGOC NHI\\Documents\\JavaProject\\LibraryManageByJava\\dist\\lib\\My_Component.jar",
+        "c:\\Users\\TRUONG THI NGOC NHI\\Documents\\JavaProject\\LibraryManageByJava\\dist\\lib\\mysql-connector-j-9.2.0.jar",
+        "c:\\Users\\TRUONG THI NGOC NHI\\Documents\\JavaProject\\LibraryManageByJava\\dist\\lib\\jcalendar-1.4.jar"
     ]
 }

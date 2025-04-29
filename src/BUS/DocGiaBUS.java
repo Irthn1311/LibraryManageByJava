@@ -44,6 +44,11 @@ public class DocGiaBUS {
             dg.setMaDG(taoMaDocGiaMoi());
         }
         
+        // Tạo mã thẻ thành viên từ số điện thoại
+        if (dg.getSoDienThoai() != null && !dg.getSoDienThoai().trim().isEmpty()) {
+            dg.setMaThe(taoMaTheTuSoDienThoai(dg.getSoDienThoai()));
+        }
+        
         // Đặt trạng thái mặc định là hoạt động
         dg.setTrangThai(true);
         
@@ -158,20 +163,59 @@ public class DocGiaBUS {
         try {
             ArrayList<DocGiaDTO> danhSachDocGia = layDanhSachDocGia();
             
+            // Chuẩn hóa dữ liệu đầu vào
+            String tenDGNormalized = chuanHoaChuoi(tenDG);
+            String soDienThoaiNormalized = chuanHoaChuoi(soDienThoai);
+            String diaChiNormalized = chuanHoaChuoi(diaChi);
+            
             for (DocGiaDTO dg : danhSachDocGia) {
-                if (dg.getTenDG().equals(tenDG) && 
-                    dg.getSoDienThoai().equals(soDienThoai) && 
-                    dg.getDiaChi().equals(diaChi) && 
-                    dg.getNgaySinh().equals(ngaySinh)) {
+                // Chuẩn hóa dữ liệu từ database
+                String tenDBNormalized = chuanHoaChuoi(dg.getTenDG());
+                String sdtDBNormalized = chuanHoaChuoi(dg.getSoDienThoai());
+                String diaChiDBNormalized = chuanHoaChuoi(dg.getDiaChi());
+                
+                // So sánh từng trường thông tin
+                boolean tenTrung = tenDGNormalized != null && 
+                                 tenDGNormalized.equals(tenDBNormalized);
+                
+                boolean sdtTrung = (soDienThoaiNormalized == null && sdtDBNormalized == null) || 
+                                 (soDienThoaiNormalized != null && 
+                                  soDienThoaiNormalized.equals(sdtDBNormalized));
+                
+                boolean diaChiTrung = (diaChiNormalized == null && diaChiDBNormalized == null) || 
+                                    (diaChiNormalized != null && 
+                                     diaChiNormalized.equals(diaChiDBNormalized));
+                
+                boolean ngaySinhTrung = ngaySinh != null && 
+                                       dg.getNgaySinh() != null && 
+                                       ngaySinh.equals(dg.getNgaySinh());
+                
+                // Chỉ trả về true khi tất cả đều trùng
+                if (tenTrung && sdtTrung && diaChiTrung && ngaySinhTrung) {
                     return true;
                 }
             }
         } catch (SQLException e) {
-            // Xử lý lỗi SQL
             System.out.println("Lỗi khi kiểm tra độc giả tồn tại: " + e.getMessage());
         }
         
         return false;
+    }
+
+    // Phương thức chuẩn hóa chuỗi
+    private String chuanHoaChuoi(String input) {
+        if (input == null) return null;
+        
+        // 1. Chuyển về chữ thường
+        String result = input.toLowerCase();
+        
+        // 2. Loại bỏ khoảng trắng dư thừa
+        result = result.trim().replaceAll("\\s+", " ");
+        
+        // 3. Loại bỏ dấu câu và ký tự đặc biệt (giữ lại dấu tiếng Việt)
+        result = result.replaceAll("[^a-z0-9\\sàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]", "");
+        
+        return result;
     }
 
     public String taoMaDocGiaMoi() {
@@ -179,10 +223,17 @@ public class DocGiaBUS {
             ArrayList<DocGiaDTO> danhSachDocGia = layDanhSachDocGia();
             return "DG" + (danhSachDocGia.size() + 1);
         } catch (SQLException e) {
-            // Xử lý lỗi SQL
             System.out.println("Lỗi khi tạo mã độc giả mới: " + e.getMessage());
-            return "DG" + System.currentTimeMillis(); // Tạo mã dựa trên thời gian nếu không lấy được danh sách
+            return "DG" + System.currentTimeMillis();
         }
+    }
+
+    // Phương thức tạo mã thẻ thành viên từ số điện thoại
+    public String taoMaTheTuSoDienThoai(String soDienThoai) {
+        if (soDienThoai == null || soDienThoai.trim().isEmpty()) {
+            return null;
+        }
+        return soDienThoai.trim();
     }
 
     /**

@@ -1,18 +1,44 @@
 
 package ui;
-
+import DTO.DocGiaDTO;
+import BUS.DocGiaBUS;
+//import DAO.DocGiaDAO;
+import BUS.PhieuMuonBUS;
+import BUS.SachBUS;
+import DAO.PhieuMuonDAO;
+import DAO.PhieuPhatDAO;
+import DTO.SachDTO;
+import DTO.PhieuMuonDTO;
+import DTO.PhieuPhatDTO;
 import java.awt.CardLayout;
 import java.awt.Font;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
+import java.sql.SQLException;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 
 public class PhieumuonGUI extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PhieumuonGUI
-     */
+    PhieuMuonBUS bus = new PhieuMuonBUS();
+ArrayList<PhieuMuonDTO> danhSach = bus.getDanhSachPhieuMuon();
+PhieuMuonDTO x = new PhieuMuonDTO();
+//DocGiaBUS docGiaBUS = new DocGiaBUS();
+ArrayList<DocGiaDTO> dsDocGia;
+DocGiaBUS docGiaBUS;
+//ArrayList<DocGiaDTO> dsDocGia = docGiaBUS.layDanhSachDocGia();
+//ArrayList<DocGiaDTO> dsDocGia = docGiaDAO.getList();
+
     public PhieumuonGUI() {
         initComponents();
         Giaodien.setLayout(new CardLayout());
@@ -24,8 +50,75 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         JTableHeader headerTp = tbTraphat.getTableHeader(); 
         headerTp.setFont(new Font("Arial", Font.BOLD, 16));
         ((DefaultTableCellRenderer) headerTp.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ViewtablePhieuMuon();
+    }
+public String chuyenTrangThai(int trangThai) {
+    switch (trangThai) {
+        case 0:
+            return "Đã trả";
+        case 1:
+            return "Đang mượn";
+        case 2:
+            return "Đặt trước";
+        case 3:
+            return "Đã quá hạn";
+        case 4:
+            return "Sách hỏng";
+        
+        default:
+            return "Trạng thái không hợp lệ";
+    }
+}
+
+
+public void ViewtablePhieuMuon() {
+    DefaultTableModel model = (DefaultTableModel) tbPhieumuon.getModel();
+    model.setRowCount(0); // Xóa dữ liệu cũ
+
+    PhieuMuonBUS bus = new PhieuMuonBUS();
+    ArrayList<PhieuMuonDTO> danhSach = bus.getDanhSachPhieuMuon();
+
+    if (danhSach == null || danhSach.isEmpty()) {
+        // Nếu danh sách rỗng hoặc null, hiển thị một thông báo hoặc hành động khác
+        JOptionPane.showMessageDialog(null, "Không có dữ liệu phiếu mượn!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return;
     }
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    for (PhieuMuonDTO pm : danhSach) {
+        // Kiểm tra và định dạng từng ngày nếu không null
+        String ngayMuon = (pm.getNgayMuon() != null) ? pm.getNgayMuon().format(formatter) : "---";
+        String hanTra = (pm.getHanTra() != null) ? pm.getHanTra().format(formatter) : "---";
+        String ngayTraThucTe = (pm.getNgayTraThucTe() != null) ? pm.getNgayTraThucTe().format(formatter) : "Chưa trả";
+
+        model.addRow(new Object[]{
+            pm.getMaPhieuMuon(),
+            pm.getMaDocGia(),
+            pm.getMaSach(),
+            ngayMuon,
+            hanTra,
+            ngayTraThucTe,
+            chuyenTrangThai(pm.getTrangThai()),
+            pm.getTienPhat()
+        });
+    }
+}
+
+public static void main(String[] args) {
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        public void run() {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Quản lý phiếu mượn");
+            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            frame.setSize(1000, 600); // điều chỉnh kích thước theo ý bạn
+            frame.setLocationRelativeTo(null); // hiển thị giữa màn hình
+            
+            PhieumuonGUI gui = new PhieumuonGUI();
+            frame.setContentPane(gui);
+            frame.setVisible(true);
+        }
+    });
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -76,16 +169,31 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         btnThem.setText("Thêm");
         btnThem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
         btnThem.setContentAreaFilled(false);
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnCapnhat.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         btnCapnhat.setText("Cập nhật");
         btnCapnhat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
         btnCapnhat.setContentAreaFilled(false);
+        btnCapnhat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapnhatActionPerformed(evt);
+            }
+        });
 
         btnXoa.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
         btnXoa.setContentAreaFilled(false);
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         PanThongtin.setBackground(new java.awt.Color(255, 255, 255));
         PanThongtin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
@@ -128,6 +236,11 @@ public class PhieumuonGUI extends javax.swing.JPanel {
 
         btnReset.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanThongtinLayout = new javax.swing.GroupLayout(PanThongtin);
         PanThongtin.setLayout(PanThongtinLayout);
@@ -182,8 +295,8 @@ public class PhieumuonGUI extends javax.swing.JPanel {
                             .addComponent(NgaytraDK, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
                         .addGroup(PanThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNgaytraTT, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-                            .addComponent(NgaytraTT, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(NgaytraTT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNgaytraTT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(PanThongtinLayout.createSequentialGroup()
                         .addGroup(PanThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtMaDG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,10 +333,15 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         btnTimkiem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
         btnTimkiem.setForeground(new java.awt.Color(0, 122, 77));
         btnTimkiem.setText("Tìm kiếm");
+        btnTimkiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimkiemActionPerformed(evt);
+            }
+        });
 
         cbLocTrangthai.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         cbLocTrangthai.setForeground(new java.awt.Color(0, 122, 77));
-        cbLocTrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đặt trước", "Đang mượn", "Đã trả", "Đã quá hạn", "Mất/ Hỏng" }));
+        cbLocTrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Đặt trước", "Đang mượn", "Đã trả", "Đã quá hạn", "Mất/ Hỏng" }));
 
         javax.swing.GroupLayout PanTimkiem1Layout = new javax.swing.GroupLayout(PanTimkiem1);
         PanTimkiem1.setLayout(PanTimkiem1Layout);
@@ -232,13 +350,13 @@ public class PhieumuonGUI extends javax.swing.JPanel {
             .addGroup(PanTimkiem1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Timkiem)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbLocTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(458, Short.MAX_VALUE))
+                .addContainerGap(491, Short.MAX_VALUE))
         );
         PanTimkiem1Layout.setVerticalGroup(
             PanTimkiem1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,12 +370,20 @@ public class PhieumuonGUI extends javax.swing.JPanel {
                         .addGap(0, 1, Short.MAX_VALUE)
                         .addGroup(PanTimkiem1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Timkiem)
-                            .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnTimkiem))))
                 .addGap(10, 10, 10))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanTimkiem1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
 
         tbPhieumuon.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         tbPhieumuon.setModel(new javax.swing.table.DefaultTableModel(
@@ -290,6 +416,11 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         tbPhieumuon.setSelectionBackground(new java.awt.Color(204, 204, 204));
         tbPhieumuon.setSelectionForeground(new java.awt.Color(0, 51, 51));
         tbPhieumuon.setShowVerticalLines(true);
+        tbPhieumuon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbPhieumuonMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbPhieumuon);
 
         javax.swing.GroupLayout PhieumuonLayout = new javax.swing.GroupLayout(Phieumuon);
@@ -335,7 +466,7 @@ public class PhieumuonGUI extends javax.swing.JPanel {
                 .addComponent(txtTimkiem2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTimkiem2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(611, Short.MAX_VALUE))
+                .addContainerGap(644, Short.MAX_VALUE))
         );
         PanTimkiem2Layout.setVerticalGroup(
             PanTimkiem2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,42 +563,43 @@ public class PhieumuonGUI extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(15, 15, 15))
+                        .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnCapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -489,13 +621,493 @@ public class PhieumuonGUI extends javax.swing.JPanel {
     private void ChuyenPhieumuon(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChuyenPhieumuon
         CardLayout card = (CardLayout) Giaodien.getLayout();
         card.show(Giaodien, "Phieumuon");
+        PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
+        int row = tbPhieumuon.getSelectedRow(); // Lấy dòng đang chọn trong bảng
+
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một phiếu mượn để đánh dấu đã trả.");
+        return;
+    }
+
+    // Lấy mã phiếu mượn từ dòng được chọn
+    String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+
+    // Gọi phương thức BUS để đánh dấu đã trả
+    if (phieuMuonBUS.danhDauDaTra(maPhieuMuon)) {
+        JOptionPane.showMessageDialog(this, "Đã đánh dấu phiếu mượn là đã trả.");
+        loadTablePhieuMuon(); // Cập nhật lại bảng
+    } else {
+        JOptionPane.showMessageDialog(this, "Cập nhật trạng thái thất bại.");
+    }
     }//GEN-LAST:event_ChuyenPhieumuon
 
     private void btnTrangthai1ChuyenPhieumuon(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrangthai1ChuyenPhieumuon
-        // TODO add your handling code here:
+                                            
+
+int row = tbPhieumuon.getSelectedRow();
+PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
+
+if (row == -1) {
+    JOptionPane.showMessageDialog(this, "Vui lòng chọn một phiếu mượn để cập nhật.");
+    return;
+}
+
+try {
+    // Lấy mã phiếu mượn từ bảng
+    String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+
+    String maDG = txtMaDG.getText().trim();
+    String maSach = txtMaSach.getText().trim();
+
+    LocalDate ngayMuon = txtNgaymuon.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate hanTra = txtNgaytraDK.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+    
+    LocalDate ngayTraThucTe = LocalDate.now();
+
+    
+    int trangThai = 4;           // 4 = Hỏng
+    double tienPhat = 50000;     // Tiền phạt 50.000 VNĐ
+
+    PhieuMuonDTO pm = new PhieuMuonDTO(maPhieuMuon, maDG, maSach, ngayMuon, hanTra, ngayTraThucTe, trangThai, tienPhat);
+
+    if (phieuMuonBUS.suaPhieuMuon(pm)) {
+        JOptionPane.showMessageDialog(this, "Đã đánh dấu sách hỏng!");
+        loadTablePhieuMuon();
+    } else {
+        JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+    }
+
+} catch (Exception e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this,"Lỗi cập nhật: " + e.getMessage());
+}
+
     }//GEN-LAST:event_btnTrangthai1ChuyenPhieumuon
 
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+try {
+        PhieuMuonDAO dao = new PhieuMuonDAO();
+        PhieuMuonBUS bus = new PhieuMuonBUS();
 
+        String maPhieuMoi = bus.taoMaPhieuMoi(); 
+
+        // Lấy dữ liệu từ giao diện
+        String maDG = txtMaDG.getText();
+        String maSach = txtMaSach.getText();
+        LocalDate ngayMuon = txtNgaymuon.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate hanTra = txtNgaytraDK.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate ngayTraThucTe = (txtNgaytraTT.getDate() != null) ?
+        txtNgaytraTT.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
+
+        int trangThai = 1;  
+        double tienPhat = 0;  
+
+        PhieuMuonDTO pm = new PhieuMuonDTO(maPhieuMoi, maDG, maSach, ngayMuon, hanTra, ngayTraThucTe, trangThai, tienPhat);
+
+        boolean success = bus.themPhieuMuon(pm);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công!");
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Không thể thêm phiếu mượn!");
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
+    }  
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2MouseClicked
+
+    private void tbPhieumuonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPhieumuonMouseClicked
+     int row = tbPhieumuon.getSelectedRow();
+    PhieuPhatDAO phieuPhatDAO = new PhieuPhatDAO();
+    PhieuMuonDAO dao = new PhieuMuonDAO();
+
+    if (row != -1) {
+        String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+        String trangThai = tbPhieumuon.getValueAt(row, 6).toString();
+
+        // Nếu trạng thái là "Đã quá hạn"
+        if (trangThai.equalsIgnoreCase("Đã quá hạn")) {
+            if (!phieuPhatDAO.daCoPhieuPhat(maPhieuMuon)) {
+                // Tạo phiếu phạt mới
+                String maPhieuPhat = "PP" + System.currentTimeMillis();
+              PhieuMuonDTO pm = dao.timTheoMa(maPhieuMuon);
+
+                if (!danhSach.isEmpty()) {
+                  
+
+                    double tienPhat = tinhTienPhat(pm); 
+
+                    PhieuPhatDTO pp = new PhieuPhatDTO(maPhieuPhat, maPhieuMuon, tienPhat);
+                    phieuPhatDAO.Them(pp);
+
+                    JOptionPane.showMessageDialog(null, 
+                        "Đã tạo phiếu phạt cho phiếu mượn " + maPhieuMuon + 
+                        "\nMã phiếu phạt: " + maPhieuPhat +
+                        "\nTiền phạt: " + tienPhat + " VND", 
+                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String strNgayMuon = tbPhieumuon.getValueAt(row, 3).toString();
+        String strHanTra = tbPhieumuon.getValueAt(row, 4).toString();
+        String strNgayTraThucTe = tbPhieumuon.getValueAt(row, 5).toString();
+       
+       
+// lay ten doc gia tu ma doc gia
+
+
+        //DocGiaBUS docGiaBUS = new DocGiaBUS();
+            //private ArrayList<DocGiaDTO> dsDocGia;
+            //private DocGiaBUS docGiaBUS;
+        //ArrayList<DocGiaDTO> dsDocGia = docGiaBUS.layDanhSachDocGia();
+        //ArrayList<DocGiaDTO> dsDocGia = docGiaDAO.getList();
+         String MaDG = tbPhieumuon.getValueAt(row, 1).toString();  // Cột 1 là Mã độc giả
+        docGiaBUS = new DocGiaBUS();
+        try {
+            dsDocGia = docGiaBUS.layDanhSachDocGia();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi lấy danh sách độc giả: " + e.getMessage());
+        }
+        for (DocGiaDTO dg : dsDocGia) {
+            if (dg.getMaDG().equals(MaDG)) {
+                txtTenDG.setText(dg.getTenDG()); 
+            break;
+    }
+}
+        //lay ten sach tu ma sach
+        String MaS = tbPhieumuon.getValueAt(row, 2).toString();
+        SachBUS sachBUS = new SachBUS();
+        ArrayList<SachDTO> dsSach = new ArrayList<>();
+        try {
+            dsSach = new ArrayList<>(sachBUS.layDanhSachSach()); // Ensure conversion to ArrayList
+            for (SachDTO dg : dsSach) {
+                if (dg.getMaSach().equals(MaS)) {
+                    txtTenSach.setText(dg.getTenSach());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi lấy danh sách sách: " + e.getMessage());
+        }
+        
+
+        try {
+            // Chuyển từ String sang Date
+            Date ngayMuon = sdf.parse(strNgayMuon);
+            Date hanTra = sdf.parse(strHanTra);
+           
+            // Set lên JDateChooser
+            txtNgaymuon.setDate(ngayMuon);
+            txtNgaytraDK.setDate(hanTra);
+          
+            if (!strNgayTraThucTe.equalsIgnoreCase("Chưa trả")) {
+                Date ngayTraThucTe = sdf.parse(strNgayTraThucTe);
+                txtNgaytraTT.setDate(ngayTraThucTe);
+            } else {
+                txtNgaytraTT.setDate(null); // hoặc để trống nếu chưa trả
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Set các JTextField khác
+        txtMaDG.setText(tbPhieumuon.getValueAt(row, 1).toString());
+        txtMaSach.setText(tbPhieumuon.getValueAt(row, 2).toString());
+       
+
+    }
+
+    }//GEN-LAST:event_tbPhieumuonMouseClicked
+
+    
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+ 
+        try {
+        
+        loadTablePhieuMuon();  
+
+        // Xóa trắng các trường nhập liệu
+        txtMaDG.setText("");
+        txtTenDG.setText("");
+        txtMaSach.setText("");
+        txtTenSach.setText("");
+        txtNgaymuon.setDate(null);
+        txtNgaytraDK.setDate(null);
+        txtNgaytraTT.setDate(null);
+
+       
+
+        JOptionPane.showMessageDialog(this, "Đã reset!");
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi khi reset: " + e.getMessage());
+    }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnCapnhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapnhatActionPerformed
+
+       int row = tbPhieumuon.getSelectedRow();
+PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
+
+if (row == -1) {
+    JOptionPane.showMessageDialog(this, "Vui lòng chọn một phiếu mượn để cập nhật.");
+    return;
+}
+
+try {
+    // Lấy mã phiếu mượn từ bảng
+    String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+
+    String maDG = txtMaDG.getText().trim();
+    String maSach = txtMaSach.getText().trim();
+
+    LocalDate ngayMuon = txtNgaymuon.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate hanTra = txtNgaytraDK.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+    LocalDate ngayTraThucTe = null;
+    if (txtNgaytraTT.getDate() != null) {
+        ngayTraThucTe = txtNgaytraTT.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    int trangThai = 1;
+    double tienPhat = 0.0;
+
+    // ✅ Kiểm tra nếu trả muộn
+    if (ngayTraThucTe != null && ngayTraThucTe.isAfter(hanTra)) {
+        long soNgayTre = ChronoUnit.DAYS.between(hanTra, ngayTraThucTe);
+        tienPhat = soNgayTre * 20000; // 20k/ngày trễ
+        trangThai = 3; // Quá hạn
+        
+    }
+
+    PhieuMuonDTO pm = new PhieuMuonDTO(maPhieuMuon, maDG, maSach, ngayMuon, hanTra, ngayTraThucTe, trangThai, tienPhat);
+
+    if (phieuMuonBUS.suaPhieuMuon(pm)) {
+        JOptionPane.showMessageDialog(this, "Cập nhật trạng thái thành công!");
+        loadTablePhieuMuon();
+    } else {
+        JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+    }
+
+} catch (Exception e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Lỗi cập nhật: " + e.getMessage());
+}
+
+    }//GEN-LAST:event_btnCapnhatActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+//     int row = tbPhieumuon.getSelectedRow();
+//     PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
+//    if (row == -1) {
+//        JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu mượn để xóa.");
+//        return;
+//    }
+//
+//    int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+//    if (confirm == JOptionPane.YES_OPTION) {
+//        try {
+//            String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+//            if (phieuMuonBUS.xoaPhieuMuon(maPhieuMuon)) {
+//                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+//                loadTablePhieuMuon();
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Lỗi khi xóa: " + e.getMessage());
+//        }
+//    }
+int row = tbPhieumuon.getSelectedRow();
+    PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
+    
+    // Kiểm tra xem người dùng đã chọn phiếu mượn hay chưa
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu mượn để xóa.");
+        return;
+    }
+
+    // Xác nhận hành động xóa
+    int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            // Lấy mã phiếu mượn từ bảng
+            String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+            
+            // Thực hiện xóa phiếu mượn
+            boolean isDeleted = phieuMuonBUS.xoaPhieuMuon(maPhieuMuon);
+            
+            if (isDeleted) {
+                // Nếu xóa thành công, làm mới bảng và hiển thị thông báo
+                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                loadTablePhieuMuon();  // Làm mới bảng sau khi xóa
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi xóa: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnTimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimkiemActionPerformed
+ try {
+        String tuKhoa = txtTimkiem.getText().trim();
+        String trangThaiStr = (String) cbLocTrangthai.getSelectedItem();
+        Integer trangThai = null;
+
+        if (!"Tất cả".equals(trangThaiStr)) {
+            switch (trangThaiStr) {
+                case "Đã trả" -> trangThai = 0;
+                case "Đang mượn" -> trangThai = 1;
+                case "Đặt trước" -> trangThai = 2;
+                case "Đã quá hạn" -> trangThai = 3;
+                case "Mất/ Hỏng" -> trangThai = 4;
+            }
+        }
+
+        PhieuMuonDAO dao = new PhieuMuonDAO();
+        ArrayList<PhieuMuonDTO> danhSachGoc = dao.getAllPhieuMuonDTO();
+        ArrayList<PhieuMuonDTO> ketQua = new ArrayList<>();
+
+        for (PhieuMuonDTO pm : danhSachGoc) {
+            boolean match = true;
+
+            // Trường hợp 1: có nhập từ khóa
+            if (!tuKhoa.isEmpty()) {
+                boolean matchMaPM = pm.getMaPhieuMuon().toLowerCase().contains(tuKhoa.toLowerCase());
+                boolean matchMaDG = pm.getMaDocGia().toLowerCase().contains(tuKhoa.toLowerCase());
+                boolean matchMaSach = pm.getMaSach().toLowerCase().contains(tuKhoa.toLowerCase());
+
+                if (!(matchMaPM || matchMaDG || matchMaSach)) match = false;
+            }
+
+            // Trường hợp 2: không nhập từ khóa, chỉ lọc theo trạng thái
+            if (tuKhoa.isEmpty() && trangThai != null && pm.getTrangThai() != trangThai) {
+                match = false;
+            }
+
+            if (match) ketQua.add(pm);
+        }
+
+        // Đổ dữ liệu vào bảng
+        DefaultTableModel model = (DefaultTableModel) tbPhieumuon.getModel();
+        model.setRowCount(0);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        for (PhieuMuonDTO pm : ketQua) {
+            String ngayMuonStr = (pm.getNgayMuon() != null) ? pm.getNgayMuon().format(dtf) : "N/A";
+            String hanTraStr = (pm.getHanTra() != null) ? pm.getHanTra().format(dtf) : "N/A";
+            String ngayTraStr = (pm.getNgayTraThucTe() != null) ? pm.getNgayTraThucTe().format(dtf) : "Chưa trả";
+
+            model.addRow(new Object[]{
+                pm.getMaPhieuMuon(),
+                pm.getMaDocGia(),
+                pm.getMaSach(),
+                ngayMuonStr,
+                hanTraStr,
+                ngayTraStr,
+                chuyenTrangThai(pm.getTrangThai()),
+                pm.getTienPhat()
+            });
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm: " + e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnTimkiemActionPerformed
+
+private void loadTablePhieuMuon() {
+    DefaultTableModel model = (DefaultTableModel) tbPhieumuon.getModel();
+    model.setRowCount(0);  // Xóa hết các dòng cũ
+    PhieuPhatDAO phieuPhatDAO = new PhieuPhatDAO();
+    PhieuMuonDAO dao = new PhieuMuonDAO();
+    ArrayList<PhieuMuonDTO> danhSach = dao.getAllPhieuMuonDTO();
+
+    // Dùng formatter cho LocalDate
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+//for (PhieuMuonDTO pm : danhSach) {
+//    if (pm.getTrangThai() == 4) {
+//
+//        if (!phieuPhatDAO.daCoPhieuPhat(pm.getMaPhieuMuon())) {
+//            String maPhieuPhat = "PP" + System.currentTimeMillis();
+//            double tienPhat = tinhTienPhat(pm);
+//
+//            PhieuPhatDTO pp = new PhieuPhatDTO(maPhieuPhat, pm.getMaPhieuMuon(), tienPhat);
+//            phieuPhatDAO.Them(pp);
+//        }
+//    }
+//}
+
+    for (PhieuMuonDTO pm : danhSach) {
+        String ngayMuonStr = (pm.getNgayMuon() != null) ? pm.getNgayMuon().format(dtf) : "N/A";
+        String hanTraStr = (pm.getHanTra() != null) ? pm.getHanTra().format(dtf) : "N/A";
+        String ngayTraThucTeStr = (pm.getNgayTraThucTe() != null) ? pm.getNgayTraThucTe().format(dtf) : "Chưa trả";
+
+        model.addRow(new Object[]{
+            pm.getMaPhieuMuon(),
+            pm.getMaDocGia(),
+            pm.getMaSach(),
+            ngayMuonStr,
+            hanTraStr,
+            ngayTraThucTeStr,
+            chuyenTrangThai(pm.getTrangThai()),
+            pm.getTienPhat()
+        });
+    }
+}
+
+ private double tinhTienPhat(PhieuMuonDTO pm) {
+    if (pm.getNgayTraThucTe() == null || pm.getHanTra() == null) return 0;
+
+    long daysLate = ChronoUnit.DAYS.between(pm.getHanTra(), pm.getNgayTraThucTe());
+    if (daysLate <= 0) return 0;
+
+    double tienPhatMotNgay = 2000; // Ví dụ: 2000 đồng mỗi ngày trễ
+    return daysLate * tienPhatMotNgay;
+}
+ public void loadTablePhieuPhat(){
+      PhieuPhatDAO phieuPhatDAO = new PhieuPhatDAO();
+    PhieuMuonDAO dao = new PhieuMuonDAO();
+    ArrayList<PhieuMuonDTO> danhSach = dao.getAllPhieuMuonDTO();
+     for (PhieuMuonDTO pm : danhSach) {
+    if (pm.getTrangThai() == 3) {
+        if (!phieuPhatDAO.daCoPhieuPhat(pm.getMaPhieuMuon())) {
+            String maPhieuPhat = "PP" + System.currentTimeMillis();
+            double tienPhat = tinhTienPhat(pm);
+
+            PhieuPhatDTO pp = new PhieuPhatDTO(maPhieuPhat, pm.getMaPhieuMuon(), tienPhat);
+            phieuPhatDAO.Them(pp);
+
+            // Hiển thị thông báo
+            JOptionPane.showMessageDialog(null, 
+                "Đã tạo phiếu phạt cho phiếu mượn " + pm.getMaPhieuMuon() + 
+                "\nMã phiếu phạt: " + maPhieuPhat +
+                "\nTiền phạt: " + tienPhat + " VND", 
+                "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+}
+
+ }
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Giaodien;
     private javax.swing.JLabel MaDG;
