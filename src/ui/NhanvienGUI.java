@@ -128,9 +128,9 @@ public class NhanvienGUI extends javax.swing.JPanel {
         dcNgayVaoLam = new com.toedter.calendar.JDateChooser();
         dcNgaySinh = new com.toedter.calendar.JDateChooser();
         btnThem = new javax.swing.JButton();
-        btnSua = new javax.swing.JButton();
+        btnCapNhat = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
-        btnResert = new javax.swing.JButton();
+        btnKhoiPhuc = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
@@ -262,13 +262,13 @@ public class NhanvienGUI extends javax.swing.JPanel {
             }
         });
 
-        btnSua.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
-        btnSua.setText("Cập nhật");
-        btnSua.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
-        btnSua.setContentAreaFilled(false);
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
+        btnCapNhat.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnCapNhat.setText("Cập nhật");
+        btnCapNhat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+        btnCapNhat.setContentAreaFilled(false);
+        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
+                btnCapNhatActionPerformed(evt);
             }
         });
 
@@ -282,13 +282,13 @@ public class NhanvienGUI extends javax.swing.JPanel {
             }
         });
 
-        btnResert.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
-        btnResert.setText("Khôi phục");
-        btnResert.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
-        btnResert.setContentAreaFilled(false);
-        btnResert.addActionListener(new java.awt.event.ActionListener() {
+        btnKhoiPhuc.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnKhoiPhuc.setText("Khôi phục");
+        btnKhoiPhuc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+        btnKhoiPhuc.setContentAreaFilled(false);
+        btnKhoiPhuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResertActionPerformed(evt);
+                btnKhoiPhucActionPerformed(evt);
             }
         });
 
@@ -407,9 +407,9 @@ public class NhanvienGUI extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCapNhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnResert, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))))
+                            .addComponent(btnKhoiPhuc, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))))
                 .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
@@ -420,11 +420,11 @@ public class NhanvienGUI extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
-                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
                         .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
-                        .addComponent(btnResert, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnKhoiPhuc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -449,7 +449,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnResertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResertActionPerformed
+    private void btnKhoiPhucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoiPhucActionPerformed
         try {
             int selectedRow = tblDSNhanvien.getSelectedRow();
             if (selectedRow == -1) {
@@ -466,7 +466,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
         }
 
-    }//GEN-LAST:event_btnResertActionPerformed
+    }//GEN-LAST:event_btnKhoiPhucActionPerformed
 
     private void btnTimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimkiemActionPerformed
         try {
@@ -550,7 +550,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         } 
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
         try {
             int selectedRow = tblDSNhanvien.getSelectedRow();
             if (selectedRow == -1) {
@@ -612,7 +612,7 @@ public class NhanvienGUI extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage());
         }
-    }//GEN-LAST:event_btnSuaActionPerformed
+    }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         try {
@@ -706,9 +706,9 @@ public class NhanvienGUI extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnResert;
+    private javax.swing.JButton btnCapNhat;
+    private javax.swing.JButton btnKhoiPhuc;
     private javax.swing.JButton btnResertTimKiem;
-    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimkiem;
     private javax.swing.JButton btnXoa;

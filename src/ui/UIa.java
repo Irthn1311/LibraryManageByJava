@@ -3,22 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
-
+import DTO.PhanQuyenDTO;
+import DAO.PhanQuyenDAO;
+import java.sql.*;
+import java.util.*;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import DTO.TaiKhoanDTO;
 
 
 public class UIa extends javax.swing.JFrame {
 
     public CardLayout card = new CardLayout();
     private JButton selectedButton = null;
+     private TaiKhoanDTO currentUser = null;
+    private boolean hasPermission = false;
     
     public UIa() {
         initComponents();
         Giaodien.setLayout(card);
         Giaodien.add(new Intro(), "Intro");
-        Giaodien.add(new DocgiaGUI(), "DocgiaGUI");
         Giaodien.add(new SachGUI(), "SachGUI");
         Giaodien.add(new PhieunhapGUI(), "PhieunhapGUI");
         Giaodien.add(new PhieumuonGUI(), "PhieumuonGUI");
@@ -29,6 +35,7 @@ public class UIa extends javax.swing.JFrame {
         Giaodien.add(new NguonnhapGUI(), "NguonnhapGUI");
         Giaodien.add(new TaikhoanGUI(), "TaikhoanGUI");
         
+        card.show(Giaodien, "Intro");
     }
 
 
@@ -39,6 +46,9 @@ public class UIa extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         decor_qltv = new javax.swing.JPanel();
         Qlythuvien = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txStaff = new javax.swing.JLabel();
+        txRole = new javax.swing.JLabel();
         Bang = new javax.swing.JPanel();
         btnSach = new javax.swing.JButton();
         btnPhieunhap = new javax.swing.JButton();
@@ -49,7 +59,7 @@ public class UIa extends javax.swing.JFrame {
         btnThongke = new javax.swing.JButton();
         btnNguonnhap = new javax.swing.JButton();
         btnDangxuat = new javax.swing.JButton();
-        btnNguonnhap1 = new javax.swing.JButton();
+        btnTaikhoan = new javax.swing.JButton();
         Giaodien = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,18 +75,46 @@ public class UIa extends javax.swing.JFrame {
         Qlythuvien.setText("Quản lý thư viện");
         Qlythuvien.setPreferredSize(new java.awt.Dimension(1400, 20));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Icojam-Blue-Bits-User-settings.48.png"))); // NOI18N
+
+        txStaff.setBackground(new java.awt.Color(0, 122, 77));
+        txStaff.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txStaff.setForeground(new java.awt.Color(255, 255, 255));
+        txStaff.setText("ADMIN");
+
+        txRole.setBackground(new java.awt.Color(0, 122, 77));
+        txRole.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txRole.setForeground(new java.awt.Color(255, 255, 255));
+        txRole.setText("CHỦ QUÁN SÁCH");
+
         javax.swing.GroupLayout decor_qltvLayout = new javax.swing.GroupLayout(decor_qltv);
         decor_qltv.setLayout(decor_qltvLayout);
         decor_qltvLayout.setHorizontalGroup(
             decor_qltvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Qlythuvien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(decor_qltvLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(decor_qltvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txRole, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(Qlythuvien, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
         decor_qltvLayout.setVerticalGroup(
             decor_qltvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(decor_qltvLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(Qlythuvien, javax.swing.GroupLayout.PREFERRED_SIZE, 42, Short.MAX_VALUE)
+                .addGroup(decor_qltvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, decor_qltvLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(Qlythuvien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(decor_qltvLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txStaff)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txRole)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         Bang.setBackground(new java.awt.Color(255, 255, 255));
@@ -202,15 +240,15 @@ public class UIa extends javax.swing.JFrame {
         btnDangxuat.setText("ĐĂNG XUẤT");
         btnDangxuat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(242, 242, 242), 3));
 
-        btnNguonnhap1.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
-        btnNguonnhap1.setText("TÀI KHOẢN");
-        btnNguonnhap1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(242, 242, 242), 3));
-        btnNguonnhap1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnTaikhoan.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnTaikhoan.setText("TÀI KHOẢN");
+        btnTaikhoan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(242, 242, 242), 3));
+        btnTaikhoan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Change_Color(evt);
             }
         });
-        btnNguonnhap1.addActionListener(new java.awt.event.ActionListener() {
+        btnTaikhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChuyenTaikhoan(evt);
             }
@@ -229,7 +267,7 @@ public class UIa extends javax.swing.JFrame {
             .addComponent(btnThongke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnNguonnhap, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
             .addComponent(btnDangxuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnNguonnhap1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+            .addComponent(btnTaikhoan, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
         );
         BangLayout.setVerticalGroup(
             BangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +288,7 @@ public class UIa extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btnNguonnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(btnNguonnhap1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDangxuat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -276,8 +314,8 @@ public class UIa extends javax.swing.JFrame {
                 .addComponent(decor_qltv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Bang, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
-                    .addComponent(Giaodien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(Bang, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                    .addComponent(Giaodien, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -345,7 +383,172 @@ public class UIa extends javax.swing.JFrame {
         card.show(Giaodien, "TaikhoanGUI");
     }//GEN-LAST:event_ChuyenTaikhoan
 
+    public void setTaiKhoan(TaiKhoanDTO taiKhoan, String tenNhanVien) {
+        this.currentUser = taiKhoan;
+        
+        // Hiển thị thông tin người dùng
+        if (tenNhanVien != null && !tenNhanVien.isEmpty()) {
+            txStaff.setText(tenNhanVien);
+        } else {
+            txStaff.setText("Không xác định");
+        }
+        
+        // Thiết lập quyền hạn dựa vào mã phân quyền
+        if (taiKhoan.getMaPhanQuyen() == null || taiKhoan.getMaPhanQuyen().isEmpty()) {
+            txRole.setText("Cụ Lao Công");
+            // Vô hiệu hóa tất cả nút chức năng nếu chưa phân quyền
+            disableAllFunctionButtons();
+        } else {
+            try {
+                // Lấy tên phân quyền từ mã phân quyền
+                PhanQuyenDAO pqDAO = new PhanQuyenDAO();
+                ArrayList<PhanQuyenDTO> permissions = pqDAO.layDanhSachPhanQuyenTheoMa(taiKhoan.getMaPhanQuyen());
+                if (!permissions.isEmpty()) {
+                    txRole.setText(permissions.get(0).getTenPhanQuyen());
+                } else {
+                    txRole.setText("CHỦ QUÁN SÁCH");
+                }
+                // Cấu hình quyền truy cập cho các nút dựa trên phân quyền
+                setupButtonPermissions();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi tải phân quyền: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
     
+    // Phương thức mới để thiết lập quyền cho các nút dựa trên phân quyền của người dùng hiện tại
+    private void setupButtonPermissions() {
+        try {
+            if (currentUser != null && currentUser.getMaPhanQuyen() != null) {
+                PhanQuyenDAO pqDAO = new PhanQuyenDAO();
+                // Lấy danh sách mã chức năng mà người dùng có quyền
+                ArrayList<String> userFunctions = pqDAO.layDanhSachChucNang(currentUser.getMaPhanQuyen());
+                Set<String> userFunctionsSet = new HashSet<>(userFunctions);
+                
+                // Thiết lập quyền cho từng nút dựa trên mã chức năng
+                setupButtonPermission(btnSach, "Q1", userFunctionsSet, this::ChuyenSach);
+                setupButtonPermission(btnNhanvien, "Q2", userFunctionsSet, this::ChuyenNhanvien);
+                setupButtonPermission(btnPhieunhap, "Q3", userFunctionsSet, this::ChuyenPhieunhap);
+                setupButtonPermission(btnDocgia, "Q4", userFunctionsSet, this::ChuyenDocgia);
+                setupButtonPermission(btnPhanquyen, "Q5", userFunctionsSet, this::ChuyenPhanquyen);
+                setupButtonPermission(btnPhieumuon, "Q6", userFunctionsSet, this::ChuyenPhieumuon);
+                setupButtonPermission(btnTaikhoan, "Q7", userFunctionsSet, this::ChuyenTaikhoan);
+                setupButtonPermission(btnThongke, "Q8", userFunctionsSet, this::ChuyenThongke);
+                setupButtonPermission(btnNguonnhap, "Q9", userFunctionsSet, this::ChuyenNguonnhap);
+            } else {
+                // Nếu không có phân quyền, vô hiệu hóa tất cả các nút
+                disableAllFunctionButtons();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi thiết lập quyền cho các nút: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+     // Phương thức để thiết lập quyền cho một nút cụ thể
+    private void setupButtonPermission(JButton button, String requiredFunction, Set<String> userFunctions, ButtonAction action) {
+        // Xóa tất cả action listeners cũ
+        for (java.awt.event.ActionListener listener : button.getActionListeners()) {
+            button.removeActionListener(listener);
+        }
+        
+        // Thêm action listener mới kiểm tra quyền
+        button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (!userFunctions.contains(requiredFunction)) {
+                    JOptionPane.showMessageDialog(UIa.this, 
+                        "Bạn không có quyền để xử lý chức năng này!", 
+                        "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    // Nếu có quyền, thực hiện hành động
+                    action.execute(evt);
+                }
+            }
+        });
+    }
+    
+    // Interface để xử lý hành động nút khi có quyền
+    private interface ButtonAction {
+        void execute(java.awt.event.ActionEvent evt);
+    }
+    
+    // Vô hiệu hóa tất cả các nút chức năng (khi không có phân quyền)
+    private void disableAllFunctionButtons() {
+        JButton[] buttons = {btnSach, btnNhanvien, btnPhieunhap, btnDocgia, 
+                           btnPhanquyen, btnPhieumuon, btnTaikhoan, btnThongke, btnNguonnhap};
+        
+        for (JButton button : buttons) {
+            // Xóa tất cả action listeners cũ
+            for (java.awt.event.ActionListener listener : button.getActionListeners()) {
+                button.removeActionListener(listener);
+            }
+            
+            // Thêm action listener mới hiển thị thông báo không có quyền
+            button.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    JOptionPane.showMessageDialog(UIa.this, 
+                        "Bạn không có quyền để xử lý chức năng này!", 
+                        "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                }
+            });
+        }
+    }
+
+// Add this method to UIa class
+private void addSpecificPermissionCheckToButton(JButton button, String requiredFunction, Set<String> userFunctions) {
+    // Save old listeners
+    java.awt.event.ActionListener[] oldListeners = button.getActionListeners();
+    
+    // Remove all old listeners
+    for (java.awt.event.ActionListener listener : oldListeners) {
+        button.removeActionListener(listener);
+    }
+    
+    // Add new listener with permission check
+    button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            if (!userFunctions.contains(requiredFunction)) {
+                JOptionPane.showMessageDialog(UIa.this, 
+                        "Bạn không có quyền để xử lý chức năng này!", 
+                        "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            } else {
+                // If has permission, call the old listeners
+                for (java.awt.event.ActionListener listener : oldListeners) {
+                    listener.actionPerformed(evt);
+                }
+            }
+        }
+    });
+}
+
+    
+    // Thêm kiểm tra quyền cho một nút
+    private void addPermissionCheckToButton(JButton button) {
+        // Lưu lại ActionListener cũ
+        java.awt.event.ActionListener[] oldListeners = button.getActionListeners();
+        
+        // Xóa tất cả ActionListener cũ
+        for (java.awt.event.ActionListener listener : oldListeners) {
+            button.removeActionListener(listener);
+        }
+        
+        // Thêm ActionListener mới kiểm tra quyền
+        button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (!hasPermission) {
+                    JOptionPane.showMessageDialog(UIa.this, 
+                            "Bạn không có quyền để xử lý chức năng này!", 
+                            "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    // Nếu có quyền, gọi lại ActionListener cũ
+                    for (java.awt.event.ActionListener listener : oldListeners) {
+                        listener.actionPerformed(evt);
+                    }
+                }
+            }
+        });
+    }
     
     
     public static void main(String args[]) {
@@ -387,14 +590,17 @@ public class UIa extends javax.swing.JFrame {
     private javax.swing.JButton btnDangxuat;
     private javax.swing.JButton btnDocgia;
     private javax.swing.JButton btnNguonnhap;
-    private javax.swing.JButton btnNguonnhap1;
     private javax.swing.JButton btnNhanvien;
     private javax.swing.JButton btnPhanquyen;
     private javax.swing.JButton btnPhieumuon;
     private javax.swing.JButton btnPhieunhap;
     private javax.swing.JButton btnSach;
+    private javax.swing.JButton btnTaikhoan;
     private javax.swing.JButton btnThongke;
     private javax.swing.JPanel decor_qltv;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel txRole;
+    private javax.swing.JLabel txStaff;
     // End of variables declaration//GEN-END:variables
 }

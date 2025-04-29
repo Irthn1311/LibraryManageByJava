@@ -259,14 +259,13 @@ insert into lbr.ChucNang values
 
 
 CREATE TABLE lbr.PhanQuyen (
-    ma_phan_quyen varchar(255) PRIMARY KEY,
+    ma_phan_quyen varchar(255),
     ten_phan_quyen varchar(255),
     ma_chuc_nang varchar(255),
-    duoc_xem BOOLEAN DEFAULT FALSE,
-    duoc_cap_nhat BOOLEAN DEFAULT FALSE,
-    duoc_xoa BOOLEAN DEFAULT FALSE,
+  
 
-    FOREIGN KEY (ma_chuc_nang) REFERENCES ChucNang(ma_chuc_nang)
+    PRIMARY KEY (ma_phan_quyen, ma_chuc_nang),
+    FOREIGN KEY (ma_chuc_nang) REFERENCES lbr.ChucNang(ma_chuc_nang)
 );
 
 -- Phân quyền cho Thủ thư
@@ -287,17 +286,22 @@ INSERT INTO lbr.PhanQuyen VALUES
 
 
 CREATE TABLE lbr.TaiKhoan (
-    ma_the varchar(255),
-    ten_dang_nhap varchar(255) unique,
+    ma_tai_khoan VARCHAR(255) PRIMARY KEY,
+    ten_dang_nhap VARCHAR(255) UNIQUE,
     mat_khau VARCHAR(255) DEFAULT '123456789',
-    primary key (ma_the, ma_phan_quyen),
 
-    ma_phan_quyen varchar(255),
-    ma_nhan_vien int,
+    ma_phan_quyen VARCHAR(255),
+    ma_nhan_vien INT,
+    ma_the VARCHAR(255),
 
-    FOREIGN KEY (ma_the) REFERENCES TheThanhVien(ma_the),
-    FOREIGN KEY (ma_phan_quyen) REFERENCES PhanQuyen(ma_phan_quyen),
-    foreign key (ma_nhan_vien) references NhanVien(ma_nhan_vien)
+    FOREIGN KEY (ma_nhan_vien) REFERENCES lbr.NhanVien(ma_nhan_vien),
+    FOREIGN KEY (ma_the) REFERENCES lbr.TheThanhVien(ma_the),
+    FOREIGN KEY (ma_phan_quyen) REFERENCES lbr.PhanQuyen(ma_phan_quyen),
+
+    CHECK (
+        (ma_nhan_vien IS NOT NULL AND ma_the IS NULL) OR 
+        (ma_nhan_vien IS NULL AND ma_the IS NOT NULL)
+    )
 );
 
 CREATE TABLE lbr.ThongBao (

@@ -31,6 +31,49 @@ public class PhieunhapGUI extends javax.swing.JPanel {
 
     public PhieunhapGUI() {
         initComponents();
+        
+        // Căn giữa Header
+        JTableHeader header = tblDSPN.getTableHeader(); 
+        header.setFont(new Font("Arial", Font.BOLD, 16));
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+
+        // Căn giữa dữ liệu bảng
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < tblDSPN.getColumnCount(); i++) {
+            tblDSPN.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        // Set width cho từng cột
+        tblDSPN.getColumnModel().getColumn(0).setPreferredWidth(90);
+        tblDSPN.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tblDSPN.getColumnModel().getColumn(2).setPreferredWidth(140);
+        tblDSPN.getColumnModel().getColumn(3).setPreferredWidth(120);
+        tblDSPN.getColumnModel().getColumn(4).setPreferredWidth(130);
+        tblDSPN.getColumnModel().getColumn(5).setPreferredWidth(120);
+        tblDSPN.getColumnModel().getColumn(6).setPreferredWidth(130);
+        
+        // Căn giữa Header
+        JTableHeader headers = tblDSCTPN.getTableHeader(); 
+        headers.setFont(new Font("Arial", Font.BOLD, 16));
+        ((DefaultTableCellRenderer) headers.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+
+        // Căn giữa dữ liệu bảng
+        DefaultTableCellRenderer centerRenderers = new DefaultTableCellRenderer();
+        centerRenderers.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < tblDSCTPN.getColumnCount(); i++) {
+            tblDSCTPN.getColumnModel().getColumn(i).setCellRenderer(centerRenderers);
+        }
+
+        // Set width cho từng cột
+        tblDSCTPN.getColumnModel().getColumn(0).setPreferredWidth(90);
+        tblDSCTPN.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tblDSCTPN.getColumnModel().getColumn(2).setPreferredWidth(140);
+        tblDSCTPN.getColumnModel().getColumn(3).setPreferredWidth(120);
+        tblDSCTPN.getColumnModel().getColumn(4).setPreferredWidth(130);
+        tblDSCTPN.getColumnModel().getColumn(5).setPreferredWidth(120);
+
+        
         phieuNhapBUS = new PhieuNhapBUS();
         chiTietPhieuNhapBUS = new ChiTietPhieuNhapBUS();
         modelPhieuNhap = (DefaultTableModel) tblDSPN.getModel();
@@ -169,7 +212,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         ThanhChucnang = new javax.swing.JPanel();
         btnLapPhieu = new javax.swing.JButton();
-        btnThemCT = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         Giaodien = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -223,10 +266,10 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             }
         });
 
-        btnThemCT.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
-        btnThemCT.setText("Thêm");
-        btnThemCT.setContentAreaFilled(false);
-        btnThemCT.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
+        btnThem.setText("Thêm");
+        btnThem.setContentAreaFilled(false);
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Them(evt);
             }
@@ -247,7 +290,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ThanhChucnangLayout.createSequentialGroup()
                 .addContainerGap(888, Short.MAX_VALUE)
-                .addComponent(btnThemCT)
+                .addComponent(btnThem)
                 .addGap(18, 18, 18)
                 .addComponent(btnXoa)
                 .addGap(18, 18, 18)
@@ -258,7 +301,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnLapPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnThemCT, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -319,6 +362,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblDSPN.setRowHeight(30);
         jScrollPane1.setViewportView(tblDSPN);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -379,6 +423,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblDSCTPN.setRowHeight(30);
         jScrollPane2.setViewportView(tblDSCTPN);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -657,7 +702,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 2106, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -881,6 +926,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             }
         });
     }
+        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Giaodien;
@@ -888,7 +934,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnLapPhieu;
     private javax.swing.JButton btnResertTimKiemChiTietPhieuNhap;
     private javax.swing.JButton btnResertTimKiemPhieuNhap;
-    private javax.swing.JButton btnThemCT;
+    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimkiemChiTietPhieuNhap;
     private javax.swing.JButton btnTimkiemPhieuNhap;
     private javax.swing.JButton btnXoa;

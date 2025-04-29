@@ -4,12 +4,19 @@
  */
 package ui;
 
+
+import DTO.PhanQuyenDTO;
+import DAO.PhanQuyenDAO;
+import Helper.PlaceHolder;
 import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-
+import java.util.*;
+import javax.swing.*;
+import java.sql.*;
+import javax.swing.table.*;
 /**
  *
  * @author dinhp
@@ -19,13 +26,30 @@ public class PhanquyenGUI extends javax.swing.JPanel {
 
     public PhanquyenGUI() {
         initComponents();
+        
         Giaodien.setLayout(new CardLayout());
         Giaodien.add(XemPhanquyen, "Xem");
         Giaodien.add(ThemPhanquyen, "Them");
-        Giaodien.add(Chitiet, "Chitiet");
+     
         JTableHeader header = tbPhanquyen.getTableHeader(); 
         header.setFont(new Font("Arial", Font.BOLD, 16));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+          
+            PlaceHolder.addPlaceHolderEffect(txtNhapten,"Nhập tên cho phân quyền");
+ // Add this line to connect the button to the action handler
+    btnThemquyen.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnThemquyenActionPerformed(evt);
+        }
+    });
+    
+       loadPhanQuyenTable();
+btnChitiet.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnChitietChuyenChitietActionPerformed(evt);
+    }
+});
+
     }
 
     /**
@@ -52,121 +76,91 @@ public class PhanquyenGUI extends javax.swing.JPanel {
         Nhapten = new javax.swing.JLabel();
         txtNhapten = new javax.swing.JTextField();
         Quanlychucnang = new javax.swing.JLabel();
-        Quanlysach = new javax.swing.JLabel();
+        txQuanlysach = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        Quanlynhanvien = new javax.swing.JLabel();
-        Quanlyphieunhapsach = new javax.swing.JLabel();
-        Quanlydocgia = new javax.swing.JLabel();
-        Quanlyphanquyen = new javax.swing.JLabel();
-        Quanlyphieumuon = new javax.swing.JLabel();
-        Quanlytaikhoan = new javax.swing.JLabel();
-        Quanlythongke = new javax.swing.JLabel();
-        Quanlynguonnhap = new javax.swing.JLabel();
-        Xem = new javax.swing.JLabel();
-        Capnhat = new javax.swing.JLabel();
-        Xoa_Khoiphuc = new javax.swing.JLabel();
-        qls_xem = new javax.swing.JCheckBox();
-        qlnv_xem = new javax.swing.JCheckBox();
-        qlpns_xem = new javax.swing.JCheckBox();
-        qldg_xem = new javax.swing.JCheckBox();
-        qlpq_xem = new javax.swing.JCheckBox();
-        qlpm_xem = new javax.swing.JCheckBox();
-        qltk_xem = new javax.swing.JCheckBox();
-        qltke_xem = new javax.swing.JCheckBox();
-        qlnn_xem = new javax.swing.JCheckBox();
-        qls_capnhat = new javax.swing.JCheckBox();
-        qlnv_capnhat = new javax.swing.JCheckBox();
-        qldg_capnhat = new javax.swing.JCheckBox();
-        qlpq_capnhat = new javax.swing.JCheckBox();
-        qlpm_capnhat = new javax.swing.JCheckBox();
-        qltk_capnhat = new javax.swing.JCheckBox();
-        qltke_capnhat = new javax.swing.JCheckBox();
-        qlnn_capnhat = new javax.swing.JCheckBox();
-        qls_xoa_kp = new javax.swing.JCheckBox();
-        qlnv_xoa_kp = new javax.swing.JCheckBox();
-        qldg_xoa_kp = new javax.swing.JCheckBox();
-        qlpns_xoa_kp = new javax.swing.JCheckBox();
-        qlpq_xoa_kp = new javax.swing.JCheckBox();
-        qltk_xoa_kp = new javax.swing.JCheckBox();
-        qltke_xoa_kp = new javax.swing.JCheckBox();
-        qlnn_xoa_kp = new javax.swing.JCheckBox();
+        txQuanlynhanvien = new javax.swing.JLabel();
+        txQuanlyphieunhapsach = new javax.swing.JLabel();
+        txQuanlydocgia = new javax.swing.JLabel();
+        txQuanlyphanquyen = new javax.swing.JLabel();
+        txQuanlyphieumuon = new javax.swing.JLabel();
+        txQuanlytaikhoan = new javax.swing.JLabel();
+        txQuanlythongke = new javax.swing.JLabel();
+        txQuanlynguonnhap = new javax.swing.JLabel();
+        Quanlysach = new javax.swing.JCheckBox();
+        Quanlynhanvien = new javax.swing.JCheckBox();
+        Quanlyphieunhapsach = new javax.swing.JCheckBox();
+        Quanlydocgia = new javax.swing.JCheckBox();
+        Quanlyphanquyen = new javax.swing.JCheckBox();
+        Quanlyphieumuon = new javax.swing.JCheckBox();
+        Quanlytaikhoan = new javax.swing.JCheckBox();
+        Quanlythongke = new javax.swing.JCheckBox();
+        Quanlynguonnhap = new javax.swing.JCheckBox();
         btnCapnhat = new javax.swing.JButton();
         btnThemquyen = new javax.swing.JButton();
-        Chitiet = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        Tenquyen = new javax.swing.JLabel();
-        txTen = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
-        txQuyanly = new javax.swing.JLabel();
-        Quanlysach1 = new javax.swing.JLabel();
-        Quanlynhanvien1 = new javax.swing.JLabel();
-        Quanlyphieunhapsach1 = new javax.swing.JLabel();
-        Quanlydocgia1 = new javax.swing.JLabel();
-        Quanlyphanquyen1 = new javax.swing.JLabel();
-        Quanlyphieumuon1 = new javax.swing.JLabel();
-        Quanlytaikhoan1 = new javax.swing.JLabel();
-        Quanlythongke1 = new javax.swing.JLabel();
-        Quanlynguonnhap1 = new javax.swing.JLabel();
-        txqlnn_xem = new javax.swing.JCheckBox();
-        txqltke_xem = new javax.swing.JCheckBox();
-        txqltk_xem = new javax.swing.JCheckBox();
-        txqlpm_xem = new javax.swing.JCheckBox();
-        txqlpq_xem = new javax.swing.JCheckBox();
-        txqldg_xem = new javax.swing.JCheckBox();
-        txqlpns_xem = new javax.swing.JCheckBox();
-        txqlnv_xem = new javax.swing.JCheckBox();
-        txqls_xem = new javax.swing.JCheckBox();
-        Xem1 = new javax.swing.JLabel();
-        Capnhat1 = new javax.swing.JLabel();
-        txqls_capnhat = new javax.swing.JCheckBox();
-        txqlnv_capnhat = new javax.swing.JCheckBox();
-        txqldg_capnhat = new javax.swing.JCheckBox();
-        txqlpq_capnhat = new javax.swing.JCheckBox();
-        txqlpm_capnhat = new javax.swing.JCheckBox();
-        txqltk_capnhat = new javax.swing.JCheckBox();
-        txqltke_capnhat = new javax.swing.JCheckBox();
-        txqlnn_capnhat = new javax.swing.JCheckBox();
-        txqlnn_xoa_kp = new javax.swing.JCheckBox();
-        txqltke_xoa_kp = new javax.swing.JCheckBox();
-        txqltk_xoa_kp = new javax.swing.JCheckBox();
-        txqlpq_xoa_kp = new javax.swing.JCheckBox();
-        txqldg_xoa_kp = new javax.swing.JCheckBox();
-        txqlpns_xoa_kp = new javax.swing.JCheckBox();
-        txqlnv_xoa_kp = new javax.swing.JCheckBox();
-        txqls_xoa_kp = new javax.swing.JCheckBox();
-        Xoa_Khoiphuc1 = new javax.swing.JLabel();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1210, 640));
 
         ThanhChucnang.setBackground(new java.awt.Color(255, 255, 255));
         ThanhChucnang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
 
-        btnXem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
+        btnXem.setBackground(new java.awt.Color(153, 153, 153));
+        btnXem.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btnXem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/view.png"))); // NOI18N
         btnXem.setText("Xem");
+        btnXem.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnXem.setContentAreaFilled(false);
+        btnXem.setFocusPainted(false);
+        btnXem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnXem.setMaximumSize(new java.awt.Dimension(50, 72));
+        btnXem.setMinimumSize(new java.awt.Dimension(50, 72));
+        btnXem.setPreferredSize(new java.awt.Dimension(50, 72));
+        btnXem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnXem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXemChuyenXem(evt);
             }
         });
 
-        btnThem.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
+        btnThem.setBackground(new java.awt.Color(153, 153, 153));
+        btnThem.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/add.png"))); // NOI18N
         btnThem.setText("Thêm");
+        btnThem.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnThem.setContentAreaFilled(false);
+        btnThem.setFocusPainted(false);
+        btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnThem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemChuyenThem(evt);
             }
         });
 
-        btnXoaphieu.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
-        btnXoaphieu.setText("Xóa phiếu");
+        btnXoaphieu.setBackground(new java.awt.Color(153, 153, 153));
+        btnXoaphieu.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btnXoaphieu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete_i.png"))); // NOI18N
+        btnXoaphieu.setText("Xóa phân quyền");
+        btnXoaphieu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnXoaphieu.setContentAreaFilled(false);
+        btnXoaphieu.setFocusPainted(false);
+        btnXoaphieu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnXoaphieu.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnXoaphieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaphieuActionPerformed(evt);
+            }
+        });
 
-        btnChitiet.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
+        btnChitiet.setBackground(new java.awt.Color(153, 153, 153));
+        btnChitiet.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btnChitiet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/chitiet.png"))); // NOI18N
         btnChitiet.setText("Chi tiết");
         btnChitiet.setToolTipText("");
+        btnChitiet.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnChitiet.setContentAreaFilled(false);
+        btnChitiet.setFocusPainted(false);
+        btnChitiet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnChitiet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnChitiet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChitietChuyenChitiet(evt);
@@ -179,23 +173,23 @@ public class PhanquyenGUI extends javax.swing.JPanel {
             ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ThanhChucnangLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnXem)
+                .addComponent(btnXem, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnThem)
-                .addGap(18, 18, 18)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnXoaphieu)
-                .addGap(18, 18, 18)
-                .addComponent(btnChitiet)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnChitiet, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(172, 172, 172))
         );
         ThanhChucnangLayout.setVerticalGroup(
             ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ThanhChucnangLayout.createSequentialGroup()
-                .addGroup(ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnXem, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoaphieu, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChitiet, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnChitiet, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -260,44 +254,35 @@ public class PhanquyenGUI extends javax.swing.JPanel {
         Quanlychucnang.setText("Quản lý chức năng");
         Quanlychucnang.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        Quanlysach.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlysach.setText("Quản lý sách");
+        txQuanlysach.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlysach.setText("Quản lý sách");
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
-        Quanlynhanvien.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlynhanvien.setText("Quản lý nhân viên");
+        txQuanlynhanvien.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlynhanvien.setText("Quản lý nhân viên");
 
-        Quanlyphieunhapsach.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlyphieunhapsach.setText("Quản lý phiếu nhập sách");
+        txQuanlyphieunhapsach.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlyphieunhapsach.setText("Quản lý phiếu nhập sách");
 
-        Quanlydocgia.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlydocgia.setText("Quản lý độc giả");
+        txQuanlydocgia.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlydocgia.setText("Quản lý độc giả");
 
-        Quanlyphanquyen.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlyphanquyen.setText("Quản lý phân quyền");
+        txQuanlyphanquyen.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlyphanquyen.setText("Quản lý phân quyền");
 
-        Quanlyphieumuon.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlyphieumuon.setText("Quản lý phiếu mượn");
+        txQuanlyphieumuon.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlyphieumuon.setText("Quản lý phiếu mượn");
 
-        Quanlytaikhoan.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlytaikhoan.setText("Quản lý tài khoản");
+        txQuanlytaikhoan.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlytaikhoan.setText("Quản lý tài khoản");
 
-        Quanlythongke.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlythongke.setText("Quản lý thống kê");
+        txQuanlythongke.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlythongke.setText("Quản lý thống kê");
 
-        Quanlynguonnhap.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlynguonnhap.setText("Quản lý nguồn nhập");
-
-        Xem.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Xem.setText("Xem");
-
-        Capnhat.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Capnhat.setText("Cập nhật");
-
-        Xoa_Khoiphuc.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Xoa_Khoiphuc.setText("Xóa/ Khôi phục");
+        txQuanlynguonnhap.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txQuanlynguonnhap.setText("Quản lý nguồn nhập");
 
         btnCapnhat.setBackground(new java.awt.Color(255, 204, 0));
         btnCapnhat.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
@@ -327,180 +312,103 @@ public class PhanquyenGUI extends javax.swing.JPanel {
                         .addGap(50, 50, 50)
                         .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(Quanlysach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txQuanlysach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Quanlychucnang, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(Quanlynhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlyphieunhapsach, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlydocgia, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlyphanquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlyphieumuon, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlytaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlythongke, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Quanlynguonnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txQuanlynhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txQuanlyphieunhapsach, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txQuanlydocgia, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txQuanlyphanquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txQuanlyphieumuon, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txQuanlytaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txQuanlythongke, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txQuanlynguonnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(100, 100, 100)
                         .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                .addComponent(Xem)
-                                .addGap(150, 150, 150)
-                                .addComponent(Capnhat)
-                                .addGap(150, 150, 150)
-                                .addComponent(Xoa_Khoiphuc))
+                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Quanlynhanvien)
+                                    .addComponent(Quanlysach)
+                                    .addComponent(Quanlydocgia)
+                                    .addComponent(Quanlyphieunhapsach)
+                                    .addComponent(Quanlytaikhoan)
+                                    .addComponent(Quanlythongke)
+                                    .addComponent(Quanlynguonnhap))
+                                .addGap(628, 628, 628)
+                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnThemquyen, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)))
                             .addGroup(PanPhanquyenLayout.createSequentialGroup()
                                 .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(qlnv_xem)
-                                    .addComponent(qls_xem)
-                                    .addComponent(qldg_xem)
-                                    .addComponent(qlpns_xem)
-                                    .addComponent(qlpm_xem)
-                                    .addComponent(qlpq_xem)
-                                    .addComponent(qltke_xem)
-                                    .addComponent(qltk_xem)
-                                    .addComponent(qlnn_xem))
-                                .addGap(179, 179, 179)
-                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(qlnv_capnhat)
-                                    .addComponent(qls_capnhat)
-                                    .addComponent(qldg_capnhat)
-                                    .addComponent(qlpm_capnhat)
-                                    .addComponent(qlpq_capnhat)
-                                    .addComponent(qltke_capnhat)
-                                    .addComponent(qltk_capnhat)
-                                    .addComponent(qlnn_capnhat))
-                                .addGap(212, 212, 212)
-                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(qlpq_xoa_kp)
-                                            .addComponent(qldg_xoa_kp)
-                                            .addComponent(qlpns_xoa_kp)
-                                            .addComponent(qlnv_xoa_kp)
-                                            .addComponent(qls_xoa_kp))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(qltk_xoa_kp)
-                                            .addComponent(qlnn_xoa_kp)
-                                            .addComponent(qltke_xoa_kp))
-                                        .addGap(199, 199, 199)
-                                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnThemquyen, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))))))))
+                                    .addComponent(Quanlyphanquyen)
+                                    .addComponent(Quanlyphieumuon))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         PanPhanquyenLayout.setVerticalGroup(
             PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanPhanquyenLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                        .addGap(316, 316, 316)
-                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                .addComponent(qltk_xem)
-                                .addGap(18, 18, 18)
-                                .addComponent(Quanlythongke))
-                            .addComponent(qltke_xem))
-                        .addGap(18, 18, 18)
-                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(PanPhanquyenLayout.createSequentialGroup()
+                            .addGap(353, 353, 353)
+                            .addComponent(txQuanlythongke)
+                            .addGap(19, 19, 19)
+                            .addComponent(txQuanlynguonnhap))
+                        .addGroup(PanPhanquyenLayout.createSequentialGroup()
                             .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(Quanlynguonnhap)
-                                .addComponent(qlnn_xem))
-                            .addComponent(qlnn_capnhat)
-                            .addComponent(qlnn_xoa_kp)))
-                    .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                .addComponent(qlpq_xem)
-                                .addGap(18, 18, 18)
-                                .addComponent(Quanlyphieumuon))
-                            .addComponent(qlpm_xem)
-                            .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtNhapten, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Nhapten, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
-                                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
-                                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txQuanlyphieumuon)
+                                .addGroup(PanPhanquyenLayout.createSequentialGroup()
+                                    .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtNhapten, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Nhapten, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
+                                            .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
+                                                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(18, 18, 18)
                                                     .addComponent(Quanlychucnang)
-                                                    .addComponent(Xem)
-                                                    .addComponent(Capnhat)
-                                                    .addComponent(Xoa_Khoiphuc))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(txQuanlysach)
+                                                    .addGap(37, 37, 37))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
                                                     .addComponent(Quanlysach)
-                                                    .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                                            .addComponent(qls_capnhat)
-                                                            .addGap(36, 36, 36))
-                                                        .addComponent(qlnv_capnhat))
-                                                    .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                                            .addComponent(qls_xoa_kp)
-                                                            .addGap(36, 36, 36))
-                                                        .addComponent(qlnv_xoa_kp))))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
-                                                .addComponent(qls_xem)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(Quanlynhanvien))
-                                            .addComponent(qlnv_xem, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(txQuanlynhanvien))
+                                                .addComponent(Quanlynhanvien, javax.swing.GroupLayout.Alignment.TRAILING))
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txQuanlyphieunhapsach)
+                                            .addGap(37, 37, 37))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
                                             .addComponent(Quanlyphieunhapsach)
-                                            .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                                .addGap(36, 36, 36)
-                                                .addComponent(qldg_capnhat))
-                                            .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                                    .addComponent(qlpns_xoa_kp)
-                                                    .addGap(36, 36, 36))
-                                                .addComponent(qldg_xoa_kp))))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
-                                        .addComponent(qlpns_xem)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(Quanlydocgia))
-                                    .addComponent(qldg_xem, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGap(18, 18, 18)
-                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txQuanlydocgia))
+                                        .addComponent(Quanlydocgia, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addGap(18, 18, 18)
                                     .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                            .addComponent(qlpq_capnhat)
-                                            .addGap(36, 36, 36))
-                                        .addComponent(qlpm_capnhat))
-                                    .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Quanlyphanquyen)
-                                            .addComponent(qlpq_xoa_kp))
-                                        .addGap(36, 36, 36)))))
-                        .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Quanlytaikhoan)
+                                        .addComponent(txQuanlyphanquyen)
+                                        .addComponent(Quanlyphanquyen))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(Quanlyphieumuon)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
                                     .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                            .addComponent(qltk_capnhat)
-                                            .addGap(36, 36, 36))
-                                        .addComponent(qltke_capnhat))
-                                    .addGroup(PanPhanquyenLayout.createSequentialGroup()
-                                        .addComponent(qltk_xoa_kp)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(qltke_xoa_kp)))
-                                .addGap(31, 31, 31))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PanPhanquyenLayout.createSequentialGroup()
+                                        .addComponent(Quanlytaikhoan)
+                                        .addComponent(txQuanlytaikhoan))
+                                    .addGap(25, 25, 25)
+                                    .addComponent(btnCapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(PanPhanquyenLayout.createSequentialGroup()
+                                    .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(btnThemquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanPhanquyenLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnCapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                                        .addComponent(Quanlythongke, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addGap(36, 36, 36)))))
+                    .addGroup(PanPhanquyenLayout.createSequentialGroup()
+                        .addGap(390, 390, 390)
+                        .addComponent(Quanlynguonnhap)))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout ThemPhanquyenLayout = new javax.swing.GroupLayout(ThemPhanquyen);
@@ -518,274 +426,24 @@ public class PhanquyenGUI extends javax.swing.JPanel {
 
         Giaodien.add(ThemPhanquyen, "Them");
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        Tenquyen.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        Tenquyen.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        Tenquyen.setText("Tên quyền:");
-
-        txTen.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txTen.setText("jTextField1");
-        txTen.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-
-        jSeparator3.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-
-        txQuyanly.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        txQuyanly.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        txQuyanly.setText("Quản lý chức năng");
-        txQuyanly.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-
-        Quanlysach1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlysach1.setText("Quản lý sách");
-
-        Quanlynhanvien1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlynhanvien1.setText("Quản lý nhân viên");
-
-        Quanlyphieunhapsach1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlyphieunhapsach1.setText("Quản lý phiếu nhập sách");
-
-        Quanlydocgia1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlydocgia1.setText("Quản lý độc giả");
-
-        Quanlyphanquyen1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlyphanquyen1.setText("Quản lý phân quyền");
-
-        Quanlyphieumuon1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlyphieumuon1.setText("Quản lý phiếu mượn");
-
-        Quanlytaikhoan1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlytaikhoan1.setText("Quản lý tài khoản");
-
-        Quanlythongke1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlythongke1.setText("Quản lý thống kê");
-
-        Quanlynguonnhap1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Quanlynguonnhap1.setText("Quản lý nguồn nhập");
-
-        Xem1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Xem1.setText("Xem");
-
-        Capnhat1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Capnhat1.setText("Cập nhật");
-
-        Xoa_Khoiphuc1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        Xoa_Khoiphuc1.setText("Xóa/ Khôi phục");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(Tenquyen)
-                        .addGap(18, 18, 18)
-                        .addComponent(txTen, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 393, Short.MAX_VALUE))
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(53, 53, 53)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(Quanlysach1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txQuyanly, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addComponent(Quanlynhanvien1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Quanlyphieunhapsach1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Quanlydocgia1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Quanlyphanquyen1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Quanlyphieumuon1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Quanlytaikhoan1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Quanlythongke1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Quanlynguonnhap1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(100, 100, 100)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(Xem1)
-                            .addGap(150, 150, 150)
-                            .addComponent(Capnhat1)
-                            .addGap(150, 150, 150)
-                            .addComponent(Xoa_Khoiphuc1))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txqlnv_xem)
-                                .addComponent(txqls_xem)
-                                .addComponent(txqldg_xem)
-                                .addComponent(txqlpns_xem)
-                                .addComponent(txqlpm_xem)
-                                .addComponent(txqlpq_xem)
-                                .addComponent(txqltke_xem)
-                                .addComponent(txqltk_xem)
-                                .addComponent(txqlnn_xem))
-                            .addGap(179, 179, 179)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txqlnv_capnhat)
-                                .addComponent(txqls_capnhat)
-                                .addComponent(txqldg_capnhat)
-                                .addComponent(txqlpm_capnhat)
-                                .addComponent(txqlpq_capnhat)
-                                .addComponent(txqltke_capnhat)
-                                .addComponent(txqltk_capnhat)
-                                .addComponent(txqlnn_capnhat))
-                            .addGap(212, 212, 212)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txqlpq_xoa_kp)
-                                        .addComponent(txqldg_xoa_kp)
-                                        .addComponent(txqlpns_xoa_kp)
-                                        .addComponent(txqlnv_xoa_kp)
-                                        .addComponent(txqls_xoa_kp))
-                                    .addGap(0, 403, Short.MAX_VALUE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txqltk_xoa_kp)
-                                        .addComponent(txqlnn_xoa_kp)
-                                        .addComponent(txqltke_xoa_kp))
-                                    .addGap(399, 399, 399)))))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Tenquyen, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txTen, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(426, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(84, 84, 84)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(283, 283, 283)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(txqltk_xem)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(Quanlythongke1))
-                                .addComponent(txqltke_xem))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(Quanlynguonnhap1)
-                                    .addComponent(txqlnn_xem))
-                                .addComponent(txqlnn_capnhat)
-                                .addComponent(txqlnn_xoa_kp)))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(txqlpq_xem)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(Quanlyphieumuon1))
-                                .addComponent(txqlpm_xem)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGap(23, 23, 23)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(txQuyanly)
-                                                        .addComponent(Xem1)
-                                                        .addComponent(Capnhat1)
-                                                        .addComponent(Xoa_Khoiphuc1))
-                                                    .addGap(18, 18, 18)
-                                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(Quanlysach1)
-                                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(txqls_capnhat)
-                                                                .addGap(36, 36, 36))
-                                                            .addComponent(txqlnv_capnhat))
-                                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(txqls_xoa_kp)
-                                                                .addGap(36, 36, 36))
-                                                            .addComponent(txqlnv_xoa_kp))))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                                    .addComponent(txqls_xem)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(Quanlynhanvien1))
-                                                .addComponent(txqlnv_xem, javax.swing.GroupLayout.Alignment.TRAILING))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(Quanlyphieunhapsach1)
-                                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                                    .addGap(36, 36, 36)
-                                                    .addComponent(txqldg_capnhat))
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                                        .addComponent(txqlpns_xoa_kp)
-                                                        .addGap(36, 36, 36))
-                                                    .addComponent(txqldg_xoa_kp))))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                            .addComponent(txqlpns_xem)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(Quanlydocgia1))
-                                        .addComponent(txqldg_xem, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(txqlpq_capnhat)
-                                                .addGap(36, 36, 36))
-                                            .addComponent(txqlpm_capnhat))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(Quanlyphanquyen1)
-                                                .addComponent(txqlpq_xoa_kp))
-                                            .addGap(36, 36, 36)))))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Quanlytaikhoan1)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txqltk_capnhat)
-                                        .addGap(36, 36, 36))
-                                    .addComponent(txqltke_capnhat))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(txqltk_xoa_kp)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txqltke_xoa_kp)))))
-                    .addContainerGap(49, Short.MAX_VALUE)))
-        );
-
-        javax.swing.GroupLayout ChitietLayout = new javax.swing.GroupLayout(Chitiet);
-        Chitiet.setLayout(ChitietLayout);
-        ChitietLayout.setHorizontalGroup(
-            ChitietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        ChitietLayout.setVerticalGroup(
-            ChitietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        Giaodien.add(Chitiet, "Chitiet");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Giaodien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ThanhChucnang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Giaodien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ThanhChucnang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(47, 47, 47))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(ThanhChucnang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -821,41 +479,253 @@ public class PhanquyenGUI extends javax.swing.JPanel {
         card.show(Giaodien, "Chitiet");
     }//GEN-LAST:event_btnChitietChuyenChitiet
 
+    private void btnXoaphieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaphieuActionPerformed
+        // TODO add your handling code here:
+         // Get the selected row from the table
+    int selectedRow = tbPhanquyen.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một phân quyền để xóa!", 
+            "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+    
+    try {
+        // Get the permission ID from the selected row
+        String maPhanQuyen = tbPhanquyen.getValueAt(selectedRow, 0).toString();
+        String tenPhanQuyen = tbPhanquyen.getValueAt(selectedRow, 1).toString();
+        
+        // Confirm deletion with the user
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Bạn có chắc chắn muốn xóa phân quyền \"" + tenPhanQuyen + "\" (Mã: " + maPhanQuyen + ") không?", 
+            "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
+        // Create a PhanQuyenDAO instance
+        PhanQuyenDAO phanQuyenDAO = new PhanQuyenDAO();
+        
+        // Check if the permission is assigned to any account
+        if (phanQuyenDAO.kiemTraPhanQuyenDangDuocSuDung(maPhanQuyen)) {
+            JOptionPane.showMessageDialog(this, 
+                "Không thể xóa phân quyền này vì đang được gán cho một hoặc nhiều tài khoản!", 
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Delete the permission
+        boolean success = phanQuyenDAO.xoaPhanQuyen(maPhanQuyen);
+        
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Xóa phân quyền thành công!");
+            
+            // Refresh the permissions table
+            loadPhanQuyenTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Xóa phân quyền thất bại!", 
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi xóa phân quyền: " + e.getMessage(), 
+            "Lỗi", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_btnXoaphieuActionPerformed
+ // Add this method to your PhanquyenGUI class
+private void btnThemquyenActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        // Get the permission name from the text field
+        String tenPhanQuyen = txtNhapten.getText().trim();
+        
+        // Validate the input name
+        if (tenPhanQuyen.isEmpty() || tenPhanQuyen.equals("Nhập tên cho phân quyền")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên cho phân quyền!", 
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Create a PhanQuyenDAO instance
+        PhanQuyenDAO phanQuyenDAO = new PhanQuyenDAO();
+        
+        // Generate a new permission ID
+        String maPhanQuyen = phanQuyenDAO.taoMaPhanQuyenMoi();
+        
+        // Collect the selected functions (checkboxes)
+        ArrayList<String> selectedFunctions = new ArrayList<>();
+        
+        // Check each function checkbox
+        if (Quanlysach.isSelected()) selectedFunctions.add("Q1");
+        if (Quanlynhanvien.isSelected()) selectedFunctions.add("Q2");
+        if (Quanlyphieunhapsach.isSelected()) selectedFunctions.add("Q3");
+        if (Quanlydocgia.isSelected()) selectedFunctions.add("Q4");
+        if (Quanlyphanquyen.isSelected()) selectedFunctions.add("Q5");
+        if (Quanlyphieumuon.isSelected()) selectedFunctions.add("Q6");
+        if (Quanlytaikhoan.isSelected()) selectedFunctions.add("Q7");
+        if (Quanlythongke.isSelected()) selectedFunctions.add("Q8");
+        if (Quanlynguonnhap.isSelected()) selectedFunctions.add("Q9");
+        
+        // Validate at least one function is selected
+        if (selectedFunctions.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ít nhất một chức năng!", 
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Add the permission with selected functions to the database
+        boolean success = true;
+        for (String maChucNang : selectedFunctions) {
+            PhanQuyenDTO phanQuyen = new PhanQuyenDTO(maPhanQuyen, tenPhanQuyen, maChucNang);
+            if (!phanQuyenDAO.themPhanQuyen(phanQuyen)) {
+                success = false;
+                break;
+            }
+        }
+        
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Thêm phân quyền thành công!");
+            
+            // Add the new permission to the table
+            DefaultTableModel model = (DefaultTableModel) tbPhanquyen.getModel();
+            model.addRow(new Object[]{maPhanQuyen, tenPhanQuyen});
+            
+            // Reset the form
+            resetForm();
+            
+            // Refresh the permissions table
+            loadPhanQuyenTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm phân quyền thất bại!", 
+                "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage(), 
+            "Lỗi", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
+
+// Add reset form function
+private void resetForm() {
+    txtNhapten.setText("Nhập tên cho phân quyền");
+    
+    // Reset all checkboxes
+    Quanlysach.setSelected(false);
+    Quanlynhanvien.setSelected(false);
+    Quanlyphieunhapsach.setSelected(false);
+    Quanlydocgia.setSelected(false);
+    Quanlyphanquyen.setSelected(false);
+    Quanlyphieumuon.setSelected(false);
+    Quanlytaikhoan.setSelected(false);
+    Quanlythongke.setSelected(false);
+    Quanlynguonnhap.setSelected(false);
+}
+
+// Add method to load the permissions table
+private void loadPhanQuyenTable() {
+    try {
+        PhanQuyenDAO phanQuyenDAO = new PhanQuyenDAO();
+        ArrayList<PhanQuyenDTO> danhSachPhanQuyen = phanQuyenDAO.layDanhSachPhanQuyen();
+        
+        // Convert to a map to remove duplicates (since one permission can have multiple functions)
+        Map<String, String> uniquePermissions = new HashMap<>();
+        for (PhanQuyenDTO pq : danhSachPhanQuyen) {
+            uniquePermissions.put(pq.getMaPhanQuyen(), pq.getTenPhanQuyen());
+        }
+        
+        // Clear the table
+        DefaultTableModel model = (DefaultTableModel) tbPhanquyen.getModel();
+        model.setRowCount(0);
+        
+        // Add each unique permission to the table
+        for (Map.Entry<String, String> entry : uniquePermissions.entrySet()) {
+            model.addRow(new Object[]{entry.getKey(), entry.getValue()});
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi tải dữ liệu phân quyền: " + e.getMessage(), 
+            "Lỗi", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
+
+private void btnChitietChuyenChitietActionPerformed(java.awt.event.ActionEvent evt) {
+    // Lấy dòng được chọn từ bảng
+    int selectedRow = tbPhanquyen.getSelectedRow();
+    
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một phân quyền để xem chi tiết!", 
+            "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+    
+    try {
+        // Lấy mã phân quyền và tên từ dòng đã chọn
+        String maPhanQuyen = tbPhanquyen.getValueAt(selectedRow, 0).toString();
+        String tenPhanQuyen = tbPhanquyen.getValueAt(selectedRow, 1).toString();
+        
+        // Sử dụng phương thức có sẵn để lấy danh sách chức năng của phân quyền này
+        PhanQuyenDAO phanQuyenDAO = new PhanQuyenDAO();
+        ArrayList<PhanQuyenDTO> danhSachPhanQuyen = phanQuyenDAO.layDanhSachPhanQuyenTheoMa(maPhanQuyen);
+        
+        // Tạo thông điệp với thông tin phân quyền
+        StringBuilder message = new StringBuilder();
+        message.append("Mã phân quyền: ").append(maPhanQuyen).append("\n");
+        message.append("Tên phân quyền: ").append(tenPhanQuyen).append("\n\n");
+        message.append("Các chức năng:\n");
+        
+        // Thêm từng chức năng vào thông điệp
+        for (PhanQuyenDTO pq : danhSachPhanQuyen) {
+            String tenChucNang = getTenChucNang(pq.getMaChucNang());
+            message.append("- ").append(tenChucNang).append(" (").append(pq.getMaChucNang()).append(")\n");
+        }
+        
+        // Hiển thị hộp thoại thông báo
+        JOptionPane.showMessageDialog(this, message.toString(), 
+            "Chi tiết phân quyền", JOptionPane.INFORMATION_MESSAGE);
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Lỗi khi hiển thị chi tiết phân quyền: " + e.getMessage(), 
+            "Lỗi", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
+
+// Phương thức hỗ trợ để lấy tên chức năng từ mã chức năng
+private String getTenChucNang(String maChucNang) {
+    switch (maChucNang) {
+        case "Q1": return "Quản lý sách";
+        case "Q2": return "Quản lý nhân viên";
+        case "Q3": return "Quản lý phiếu nhập sách";
+        case "Q4": return "Quản lý độc giả";
+        case "Q5": return "Quản lý phân quyền";
+        case "Q6": return "Quản lý phiếu mượn";
+        case "Q7": return "Quản lý tài khoản";
+        case "Q8": return "Quản lý thống kê";
+        case "Q9": return "Quản lý nguồn nhập";
+        default: return "Chức năng không xác định";
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Capnhat;
-    private javax.swing.JLabel Capnhat1;
-    private javax.swing.JPanel Chitiet;
     private javax.swing.JPanel Giaodien;
     private javax.swing.JLabel Nhapten;
     private javax.swing.JPanel PanPhanquyen;
     private javax.swing.JLabel Quanlychucnang;
-    private javax.swing.JLabel Quanlydocgia;
-    private javax.swing.JLabel Quanlydocgia1;
-    private javax.swing.JLabel Quanlynguonnhap;
-    private javax.swing.JLabel Quanlynguonnhap1;
-    private javax.swing.JLabel Quanlynhanvien;
-    private javax.swing.JLabel Quanlynhanvien1;
-    private javax.swing.JLabel Quanlyphanquyen;
-    private javax.swing.JLabel Quanlyphanquyen1;
-    private javax.swing.JLabel Quanlyphieumuon;
-    private javax.swing.JLabel Quanlyphieumuon1;
-    private javax.swing.JLabel Quanlyphieunhapsach;
-    private javax.swing.JLabel Quanlyphieunhapsach1;
-    private javax.swing.JLabel Quanlysach;
-    private javax.swing.JLabel Quanlysach1;
-    private javax.swing.JLabel Quanlytaikhoan;
-    private javax.swing.JLabel Quanlytaikhoan1;
-    private javax.swing.JLabel Quanlythongke;
-    private javax.swing.JLabel Quanlythongke1;
-    private javax.swing.JLabel Tenquyen;
+    private javax.swing.JCheckBox Quanlydocgia;
+    private javax.swing.JCheckBox Quanlynguonnhap;
+    private javax.swing.JCheckBox Quanlynhanvien;
+    private javax.swing.JCheckBox Quanlyphanquyen;
+    private javax.swing.JCheckBox Quanlyphieumuon;
+    private javax.swing.JCheckBox Quanlyphieunhapsach;
+    private javax.swing.JCheckBox Quanlysach;
+    private javax.swing.JCheckBox Quanlytaikhoan;
+    private javax.swing.JCheckBox Quanlythongke;
     private javax.swing.JPanel ThanhChucnang;
     private javax.swing.JPanel ThemPhanquyen;
-    private javax.swing.JLabel Xem;
-    private javax.swing.JLabel Xem1;
     private javax.swing.JPanel XemPhanquyen;
-    private javax.swing.JLabel Xoa_Khoiphuc;
-    private javax.swing.JLabel Xoa_Khoiphuc1;
     private javax.swing.JButton btnCapnhat;
     private javax.swing.JButton btnChitiet;
     private javax.swing.JButton btnThem;
@@ -863,63 +733,18 @@ public class PhanquyenGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnXem;
     private javax.swing.JButton btnXoaphieu;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JCheckBox qldg_capnhat;
-    private javax.swing.JCheckBox qldg_xem;
-    private javax.swing.JCheckBox qldg_xoa_kp;
-    private javax.swing.JCheckBox qlnn_capnhat;
-    private javax.swing.JCheckBox qlnn_xem;
-    private javax.swing.JCheckBox qlnn_xoa_kp;
-    private javax.swing.JCheckBox qlnv_capnhat;
-    private javax.swing.JCheckBox qlnv_xem;
-    private javax.swing.JCheckBox qlnv_xoa_kp;
-    private javax.swing.JCheckBox qlpm_capnhat;
-    private javax.swing.JCheckBox qlpm_xem;
-    private javax.swing.JCheckBox qlpns_xem;
-    private javax.swing.JCheckBox qlpns_xoa_kp;
-    private javax.swing.JCheckBox qlpq_capnhat;
-    private javax.swing.JCheckBox qlpq_xem;
-    private javax.swing.JCheckBox qlpq_xoa_kp;
-    private javax.swing.JCheckBox qls_capnhat;
-    private javax.swing.JCheckBox qls_xem;
-    private javax.swing.JCheckBox qls_xoa_kp;
-    private javax.swing.JCheckBox qltk_capnhat;
-    private javax.swing.JCheckBox qltk_xem;
-    private javax.swing.JCheckBox qltk_xoa_kp;
-    private javax.swing.JCheckBox qltke_capnhat;
-    private javax.swing.JCheckBox qltke_xem;
-    private javax.swing.JCheckBox qltke_xoa_kp;
     private javax.swing.JTable tbPhanquyen;
-    private javax.swing.JLabel txQuyanly;
-    private javax.swing.JTextField txTen;
-    private javax.swing.JCheckBox txqldg_capnhat;
-    private javax.swing.JCheckBox txqldg_xem;
-    private javax.swing.JCheckBox txqldg_xoa_kp;
-    private javax.swing.JCheckBox txqlnn_capnhat;
-    private javax.swing.JCheckBox txqlnn_xem;
-    private javax.swing.JCheckBox txqlnn_xoa_kp;
-    private javax.swing.JCheckBox txqlnv_capnhat;
-    private javax.swing.JCheckBox txqlnv_xem;
-    private javax.swing.JCheckBox txqlnv_xoa_kp;
-    private javax.swing.JCheckBox txqlpm_capnhat;
-    private javax.swing.JCheckBox txqlpm_xem;
-    private javax.swing.JCheckBox txqlpns_xem;
-    private javax.swing.JCheckBox txqlpns_xoa_kp;
-    private javax.swing.JCheckBox txqlpq_capnhat;
-    private javax.swing.JCheckBox txqlpq_xem;
-    private javax.swing.JCheckBox txqlpq_xoa_kp;
-    private javax.swing.JCheckBox txqls_capnhat;
-    private javax.swing.JCheckBox txqls_xem;
-    private javax.swing.JCheckBox txqls_xoa_kp;
-    private javax.swing.JCheckBox txqltk_capnhat;
-    private javax.swing.JCheckBox txqltk_xem;
-    private javax.swing.JCheckBox txqltk_xoa_kp;
-    private javax.swing.JCheckBox txqltke_capnhat;
-    private javax.swing.JCheckBox txqltke_xem;
-    private javax.swing.JCheckBox txqltke_xoa_kp;
+    private javax.swing.JLabel txQuanlydocgia;
+    private javax.swing.JLabel txQuanlynguonnhap;
+    private javax.swing.JLabel txQuanlynhanvien;
+    private javax.swing.JLabel txQuanlyphanquyen;
+    private javax.swing.JLabel txQuanlyphieumuon;
+    private javax.swing.JLabel txQuanlyphieunhapsach;
+    private javax.swing.JLabel txQuanlysach;
+    private javax.swing.JLabel txQuanlytaikhoan;
+    private javax.swing.JLabel txQuanlythongke;
     private javax.swing.JTextField txtNhapten;
     // End of variables declaration//GEN-END:variables
 }
