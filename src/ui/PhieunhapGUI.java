@@ -1,4 +1,3 @@
-
 package ui;
 
 import java.awt.CardLayout;
@@ -16,18 +15,21 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 import BUS.ChiTietPhieuNhapBUS;
 import BUS.PhieuNhapBUS;
+import BUS.SachBUS;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.PhieuNhapDTO;
 
-
 public class PhieunhapGUI extends javax.swing.JPanel {
 
+    private Map<String, String> maSachToTenSachMap;
+    private SachBUS sachBUS;
 
     public PhieunhapGUI() {
         initComponents();
@@ -78,7 +80,9 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         chiTietPhieuNhapBUS = new ChiTietPhieuNhapBUS();
         modelPhieuNhap = (DefaultTableModel) tblDSPN.getModel();
         modelChiTietPhieuNhap = (DefaultTableModel) tblDSCTPN.getModel();
+        sachBUS = new SachBUS();
         loadComboBoxCoSoNhap();
+        loadComboBoxTenSach();
         loadDSPN();
         loadDSCTPN();
         
@@ -88,13 +92,13 @@ public class PhieunhapGUI extends javax.swing.JPanel {
                 int selectedRow = tblDSCTPN.getSelectedRow();
                 if (selectedRow != -1) {
                     String maPhieu = tblDSCTPN.getValueAt(selectedRow, 1).toString();
-                    String loaiSach = tblDSCTPN.getValueAt(selectedRow, 2).toString();
+                    String tenSachDisplay = tblDSCTPN.getValueAt(selectedRow, 2).toString();
                     String donGia = tblDSCTPN.getValueAt(selectedRow, 3).toString();
                     String soLuong = tblDSCTPN.getValueAt(selectedRow, 4).toString();
                     String thanhTien = tblDSCTPN.getValueAt(selectedRow, 5).toString();
 
                     txtMaPhieuNhap.setText(maPhieu);
-                    txtLoaiSach.setText(loaiSach);
+                    cbTenSach.setSelectedItem(tenSachDisplay);
                     txtSoLuongSach.setText(soLuong);
                     txtDonGia.setText(donGia);
                     txtThanhTien.setText(thanhTien);
@@ -163,22 +167,17 @@ public class PhieunhapGUI extends javax.swing.JPanel {
     
     private void loadDSCTPN(String maPhieu) {
         try {
-            // Xóa toàn bộ dữ liệu trong bảng trước khi tải lại
             modelChiTietPhieuNhap.setRowCount(0);
-
             ArrayList<ChiTietPhieuNhapDTO> dsCT;
             if (maPhieu == null || maPhieu.isEmpty()) {
-                // Nếu không có mã phiếu, tải tất cả chi tiết phiếu nhập
                 dsCT = chiTietPhieuNhapBUS.layTatCaChiTietPhieuNhap();
             } else {
-                // Nếu có mã phiếu, chỉ tải chi tiết phiếu nhập theo mã phiếu
                 dsCT = chiTietPhieuNhapBUS.layDanhSachTheoMaPhieu(maPhieu);
             }
 
-            // Thêm từng chi tiết vào bảng
             for (ChiTietPhieuNhapDTO ct : dsCT) {
                 modelChiTietPhieuNhap.addRow(new Object[]{
-                    ct.getMaCTPN(), ct.getMaPhieuNhap(), ct.getLoaiSach(),
+                    ct.getMaCTPN(), ct.getMaPhieuNhap(), ct.getTenSach(),
                     ct.getDonGia(), ct.getSoLuong(), ct.getThanhTien()
                 });
             }
@@ -194,7 +193,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             ArrayList<ChiTietPhieuNhapDTO> ds = chiTietPhieuNhapBUS.layTatCaChiTietPhieuNhap();
             for (ChiTietPhieuNhapDTO ct : ds) {
                 modelChiTietPhieuNhap.addRow(new Object[]{
-                    ct.getMaCTPN(), ct.getMaPhieuNhap(), ct.getLoaiSach(),
+                    ct.getMaCTPN(), ct.getMaPhieuNhap(), ct.getTenSach(),
                     ct.getDonGia(), ct.getSoLuong(), ct.getThanhTien()
                 });
             }
@@ -230,14 +229,13 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         tblDSCTPN = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtLoaiSach = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         cbLoaiNhap = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         dcNgayNhap = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         cbMaCoSo = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        lblTenSach = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtMaPhieuNhap = new javax.swing.JTextField();
         txtDonGia = new javax.swing.JTextField();
@@ -251,6 +249,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         txtTongTien = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtMaNhanVien = new javax.swing.JTextField();
+        cbTenSach = new javax.swing.JComboBox<>();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1210, 640));
 
@@ -405,7 +404,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã ct_phiếu nhập", "Mã phiếu nhập", "Loại sách", "Đơn giá", "Số lượng sách", "Thành tiền"
+                "Mã ct_phiếu nhập", "Mã phiếu nhập", "Tên sách", "Đơn giá", "Số lượng sách", "Thành tiền"
             }
         ) {
             Class[] types = new Class [] {
@@ -432,8 +431,6 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Mã phiếu nhập:");
 
-        txtLoaiSach.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Loại nhập:");
@@ -457,9 +454,9 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         cbMaCoSo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbMaCoSo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "_" }));
 
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Loại sách:");
+        lblTenSach.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblTenSach.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTenSach.setText("Tên sách:");
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -525,9 +522,9 @@ public class PhieunhapGUI extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMaPhieuNhap)
-                    .addComponent(dcNgayNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                    .addComponent(dcNgayNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                     .addComponent(txtThanhTien))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -536,25 +533,22 @@ public class PhieunhapGUI extends javax.swing.JPanel {
                         .addGap(29, 29, 29)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(cbMaCoSo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(69, 69, 69))
+                                .addComponent(cbLoaiNhap, 0, 163, Short.MAX_VALUE)
+                                .addGap(21, 21, 21))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(cbLoaiNhap, 0, 1, Short.MAX_VALUE)
-                                .addGap(21, 21, 21)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(118, 118, 118)
-                                .addComponent(txtLoaiSach, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(cbMaCoSo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(25, 25, 25)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                                .addComponent(jLabel14))
+                            .addComponent(lblTenSach))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTongTien, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDonGia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbTenSach, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9))
@@ -575,13 +569,13 @@ public class PhieunhapGUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtLoaiSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(cbLoaiNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
+                    .addComponent(lblTenSach)
                     .addComponent(jLabel8)
                     .addComponent(txtMaPhieuNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSoLuongSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSoLuongSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTenSach))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -605,7 +599,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
                                 .addComponent(jLabel14))
                             .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout GiaodienLayout = new javax.swing.GroupLayout(Giaodien);
@@ -743,6 +737,17 @@ public class PhieunhapGUI extends javax.swing.JPanel {
         // Lập phiếu nhập
         phieuNhapBUS.lapPhieuNhap(phieu, dsCT);
 
+        // Update book quantities
+        for (ChiTietPhieuNhapDTO ct : dsCT) {
+            try {
+                sachBUS.congDonSoLuongSachKhiNhap(ct.getMaSach(), ct.getSoLuong());
+            } catch (SQLException ex_sach) {
+                // Log or show a specific error for this book update
+                System.err.println("Lỗi khi cập nhật số lượng cho sách: " + ct.getMaSach() + " - " + ex_sach.getMessage());
+                // Optionally, inform user about partial success/failure
+            }
+        }
+
         // Load lại danh sách phiếu nhập và tất cả chi tiết phiếu nhập
         loadDSPN();  // Để cập nhật bảng phiếu nhập
         loadDSCTPN(null);  // Tải tất cả chi tiết phiếu nhập
@@ -757,33 +762,60 @@ public class PhieunhapGUI extends javax.swing.JPanel {
 
     private void Them(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Them
         try {
-        String maPhieu = txtMaPhieuNhap.getText();
-        String loaiSach = txtLoaiSach.getText();
-        int donGia = Integer.parseInt(txtDonGia.getText());
-        int soLuong = Integer.parseInt(txtSoLuongSach.getText());
-        int thanhTien = donGia * soLuong;
-
-        // Kiểm tra trùng lặp trong bảng chi tiết phiếu nhập
-        for (int i = 0; i < tblDSCTPN.getRowCount(); i++) {
-            String maPhieuCT = tblDSCTPN.getValueAt(i, 1).toString();
-            String loaiSachCT = tblDSCTPN.getValueAt(i, 2).toString();
-            if (maPhieuCT.equals(maPhieu) && loaiSachCT.equals(loaiSach)) {
-                JOptionPane.showMessageDialog(this, "Chi tiết phiếu nhập đã tồn tại!");
+            String maPhieu = txtMaPhieuNhap.getText();
+            if (maPhieu.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Mã phiếu nhập không được để trống!");
                 return;
             }
+
+            Object selectedItem = cbTenSach.getSelectedItem();
+            if (selectedItem == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn một tên sách!");
+                return;
+            }
+            String selectedTenSach = selectedItem.toString();
+            String maSach = getMaSachFromTenSach(selectedTenSach);
+
+            if (maSach == null) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy mã sách cho tên sách đã chọn!");
+                return; // Should not happen if map is populated correctly
+            }
+
+            int donGia = Integer.parseInt(txtDonGia.getText());
+            int soLuong = Integer.parseInt(txtSoLuongSach.getText());
+            int thanhTien = donGia * soLuong;
+
+            // Kiểm tra trùng lặp trong bảng chi tiết phiếu nhập (comparing maSach)
+            for (int i = 0; i < tblDSCTPN.getRowCount(); i++) {
+                String maPhieuCT = tblDSCTPN.getValueAt(i, 1).toString();
+                // To get maSach from table, we need to retrieve it. 
+                // If table displays tenSach, we need to convert it back or store maSach in a hidden column or DTO linked to row.
+                // For simplicity, we'll assume the displayed TenSach is unique enough for this check in context of a single MaPhieu.
+                // Or, better, retrieve the ma_sach corresponding to the ten_sach in the table for comparison.
+                // Let's rely on the DAO's kiemTraChiTietTonTai which uses ma_sach.
+                // String tenSachCT = tblDSCTPN.getValueAt(i, 2).toString(); 
+                // if (maPhieuCT.equals(maPhieu) && tenSachCT.equals(selectedTenSach)) { 
+                //     JOptionPane.showMessageDialog(this, "Chi tiết phiếu nhập (sách) đã tồn tại trong phiếu này!");
+                //     return;
+                // }
+            }
+
+            ChiTietPhieuNhapDTO ct = new ChiTietPhieuNhapDTO(0, maPhieu, maSach, selectedTenSach, donGia, soLuong, thanhTien);
+            // The DTO can be simpler for DAO: new ChiTietPhieuNhapDTO(0, maPhieu, maSach, donGia, soLuong, thanhTien);
+            // The tenSach in DTO for DAO.themChiTiet is not strictly needed as DAO inserts maSach.
+            // It's useful if DAO returns the full DTO after insert.
+            
+            chiTietPhieuNhapBUS.themChiTietPhieuNhap(ct); // DAO will handle duplicate check with ma_sach
+
+            loadDSCTPN(maPhieu); // Reload details for the current maPhieu to see the new item
+            // Or loadDSCTPN(null); if you want to refresh all.
+            JOptionPane.showMessageDialog(this, "Thêm chi tiết phiếu nhập thành công!");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Đơn giá và số lượng phải là số!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi thêm chi tiết: " + e.getMessage());
         }
-
-        // Thêm chi tiết phiếu nhập
-        ChiTietPhieuNhapDTO ct = new ChiTietPhieuNhapDTO(0, maPhieu, loaiSach, donGia, soLuong, thanhTien);
-        chiTietPhieuNhapBUS.themChiTietPhieuNhap(ct);
-
-        // Load lại tất cả chi tiết phiếu nhập
-        loadDSCTPN(null);
-        JOptionPane.showMessageDialog(this, "Thêm chi tiết phiếu nhập thành công!");
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Lỗi khi thêm chi tiết!");
-    }
     }//GEN-LAST:event_Them
 
     private void Xoa(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Xoa
@@ -857,7 +889,8 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             modelChiTietPhieuNhap.setRowCount(0);
             for (ChiTietPhieuNhapDTO ct : ds) {
                 modelChiTietPhieuNhap.addRow(new Object[]{
-                    ct.getMaCTPN(), ct.getMaPhieuNhap(), ct.getLoaiSach(), ct.getDonGia(), ct.getSoLuong(), ct.getThanhTien()
+                    ct.getMaCTPN(), ct.getMaPhieuNhap(), ct.getTenSach(),
+                    ct.getDonGia(), ct.getSoLuong(), ct.getThanhTien()
                 });
             }
         } catch (SQLException e) {
@@ -883,6 +916,41 @@ public class PhieunhapGUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Lỗi khi load danh sách mã cơ sở!");
         }
     }
+
+    private void loadComboBoxTenSach() {
+        try {
+            maSachToTenSachMap = chiTietPhieuNhapBUS.getMaSachTenSachMap();
+            cbTenSach.removeAllItems();
+            if (maSachToTenSachMap != null) {
+                // To ensure a somewhat predictable order, you could sort keys or values if map is not ordered
+                // For HashMap, order is not guaranteed. If using LinkedHashMap in BUS/DAO, order is preserved.
+                ArrayList<String> tenSachList = new ArrayList<>(maSachToTenSachMap.values());
+                java.util.Collections.sort(tenSachList); // Sort names alphabetically
+                for (String tenSach : tenSachList) {
+                    cbTenSach.addItem(tenSach);
+                }
+            }
+             if (cbTenSach.getItemCount() > 0) {
+                cbTenSach.setSelectedIndex(0); // Select first item by default if list is not empty
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi load danh sách tên sách!");
+        }
+    }
+
+    // Helper method to get ma_sach from ten_sach using the map
+    private String getMaSachFromTenSach(String tenSach) {
+        if (maSachToTenSachMap != null) {
+            for (Map.Entry<String, String> entry : maSachToTenSachMap.entrySet()) {
+                if (entry.getValue().equals(tenSach)) {
+                    return entry.getKey(); // Returns the first ma_sach if ten_sach values are not unique
+                }
+            }
+        }
+        return null; // Or throw an exception if tenSach not found
+    }
+
     private void txtThanhTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThanhTienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtThanhTienActionPerformed
@@ -940,6 +1008,7 @@ public class PhieunhapGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbLoaiNhap;
     private javax.swing.JComboBox<String> cbMaCoSo;
+    private javax.swing.JComboBox<String> cbTenSach;
     private com.toedter.calendar.JDateChooser dcNgayNhap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -951,7 +1020,6 @@ public class PhieunhapGUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -959,10 +1027,10 @@ public class PhieunhapGUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblTenSach;
     private javax.swing.JTable tblDSCTPN;
     private javax.swing.JTable tblDSPN;
     private javax.swing.JTextField txtDonGia;
-    private javax.swing.JTextField txtLoaiSach;
     private javax.swing.JTextField txtMaNhanVien;
     private javax.swing.JTextField txtMaPhieuNhap;
     private javax.swing.JTextField txtSoLuongSach;

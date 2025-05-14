@@ -37,6 +37,10 @@ public class TaiKhoanDTO {
         this.maNhanVien = null;
         this.maThe = maThe;
     }
+
+    public TaiKhoanDTO() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     // Getters và Setters
     public String getMaTaiKhoan() {

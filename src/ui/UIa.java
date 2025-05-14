@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package ui;
 import DTO.PhanQuyenDTO;
 import DAO.PhanQuyenDAO;
@@ -473,7 +470,6 @@ public class UIa extends javax.swing.JFrame {
         void execute(java.awt.event.ActionEvent evt);
     }
     
-    // Vô hiệu hóa tất cả các nút chức năng (khi không có phân quyền)
     private void disableAllFunctionButtons() {
         JButton[] buttons = {btnSach, btnNhanvien, btnPhieunhap, btnDocgia, 
                            btnPhanquyen, btnPhieumuon, btnTaikhoan, btnThongke, btnNguonnhap};
@@ -495,9 +491,8 @@ public class UIa extends javax.swing.JFrame {
         }
     }
 
-// Add this method to UIa class
 private void addSpecificPermissionCheckToButton(JButton button, String requiredFunction, Set<String> userFunctions) {
-    // Save old listeners
+
     java.awt.event.ActionListener[] oldListeners = button.getActionListeners();
     
     // Remove all old listeners
@@ -505,7 +500,6 @@ private void addSpecificPermissionCheckToButton(JButton button, String requiredF
         button.removeActionListener(listener);
     }
     
-    // Add new listener with permission check
     button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (!userFunctions.contains(requiredFunction)) {

@@ -4,6 +4,7 @@ import DAO.ChiTietPhieuNhapDAO;
 import DTO.ChiTietPhieuNhapDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ChiTietPhieuNhapBUS {
     private ChiTietPhieuNhapDAO chiTietPhieuNhapDAO = new ChiTietPhieuNhapDAO();
@@ -35,8 +36,8 @@ public class ChiTietPhieuNhapBUS {
         return chiTietPhieuNhapDAO.timKiemChiTiet(tuKhoa);
     }
     
-    // Phương thức lấy danh sách thể loại sách từ DAO
-    public ArrayList<String> layDanhSachLoaiSach() {
-        return chiTietPhieuNhapDAO.layDanhSachLoaiSach();
+    // Renamed and changed to return Map<String, String> for ma_sach -> ten_sach
+    public Map<String, String> getMaSachTenSachMap() throws SQLException {
+        return chiTietPhieuNhapDAO.getMaSachTenSachMapFromSachTable();
     }
 }

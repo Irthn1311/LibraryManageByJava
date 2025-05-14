@@ -187,4 +187,103 @@ public class SachDAO {
         }
         return ds;
     }
+    
+    
+    public SachDTO timSachTheoMa(String maSach) {
+        SachDTO sach = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            mySQLConnect db = new mySQLConnect();
+            conn = db.getConnection();
+
+            String sql = "SELECT * FROM lbr.Sach WHERE ma_sach = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, maSach);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                sach = new SachDTO();
+                sach.setMaSach(rs.getString("ma_sach"));
+                sach.setTenSach(rs.getString("ten_sach"));
+                sach.setTheLoai(rs.getString("the_loai"));
+                sach.setTacGia(rs.getString("tac_gia"));
+                sach.setNgonNgu(rs.getString("ngon_ngu"));
+                sach.setNhaXuatBan(rs.getString("nha_xuat_ban"));
+                sach.setNamXuatBan(rs.getInt("nam_xuat_ban"));
+                sach.setDocTaiCho(rs.getBoolean("doc_tai_cho"));
+                sach.setMuonVe(rs.getBoolean("muon_ve"));
+                sach.setDocFilePdf(rs.getBoolean("doc_file_pdf"));
+                sach.setFilePdf(rs.getString("file_pdf"));
+                sach.setSoLuong(rs.getInt("so_luong"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return sach;
+    }
+    
+    
+    public List<SachDTO> timSachTheoTen(String ten) {
+        List<SachDTO> ds = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM sach WHERE tenSach LIKE ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, "%" + ten + "%");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ds.add(new SachDTO(
+                    rs.getString("maSach"),
+                    rs.getString("tenSach"),
+                    rs.getString("tacGia"),
+                    rs.getString("nhaXuatBan"),
+                    rs.getInt("namXuatBan"),
+                    rs.getInt("soLuong"),
+                    rs.getDouble("gia"),
+                    rs.getString("theLoai")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
+    
+    public boolean capNhatSoLuong(SachDTO sach) throws SQLException {
+        String sql = "UPDATE lbr.Sach SET so_luong = ? WHERE ma_sach = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql); // Dùng biến conn của class
+        stmt.setInt(1, sach.getSoLuong());
+        stmt.setString(2, sach.getMaSach());
+        return stmt.executeUpdate() > 0;
+    }
+    
+        public boolean tangSoLuong(String maSach, int soLuongGiam) throws SQLException {
+        String sql = "UPDATE lbr.Sach SET so_luong = so_luong + ? WHERE ma_sach = ? AND so_luong >= ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, soLuongGiam);
+        ps.setString(2, maSach);
+        ps.setInt(3, soLuongGiam);  // kiểm tra không bị âm
+        return ps.executeUpdate() > 0;
+    }
+
+    // Cộng dồn số lượng sách khi nhập hàng
+    public boolean congDonSoLuongSach(String maSach, int soLuongNhap) throws SQLException {
+        String sql = "UPDATE lbr.Sach SET so_luong = so_luong + ? WHERE ma_sach = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, soLuongNhap);
+            ps.setString(2, maSach);
+            return ps.executeUpdate() > 0;
+        }
+    }
+    
 }

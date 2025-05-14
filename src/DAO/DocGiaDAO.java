@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 import DTO.DocGiaDTO;
+import DTO.TaiKhoanDTO;
 import DTO.TheThanhVienDTO;
 
 import java.text.SimpleDateFormat;
@@ -71,42 +72,127 @@ public class DocGiaDAO {
         return list;
     }
     
+//    public boolean add(DocGiaDTO dg) throws SQLException {
+//        try {
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            
+//            // Thêm độc giả
+//            String sql = "INSERT INTO DocGia(ma_doc_gia, ten_doc_gia, gioi_tinh, so_dien_thoai, ngay_sinh, dia_chi) VALUES(";
+//            sql += "'" + dg.getMaDG() + "',";
+//            sql += "'" + dg.getTenDG() + "',";
+//            sql += "'" + dg.getGioiTinh() + "',";
+//            sql += (dg.getSoDienThoai() != null ? "'" + dg.getSoDienThoai() + "'" : "NULL") + ",";
+//            sql += "'" + sdf.format(dg.getNgaySinh()) + "',";
+//            sql += (dg.getDiaChi() != null ? "'" + dg.getDiaChi() + "'" : "NULL") + ")";
+//            
+//            if (mySQL.executeUpdate(sql) <= 0) {
+//                return false;
+//            }
+//            
+//            // Thêm thẻ thành viên nếu có
+//            if (dg.getMaThe() != null) {
+//                TheThanhVienDTO the = new TheThanhVienDTO(
+//                    dg.getMaThe(),
+//                    dg.getMaDG(),
+//                    dg.getNgayCap(),
+//                    dg.getNgayHetHan(),
+//                    true
+//                );
+//                return theThanhVienDAO.add(the);
+//            }
+//            
+//        TaiKhoanDAO tkDAO = new TaiKhoanDAO();            
+//        String maTaiKhoan = tkDAO.taoMaTaiKhoanNgauNhien();
+//        String maThe = dg.getMaThe();
+//        String tenDangNhap = maThe;
+//        String matKhau = "123456789";
+//
+//        String sql1 = "INSERT INTO lbr.TaiKhoan(ma_tai_khoan, ten_dang_nhap, mat_khau, ma_the) VALUES('";
+//        sql1 += "'" + maTaiKhoan + "',";
+//        sql1 += "'" + tenDangNhap + "',";
+//        sql1 += "'" + matKhau + "',";
+//        sql1 += "'" + maThe + "')";
+//        
+//        int result = mySQL.executeUpdate(sql1);
+//        if (result <= 0) {
+//            System.out.println("❌ Thêm tài khoản thất bại");
+//            return false;
+//        }
+//
+//        System.out.println("✅ Độc giả, thẻ, tài khoản: thêm thành công.");
+//        return true;
+//
+//    } catch (Exception ex) {
+//        System.out.println("Lỗi khi thêm độc giả: " + ex.getMessage());
+//        throw new SQLException("❌ Lỗi khi thêm độc giả: " + ex.getMessage());
+//    }
+//}
+    
     public boolean add(DocGiaDTO dg) throws SQLException {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            
-            // Thêm độc giả
-            String sql = "INSERT INTO DocGia(ma_doc_gia, ten_doc_gia, gioi_tinh, so_dien_thoai, ngay_sinh, dia_chi) VALUES(";
-            sql += "'" + dg.getMaDG() + "',";
-            sql += "'" + dg.getTenDG() + "',";
-            sql += "'" + dg.getGioiTinh() + "',";
-            sql += (dg.getSoDienThoai() != null ? "'" + dg.getSoDienThoai() + "'" : "NULL") + ",";
-            sql += "'" + sdf.format(dg.getNgaySinh()) + "',";
-            sql += (dg.getDiaChi() != null ? "'" + dg.getDiaChi() + "'" : "NULL") + ")";
-            
-            if (mySQL.executeUpdate(sql) <= 0) {
-                return false;
-            }
-            
-            // Thêm thẻ thành viên nếu có
-            if (dg.getMaThe() != null) {
-                TheThanhVienDTO the = new TheThanhVienDTO(
-                    dg.getMaThe(),
-                    dg.getMaDG(),
-                    dg.getNgayCap(),
-                    dg.getNgayHetHan(),
-                    true
-                );
-                return theThanhVienDAO.add(the);
-            }
-            
-            return true;
-            
-        } catch(Exception ex) {
-            System.out.println("Lỗi thêm độc giả: " + ex.getMessage());
-            throw new SQLException("Lỗi khi thêm độc giả: " + ex.getMessage());
+    try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Thêm độc giả
+        String sql = "INSERT INTO DocGia(ma_doc_gia, ten_doc_gia, gioi_tinh, so_dien_thoai, ngay_sinh, dia_chi) VALUES(";
+        sql += "'" + dg.getMaDG() + "',";
+        sql += "'" + dg.getTenDG() + "',";
+        sql += "'" + dg.getGioiTinh() + "',";
+        sql += (dg.getSoDienThoai() != null ? "'" + dg.getSoDienThoai() + "'" : "NULL") + ",";
+        sql += "'" + sdf.format(dg.getNgaySinh()) + "',";
+        sql += (dg.getDiaChi() != null ? "'" + dg.getDiaChi() + "'" : "NULL") + ")";
+
+        if (mySQL.executeUpdate(sql) <= 0) {
+            return false;
         }
+
+        // Thêm thẻ thành viên nếu có
+        boolean theOK = true;
+        if (dg.getMaThe() != null) {
+            TheThanhVienDTO the = new TheThanhVienDTO(
+                dg.getMaThe(),
+                dg.getMaDG(),
+                dg.getNgayCap(),
+                dg.getNgayHetHan(),
+                true
+            );
+            theOK = theThanhVienDAO.add(the);
+        }
+
+        if (!theOK) {
+            System.out.println("❌ Thêm thẻ thành viên thất bại");
+            return false;
+        }
+
+        // Tạo tài khoản cho độc giả
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();            
+        String maTaiKhoan = tkDAO.taoMaTaiKhoanNgauNhien();
+        String maThe = dg.getMaThe();
+        String tenDangNhap = maThe;
+        String matKhau = "123456789";
+
+        String sql1 = "INSERT INTO lbr.TaiKhoan(ma_tai_khoan, ten_dang_nhap, mat_khau, ma_phan_quyen, ma_nhan_vien, ma_the) VALUES(";
+        sql1 += "'" + maTaiKhoan + "',";
+        sql1 += "'" + tenDangNhap + "',";
+        sql1 += "'" + matKhau + "',";
+        sql1 += "NULL,"; // không phải nhân viên
+        sql1 += "NULL,";
+        sql1 += "'" + maThe + "')";
+
+        int result = mySQL.executeUpdate(sql1);
+        if (result <= 0) {
+            System.out.println("❌ Thêm tài khoản thất bại");
+            return false;
+        }
+
+        System.out.println("✅ Độc giả, thẻ, tài khoản: thêm thành công.");
+        return true;
+
+    } catch (Exception ex) {
+        System.out.println("Lỗi khi thêm độc giả: " + ex.getMessage());
+        throw new SQLException("❌ Lỗi khi thêm độc giả: " + ex.getMessage());
     }
+}
+    
     
     public boolean update(DocGiaDTO dg) throws SQLException {
         try {

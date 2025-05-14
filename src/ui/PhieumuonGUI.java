@@ -7,6 +7,7 @@ import BUS.PhieuMuonBUS;
 import BUS.SachBUS;
 import DAO.PhieuMuonDAO;
 import DAO.PhieuPhatDAO;
+import DAO.SachDAO;
 import DTO.SachDTO;
 import DTO.PhieuMuonDTO;
 import DTO.PhieuPhatDTO;
@@ -21,6 +22,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -200,7 +203,7 @@ public static void main(String[] args) {
 
         MaDG.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         MaDG.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        MaDG.setText("Mã thẻ:");
+        MaDG.setText("Mã ĐG:");
 
         MaSach.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         MaSach.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -251,9 +254,9 @@ public static void main(String[] args) {
                 .addGroup(PanThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanThongtinLayout.createSequentialGroup()
                         .addGroup(PanThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(MaDG)
                             .addComponent(MaSach, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(MaDG, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28)
                         .addGroup(PanThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtMaDG, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -619,26 +622,62 @@ public static void main(String[] args) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ChuyenPhieumuon(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChuyenPhieumuon
+//        CardLayout card = (CardLayout) Giaodien.getLayout();
+//        card.show(Giaodien, "Phieumuon");
+//        PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
+//        int row = tbPhieumuon.getSelectedRow(); // Lấy dòng đang chọn trong bảng
+//
+//    if (row == -1) {
+//        JOptionPane.showMessageDialog(this, "Vui lòng chọn một phiếu mượn để đánh dấu đã trả.");
+//        return;
+//    }
+//    
+//    // Lấy mã phiếu mượn từ dòng được chọn
+//    String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+//    
+//
+//    // Gọi phương thức BUS để đánh dấu đã trả
+//    if (phieuMuonBUS.danhDauDaTra(maPhieuMuon)) {
+//        JOptionPane.showMessageDialog(this, "Đã đánh dấu phiếu mượn là đã trả.");
+//        loadTablePhieuMuon(); // Cập nhật lại bảng
+//    } else {
+//        JOptionPane.showMessageDialog(this, "Cập nhật trạng thái thất bại.");
+//    }
+
+
+    
         CardLayout card = (CardLayout) Giaodien.getLayout();
         card.show(Giaodien, "Phieumuon");
+
+        int row = tbPhieumuon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một phiếu mượn để đánh dấu đã trả.");
+            return;
+        }
+
+        String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+        String maSach = tbPhieumuon.getValueAt(row, 2).toString(); // dùng đúng biến row
+
+        SachDAO sachDAO = new SachDAO();
+        SachDTO sach = sachDAO.timSachTheoMa(maSach);
+
+        // Tăng số lượng sách trước
+        sach.setSoLuong(sach.getSoLuong() + 1);
+        try {
+            sachDAO.capNhatSoLuong(sach);
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieumuonGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Sau đó đánh dấu đã trả
         PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
-        int row = tbPhieumuon.getSelectedRow(); // Lấy dòng đang chọn trong bảng
+        if (phieuMuonBUS.danhDauDaTra(maPhieuMuon)) {
+            JOptionPane.showMessageDialog(this, "Đã đánh dấu phiếu mượn là đã trả.");
+            loadTablePhieuMuon();
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật trạng thái phiếu mượn thất bại.");
+        }
 
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn một phiếu mượn để đánh dấu đã trả.");
-        return;
-    }
-
-    // Lấy mã phiếu mượn từ dòng được chọn
-    String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
-
-    // Gọi phương thức BUS để đánh dấu đã trả
-    if (phieuMuonBUS.danhDauDaTra(maPhieuMuon)) {
-        JOptionPane.showMessageDialog(this, "Đã đánh dấu phiếu mượn là đã trả.");
-        loadTablePhieuMuon(); // Cập nhật lại bảng
-    } else {
-        JOptionPane.showMessageDialog(this, "Cập nhật trạng thái thất bại.");
-    }
     }//GEN-LAST:event_ChuyenPhieumuon
 
     private void btnTrangthai1ChuyenPhieumuon(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrangthai1ChuyenPhieumuon

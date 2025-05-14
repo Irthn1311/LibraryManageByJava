@@ -2,6 +2,7 @@ package BUS;
 
 import DAO.PhieuMuonDAO;
 import DTO.PhieuMuonDTO;
+import DTO.SachDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -9,6 +10,7 @@ import javax.swing.JOptionPane;
 public class PhieuMuonBUS {
     private ArrayList<PhieuMuonDTO> danhSachPhieuMuon;
     private PhieuMuonDAO phieuMuonDAO;
+    SachBUS sachBUS = new SachBUS();
 
     public PhieuMuonBUS() {
         phieuMuonDAO = new PhieuMuonDAO();
@@ -41,21 +43,31 @@ public class PhieuMuonBUS {
 //        }
 //        return false;
 //    }
-public boolean themPhieuMuon(PhieuMuonDTO pm) {
-    if (kiemTraMaTonTai(pm.getMaPhieuMuon())) {
-        System.out.println("Mã phiếu mượn đã tồn tại!");
-        return false;
-    }
-    // ✅ Kiểm tra xem đã có phiếu mượn nào trùng mã độc giả, mã sách và ngày mượn chưa
-    for (PhieuMuonDTO existing : danhSachPhieuMuon) {
-        if (existing.getMaDocGia().equals(pm.getMaDocGia()) &&
-            existing.getMaSach().equals(pm.getMaSach()) &&
-            existing.getNgayMuon().equals(pm.getNgayMuon())) {
-            
-            System.out.println("Độc giả đã mượn sách này vào ngày đó rồi!");
+    public boolean themPhieuMuon(PhieuMuonDTO pm) {
+        if (kiemTraMaTonTai(pm.getMaPhieuMuon())) {
+            System.out.println("Mã phiếu mượn đã tồn tại!");
             return false;
         }
-    }
+    
+        SachDTO sach = sachBUS.timSachTheoMa(pm.getMaSach()); // mày phải có hàm này
+            if (sach == null) {
+                System.out.println("Không tìm thấy sách!");
+                return false;
+            }
+            if (sach.getSoLuong() <= 0) {
+                System.out.println("Sách đã hết!");
+                return false;
+            }
+    // ✅ Kiểm tra xem đã có phiếu mượn nào trùng mã độc giả, mã sách và ngày mượn chưa
+//    for (PhieuMuonDTO existing : danhSachPhieuMuon) {
+//        if (existing.getMaDocGia().equals(pm.getMaDocGia()) &&
+//            existing.getMaSach().equals(pm.getMaSach()) &&
+//            existing.getNgayMuon().equals(pm.getNgayMuon())) {
+//            
+//            System.out.println("Độc giả đã mượn sách này vào ngày đó rồi!");
+//            return false;
+//        }
+//    }
 
 
     // Kiểm tra nếu ngày trả thực tế lớn hơn ngày trả dự kiến
@@ -74,6 +86,7 @@ public boolean themPhieuMuon(PhieuMuonDTO pm) {
     try {
         if (phieuMuonDAO.Them(pm)) {
             danhSachPhieuMuon.add(pm);
+            sachBUS.giamSoLuong(pm.getMaSach(), 1);
             return true;
         }
     } catch (Exception e) {

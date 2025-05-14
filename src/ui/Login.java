@@ -1,8 +1,10 @@
 package ui;
 
+import DAO.DocGiaDAO;
 import Helper.PlaceHolder;
 import DAO.TaiKhoanDAO;
 import DAO.NhanVienDAO;
+import DTO.DocGiaDTO;
 import DTO.TaiKhoanDTO;
 import DTO.NhanVienDTO;
 import javax.swing.JPasswordField;
@@ -10,6 +12,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
+import java.util.List;
 public class Login extends javax.swing.JFrame {
 
     /**
@@ -170,48 +173,61 @@ public class Login extends javax.swing.JFrame {
         });
     }
       
-        private void btnDangnhapActionPerformed(java.awt.event.ActionEvent evt) {
-        String tenDangNhap = txTaiKhoan.getText().trim();
-        String matKhau = String.valueOf(txMatKhau.getPassword()).trim();
-        
-        // Kiểm tra giá trị có phải là placeholder không
-        if (tenDangNhap.equals("Nhập tên đăng nhập/ Mã thẻ") || matKhau.equals("Nhập mật khẩu")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập và mật khẩu!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        try {
-            TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
-            TaiKhoanDTO taiKhoan = taiKhoanDAO.kiemTraDangNhap(tenDangNhap, matKhau);
-            
-            if (taiKhoan != null) {
-                // Đăng nhập thành công
-                this.dispose(); // Đóng cửa sổ đăng nhập
-                
-                // Lấy thông tin nhân viên nếu là tài khoản nhân viên
-                String tenNhanVien = "";
-                if (taiKhoan.getMaNhanVien() != null) {
-                    NhanVienDAO nhanVienDAO = new NhanVienDAO();
-                    NhanVienDTO nhanVien = nhanVienDAO.layThongTinNhanVien(taiKhoan.getMaNhanVien());
-                    if (nhanVien != null) {
-                        tenNhanVien = nhanVien.getTenNhanVien();
-                    }
-                }
-                
-                // Mở giao diện chính và truyền thông tin tài khoản
-                UIa mainInterface = new UIa();
-                mainInterface.setTaiKhoan(taiKhoan, tenNhanVien);
-                mainInterface.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không chính xác!", 
-                        "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Lỗi kết nối đến cơ sở dữ liệu: " + e.getMessage(),
-                    "Lỗi hệ thống", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
+    private void btnDangnhapActionPerformed(java.awt.event.ActionEvent evt) {
+    String nhapVao = txTaiKhoan.getText().trim();
+    String matKhau = String.valueOf(txMatKhau.getPassword()).trim();
+
+    if (nhapVao.equals("Nhập tên đăng nhập/ Mã thẻ") || matKhau.equals("Nhập mật khẩu")) {
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập/mã thẻ và mật khẩu!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+        return;
     }
+
+    if (!matKhau.equals("123456789")) {
+        JOptionPane.showMessageDialog(this, "Sai mật khẩu mặc định!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+        TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+        TaiKhoanDTO tk = taiKhoanDAO.kiemTraDangNhap(nhapVao, matKhau);
+
+        if (tk != null) {
+            this.dispose();
+
+            if (tk.getMaNhanVien() != null) {
+                // → Admin
+                NhanVienDAO nvDAO = new NhanVienDAO();
+                NhanVienDTO nv = nvDAO.layThongTinNhanVien(tk.getMaNhanVien());
+                UIa adminUI = new UIa();
+                adminUI.setTaiKhoan(tk, nv.getTenNhanVien());
+                adminUI.setVisible(true);
+
+            } else if (tk.getMaThe() != null) {
+                // → Độc giả
+                DocGiaDAO dgDAO = new DocGiaDAO();
+                DocGiaDTO dg = dgDAO.getList().stream()
+                    .filter(d -> d.getMaThe().equals(tk.getMaThe()))
+                    .findFirst()
+                    .orElse(null);
+
+                if (dg != null) {
+                    UIu userUI = new UIu();
+                    userUI.setDocGia(dg);
+                    userUI.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy độc giả!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy tài khoản!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+}
+      
 
       
     public static void main(String args[]) {

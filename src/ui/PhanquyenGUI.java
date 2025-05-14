@@ -180,13 +180,13 @@ btnChitiet.addActionListener(new java.awt.event.ActionListener() {
                 .addComponent(btnXoaphieu)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnChitiet, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(172, 172, 172))
+                .addGap(16, 16, 16))
         );
         ThanhChucnangLayout.setVerticalGroup(
             ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ThanhChucnangLayout.createSequentialGroup()
                 .addGroup(ThanhChucnangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnXem, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoaphieu, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnChitiet, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -226,7 +226,7 @@ btnChitiet.addActionListener(new java.awt.event.ActionListener() {
         XemPhanquyen.setLayout(XemPhanquyenLayout);
         XemPhanquyenLayout.setHorizontalGroup(
             XemPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1184, Short.MAX_VALUE)
         );
         XemPhanquyenLayout.setVerticalGroup(
             XemPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +336,7 @@ btnChitiet.addActionListener(new java.awt.event.ActionListener() {
                                 .addGap(628, 628, 628)
                                 .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnThemquyen, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)))
+                                    .addComponent(btnThemquyen, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)))
                             .addGroup(PanPhanquyenLayout.createSequentialGroup()
                                 .addGroup(PanPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Quanlyphanquyen)
@@ -415,7 +415,7 @@ btnChitiet.addActionListener(new java.awt.event.ActionListener() {
         ThemPhanquyen.setLayout(ThemPhanquyenLayout);
         ThemPhanquyenLayout.setHorizontalGroup(
             ThemPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanPhanquyen, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+            .addComponent(PanPhanquyen, javax.swing.GroupLayout.DEFAULT_SIZE, 1184, Short.MAX_VALUE)
         );
         ThemPhanquyenLayout.setVerticalGroup(
             ThemPhanquyenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,13 +431,14 @@ btnChitiet.addActionListener(new java.awt.event.ActionListener() {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(Giaodien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(ThanhChucnang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(Giaodien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(16, 16, 16))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(ThanhChucnang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(47, 47, 47))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -682,8 +683,8 @@ private void btnChitietChuyenChitietActionPerformed(java.awt.event.ActionEvent e
             message.append("- ").append(tenChucNang).append(" (").append(pq.getMaChucNang()).append(")\n");
         }
         
-        // Hiển thị hộp thoại thông báo
-        JOptionPane.showMessageDialog(this, message.toString(), 
+        
+        JOptionPane.showMessageDialog(null, message.toString(), 
             "Chi tiết phân quyền", JOptionPane.INFORMATION_MESSAGE);
         
     } catch (Exception e) {

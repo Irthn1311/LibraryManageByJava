@@ -1,4 +1,3 @@
-
 package DAO;
 
 import DTO.ChiTietPhieuNhapDTO;
@@ -73,10 +72,10 @@ public class PhieuNhapDAO {
     
     // Hàm kiểm tra chi tiết phiếu nhập đã tồn tại hay chưa
     private boolean kiemTraChiTietTonTai(ChiTietPhieuNhapDTO ct) throws SQLException {
-        String sql = "SELECT 1 FROM ChiTietPhieuNhap WHERE ma_phieu_nhap = ? AND loai_sach = ? AND don_gia = ? AND so_luong = ?";
+        String sql = "SELECT 1 FROM ChiTietPhieuNhap WHERE ma_phieu_nhap = ? AND ma_sach = ? AND don_gia = ? AND so_luong = ?";
         try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
             stmt.setString(1, ct.getMaPhieuNhap());
-            stmt.setString(2, ct.getLoaiSach());
+            stmt.setString(2, ct.getMaSach());
             stmt.setInt(3, ct.getDonGia());
             stmt.setInt(4, ct.getSoLuong());
             ResultSet rs = stmt.executeQuery();
@@ -156,5 +155,35 @@ public class PhieuNhapDAO {
         }
         return ds;
     }
+    
+    public ArrayList<Integer> layDanhSachNam() throws SQLException {
+        ArrayList<Integer> dsNam = new ArrayList<>();
+        String sql = "SELECT DISTINCT YEAR(ngay_nhap) AS nam FROM PhieuNhap ORDER BY nam";
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                dsNam.add(rs.getInt("nam"));
+            }
+        }
+        return dsNam;
+    }
+
+    public ArrayList<Integer> layTongSachTheoNam() throws SQLException {
+        ArrayList<Integer> dsTong = new ArrayList<>();
+        String sql = "SELECT SUM(so_luong_sach) AS tong_sach " +
+                     "FROM PhieuNhap " +
+                     "GROUP BY YEAR(ngay_nhap) " +
+                     "ORDER BY YEAR(ngay_nhap)";
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                dsTong.add(rs.getInt("tong_sach"));
+            }
+        }
+        return dsTong;
+    }
+    
+
+    
 }
 

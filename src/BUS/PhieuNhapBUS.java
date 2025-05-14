@@ -5,21 +5,19 @@ import DTO.PhieuNhapDTO;
 import DTO.ChiTietPhieuNhapDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class PhieuNhapBUS {
     private PhieuNhapDAO phieuNhapDAO = new PhieuNhapDAO();
 
-    // Lập phiếu nhập
     public void lapPhieuNhap(PhieuNhapDTO phieu, ArrayList<ChiTietPhieuNhapDTO> chiTiets) throws SQLException {
         phieuNhapDAO.lapPhieuNhap(phieu, chiTiets);
     }
     
-    // Xóa phiếu nhập và chi tiết phiếu nhập
     public void xoaPhieuNhap(String maPhieuNhap) throws SQLException {
         phieuNhapDAO.xoaPhieuNhap(maPhieuNhap);
     }
 
-    // Tìm kiếm phiếu nhập
     public ArrayList<PhieuNhapDTO> timKiemPhieuNhap(String tuKhoa) throws SQLException {
         return phieuNhapDAO.timKiemPhieuNhap(tuKhoa);
     }
@@ -31,4 +29,14 @@ public class PhieuNhapBUS {
     public ArrayList<String> layDanhSachMaCoSo() throws SQLException {
         return phieuNhapDAO.layDanhSachMaCoSo();
     }
+    
+    public ArrayList<Integer> layDanhSachNam() throws SQLException {
+        return phieuNhapDAO.layDanhSachNam();
+    }
+
+    public ArrayList<Integer> layTongSachTheoNam() throws SQLException {
+        return phieuNhapDAO.layTongSachTheoNam();
+    }
+    
+    
 }

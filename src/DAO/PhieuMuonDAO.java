@@ -16,12 +16,17 @@ import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Random;
 import javax.lang.model.util.Types;
 /**
  *
  * @author TRUONG THI NGOC NHI
  */
 public class PhieuMuonDAO {
+    
+    private mySQLConnect db = new mySQLConnect();
+    private ResultSet rs=null;
+    
     
 public ArrayList<PhieuMuonDTO> getAllPhieuMuonDTO() {
     ArrayList<PhieuMuonDTO> list = new ArrayList<>();
@@ -236,7 +241,7 @@ public PhieuMuonDTO timTheoMa(String maPhieuMuon) {
             pm.setHanTra(rs.getDate("han_tra").toLocalDate());
 Date ngayTraTT = rs.getDate("ngay_tra_thuc_te");
 if (ngayTraTT != null) {
-    pm.setNgayTraThucTe(((java.sql.Date) ngayTraTT).toLocalDate());
+    pm.setNgayTraThucTe(((java.sql.Date) ngayTraTT).toLocalDate()); 
 }
 
             pm.setTrangThai(rs.getInt("trang_thai"));
@@ -250,5 +255,64 @@ if (ngayTraTT != null) {
     return pm;
 }
 
+        public String taoMaPhieumuonNgauNhien() throws SQLException {
+        Random rand = new Random();
+        String maPhieumuon;
+        boolean maTonTai;
+        
+        do {
+            // Tạo số ngẫu nhiên 8 chữ số
+            int randomNum = 100000 + rand.nextInt(900000);
+            maPhieumuon = String.valueOf(randomNum);
+            
+            // Kiểm tra mã đã tồn tại chưa
+            String sql = "SELECT COUNT(*) FROM taikhoan WHERE ma_tai_khoan = ?";
+            try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
+                stmt.setString(1, maPhieumuon);
+                ResultSet rs = stmt.executeQuery();
+                maTonTai = rs.next() && rs.getInt(1) > 0;
+            }
+        } while (maTonTai); // Lặp lại nếu mã đã tồn tại
+        
+        return maPhieumuon;
+    }
+     
+        
+        public ArrayList<PhieuMuonDTO> layPhieuMuonTheoDocGia(String maDocGia) throws SQLException {
+        ArrayList<PhieuMuonDTO> danhSach = new ArrayList<>();
+        Connection conn = db.getConnection(); // Kết nối DB, mày nhớ xử lý đóng sau khi dùng
+        String sql = "SELECT * FROM PhieuMuon WHERE ma_doc_gia = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, maDocGia);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            PhieuMuonDTO pm = new PhieuMuonDTO();
+            pm.setMaPhieuMuon(rs.getString("ma_phieu_muon"));
+            pm.setMaDocGia(rs.getString("ma_doc_gia"));
+            pm.setMaSach(rs.getString("ma_sach"));
+
+            // Convert java.sql.Date -> LocalDate
+            java.sql.Date sqlNgayMuon = rs.getDate("ngay_muon");
+            java.sql.Date sqlHanTra = rs.getDate("han_tra");
+            java.sql.Date sqlNgayTraThucTe = rs.getDate("ngay_tra_thuc_te");
+
+            pm.setNgayMuon(sqlNgayMuon != null ? sqlNgayMuon.toLocalDate() : null);
+            pm.setHanTra(sqlHanTra != null ? sqlHanTra.toLocalDate() : null);
+            pm.setNgayTraThucTe(sqlNgayTraThucTe != null ? sqlNgayTraThucTe.toLocalDate() : null);
+
+            pm.setTrangThai(rs.getInt("trang_thai"));
+            pm.setTienPhat(rs.getDouble("tien_phat"));
+
+            danhSach.add(pm);
+        }
+
+        // Đóng kết nối sau khi xài xong (tốt nhất nên dùng try-with-resources nhưng tạm vậy)
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return danhSach;
+    }
 
 }

@@ -36,6 +36,14 @@ public class SachDTO {
         this.docFilePdf = docFilePdf;
     }
 
+    public SachDTO(String string, String string0, String string1, String string2, int aInt, int aInt0, double aDouble) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public SachDTO(String string, String string0, String string1, String string2, int aInt, int aInt0, double aDouble, String string3) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     // Getters and Setters
     public String getMaSach() {
         return maSach;
@@ -132,5 +140,7 @@ public class SachDTO {
     public void setDocFilePdf(boolean docFilePdf) {
         this.docFilePdf = docFilePdf;
     }
+    
+    
 }
 

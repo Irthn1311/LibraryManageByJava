@@ -4,6 +4,20 @@
  */
 package ui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
 /**
  *
  * @author dinhp
@@ -27,30 +41,93 @@ public class Intro extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        // jLabel1 = new javax.swing.JLabel(); // Removed original label
 
+        // Main panel setup
         jPanel1.setPreferredSize(new java.awt.Dimension(1210, 640));
+        jPanel1.setLayout(new BorderLayout(20, 20)); // Add some spacing
+        jPanel1.setBackground(new Color(240, 245, 250)); // Light background color
+        jPanel1.setBorder(new EmptyBorder(30, 30, 30, 30)); // Add padding around the panel
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 100)); // NOI18N
-        jLabel1.setText("Từ từ decor sau");
+        // Title Label
+        JLabel titleLabel = new JLabel("HỆ THỐNG QUẢN LÝ THƯ VIỆN", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 36));
+        titleLabel.setForeground(new Color(0, 102, 204)); // A nice blue color
+        jPanel1.add(titleLabel, BorderLayout.NORTH);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(178, 178, 178)
-                .addComponent(jLabel1)
-                .addContainerGap(347, Short.MAX_VALUE))
+        // Content Panel (for About and Features)
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setOpaque(false); // Make it transparent to show jPanel1's background
+
+        // About Section
+        JPanel aboutPanel = new JPanel(new BorderLayout(0, 10));
+        aboutPanel.setOpaque(false);
+        JLabel aboutTitle = new JLabel("Giới Thiệu Chung");
+        aboutTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        aboutTitle.setForeground(new Color(50, 50, 50));
+        aboutPanel.add(aboutTitle, BorderLayout.NORTH);
+
+        JTextArea aboutText = new JTextArea(
+            "Chào mừng bạn đến với Hệ thống Quản lý Thư viện Hiện Đại." +
+            "Hệ thống của chúng tôi được thiết kế để đơn giản hóa và tối ưu hóa các quy trình quản lý sách, " +
+            "mượn trả, quản lý độc giả và nhiều hơn nữa. Với giao diện thân thiện và các tính năng mạnh mẽ, " +
+            "chúng tôi mong muốn mang lại trải nghiệm tốt nhất cho cả nhân viên thư viện và độc giả."
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(207, 207, 207)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(329, Short.MAX_VALUE))
-        );
+        aboutText.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        aboutText.setWrapStyleWord(true);
+        aboutText.setLineWrap(true);
+        aboutText.setEditable(false);
+        aboutText.setOpaque(true);
+        aboutText.setBackground(new Color(240, 245, 250));
+        aboutText.setForeground(new Color(50, 50, 50));
+        aboutText.setFocusable(false);
+        aboutText.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        aboutPanel.add(aboutText, BorderLayout.CENTER);
+        
+        contentPanel.add(aboutPanel);
+        contentPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Spacer
 
+        // Features Section
+        JPanel featuresPanel = new JPanel(new BorderLayout(0, 10));
+        featuresPanel.setOpaque(false);
+        JLabel featuresTitle = new JLabel("Tính Năng Nổi Bật");
+        featuresTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        featuresTitle.setForeground(new Color(50, 50, 50));
+        featuresPanel.add(featuresTitle, BorderLayout.NORTH);
+
+        JPanel featuresGrid = new JPanel(new GridLayout(0, 2, 15, 10)); // 2 columns, auto rows
+        featuresGrid.setOpaque(false);
+        
+        String[] features = {
+            "Quản lý Sách Toàn Diện: Dễ dàng thêm, sửa, xóa và tra cứu thông tin sách.",
+            "Quản lý Mượn/Trả Thông Minh: Theo dõi lịch sử mượn trả, tự động nhắc nhở quá hạn.",
+            "Quản lý Độc Giả Hiệu Quả: Lưu trữ thông tin độc giả, phân loại và quản lý thẻ thư viện.",
+            "Tìm Kiếm Nâng Cao: Công cụ tìm kiếm mạnh mẽ giúp tra cứu nhanh chóng.",
+            "Thống Kê & Báo Cáo: Cung cấp các báo cáo chi tiết về hoạt động của thư viện.",
+            "Giao Diện Thân Thiện: Thiết kế trực quan, dễ sử dụng cho mọi đối tượng."
+        };
+
+        for (String feature : features) {
+            JLabel featureLabel = new JLabel("<html><body style='width: 90%;'><b>&bull;</b> " + feature + "</body></html>");
+            featureLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            featureLabel.setForeground(new Color(70, 70, 70));
+            featuresGrid.add(featureLabel);
+        }
+        featuresPanel.add(featuresGrid, BorderLayout.CENTER);
+
+        contentPanel.add(featuresPanel);
+        
+        jPanel1.add(contentPanel, BorderLayout.CENTER);
+        
+        // Footer (Optional - can be added here if needed)
+        JLabel footerLabel = new JLabel("Đồ án Phát triển bởi Nhóm XYZ - © 2024", SwingConstants.CENTER);
+        footerLabel.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+        footerLabel.setForeground(Color.GRAY);
+        jPanel1.add(footerLabel, BorderLayout.SOUTH);
+
+
+        // Original layout setup - keep this structure if the GUI builder relies on it
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,7 +146,7 @@ public class Intro extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    // private javax.swing.JLabel jLabel1; // Removed original
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

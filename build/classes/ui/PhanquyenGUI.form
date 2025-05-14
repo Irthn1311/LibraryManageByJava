@@ -43,14 +43,17 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="Giaodien" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="ThanhChucnang" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="Giaodien" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="ThanhChucnang" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -92,7 +95,7 @@
                       <Component id="btnXoaphieu" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnChitiet" min="-2" pref="72" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -100,7 +103,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnXem" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
+                          <Component id="btnXem" alignment="1" min="-2" pref="82" max="-2" attributes="0"/>
                           <Component id="btnXoaphieu" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
                           <Component id="btnChitiet" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
                           <Component id="btnThem" alignment="0" min="-2" pref="82" max="-2" attributes="0"/>
@@ -241,7 +244,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="1176" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="1184" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -318,7 +321,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="PanPhanquyen" alignment="0" pref="1176" max="32767" attributes="0"/>
+                      <Component id="PanPhanquyen" alignment="0" pref="1184" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -392,7 +395,7 @@
                                               <EmptySpace min="-2" pref="628" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="btnCapnhat" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="btnThemquyen" alignment="0" pref="197" max="32767" attributes="0"/>
+                                                  <Component id="btnThemquyen" alignment="0" pref="205" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" attributes="0">
