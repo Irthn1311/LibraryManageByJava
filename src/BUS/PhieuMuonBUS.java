@@ -244,5 +244,16 @@ public boolean danhDauDaTra(String maPhieuMuon) {
 
     return ketQua;
 }
+    
+    public boolean doiTrangThai(String maPhieuMuon, int trangThaiMoi) {
+    PhieuMuonDAO dao = new PhieuMuonDAO();
+    try {
+        return dao.capNhatTrangThai(maPhieuMuon, trangThaiMoi);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+    
 
 }

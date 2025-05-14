@@ -13,6 +13,8 @@ import DTO.PhieuMuonDTO;
 import DTO.PhieuPhatDTO;
 import java.awt.CardLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -165,6 +167,7 @@ public static void main(String[] args) {
         tbTraphat = new javax.swing.JTable();
         btnTrangthai = new javax.swing.JButton();
         btnTrangthai1 = new javax.swing.JButton();
+        btnXacnhanmuon = new javax.swing.JButton();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1210, 640));
 
@@ -316,7 +319,7 @@ public static void main(String[] args) {
                 .addGroup(PanThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TenSach)
                     .addComponent(txtTenSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(btnReset)
                 .addContainerGap())
         );
@@ -353,13 +356,13 @@ public static void main(String[] args) {
             .addGroup(PanTimkiem1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Timkiem)
-                .addGap(24, 24, 24)
-                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addComponent(cbLocTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(491, Short.MAX_VALUE))
+                .addContainerGap(438, Short.MAX_VALUE))
         );
         PanTimkiem1Layout.setVerticalGroup(
             PanTimkiem1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,12 +376,9 @@ public static void main(String[] args) {
                         .addGap(0, 1, Short.MAX_VALUE)
                         .addGroup(PanTimkiem1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Timkiem)
-                            .addComponent(btnTimkiem))))
+                            .addComponent(btnTimkiem)
+                            .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(10, 10, 10))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanTimkiem1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -430,8 +430,11 @@ public static void main(String[] args) {
         Phieumuon.setLayout(PhieumuonLayout);
         PhieumuonLayout.setHorizontalGroup(
             PhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanTimkiem1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2)
+            .addGroup(PhieumuonLayout.createSequentialGroup()
+                .addGroup(PhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PanTimkiem1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 53, Short.MAX_VALUE))
         );
         PhieumuonLayout.setVerticalGroup(
             PhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -561,48 +564,65 @@ public static void main(String[] args) {
             }
         });
 
+        btnXacnhanmuon.setBackground(new java.awt.Color(102, 255, 51));
+        btnXacnhanmuon.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnXacnhanmuon.setText("Xác nhận mượn");
+        btnXacnhanmuon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        btnXacnhanmuon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacnhanmuonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCapnhat, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-                        .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(btnXacnhanmuon))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(12, 12, 12)
                         .addComponent(btnCapnhat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnTrangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                            .addComponent(btnTrangthai1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnXacnhanmuon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PanThongtin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Giaodien, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -622,30 +642,6 @@ public static void main(String[] args) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ChuyenPhieumuon(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChuyenPhieumuon
-//        CardLayout card = (CardLayout) Giaodien.getLayout();
-//        card.show(Giaodien, "Phieumuon");
-//        PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
-//        int row = tbPhieumuon.getSelectedRow(); // Lấy dòng đang chọn trong bảng
-//
-//    if (row == -1) {
-//        JOptionPane.showMessageDialog(this, "Vui lòng chọn một phiếu mượn để đánh dấu đã trả.");
-//        return;
-//    }
-//    
-//    // Lấy mã phiếu mượn từ dòng được chọn
-//    String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
-//    
-//
-//    // Gọi phương thức BUS để đánh dấu đã trả
-//    if (phieuMuonBUS.danhDauDaTra(maPhieuMuon)) {
-//        JOptionPane.showMessageDialog(this, "Đã đánh dấu phiếu mượn là đã trả.");
-//        loadTablePhieuMuon(); // Cập nhật lại bảng
-//    } else {
-//        JOptionPane.showMessageDialog(this, "Cập nhật trạng thái thất bại.");
-//    }
-
-
-    
         CardLayout card = (CardLayout) Giaodien.getLayout();
         card.show(Giaodien, "Phieumuon");
 
@@ -1004,73 +1000,180 @@ int row = tbPhieumuon.getSelectedRow();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnTimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimkiemActionPerformed
- try {
-        String tuKhoa = txtTimkiem.getText().trim();
-        String trangThaiStr = (String) cbLocTrangthai.getSelectedItem();
-        Integer trangThai = null;
+// try {
+//        String tuKhoa = txtTimkiem.getText().trim();
+//        String trangThaiStr = (String) cbLocTrangthai.getSelectedItem();
+//        Integer trangThai = null;
+//
+//        if (!"Tất cả".equals(trangThaiStr)) {
+//            switch (trangThaiStr) {
+//                case "Đã trả" -> trangThai = 0;
+//                case "Đang mượn" -> trangThai = 1;
+//                case "Đặt trước" -> trangThai = 2;
+//                case "Đã quá hạn" -> trangThai = 3;
+//                case "Mất/ Hỏng" -> trangThai = 4;
+//            }
+//        }
+//
+//        PhieuMuonDAO dao = new PhieuMuonDAO();
+//        ArrayList<PhieuMuonDTO> danhSachGoc = dao.getAllPhieuMuonDTO();
+//        ArrayList<PhieuMuonDTO> ketQua = new ArrayList<>();
+//
+//        for (PhieuMuonDTO pm : danhSachGoc) {
+//            boolean match = true;
+//
+//            // Trường hợp 1: có nhập từ khóa
+//            if (!tuKhoa.isEmpty()) {
+//                boolean matchMaPM = pm.getMaPhieuMuon().toLowerCase().contains(tuKhoa.toLowerCase());
+//                boolean matchMaDG = pm.getMaDocGia().toLowerCase().contains(tuKhoa.toLowerCase());
+//                boolean matchMaSach = pm.getMaSach().toLowerCase().contains(tuKhoa.toLowerCase());
+//
+//                if (!(matchMaPM || matchMaDG || matchMaSach)) match = false;
+//            }
+//
+//            // Trường hợp 2: không nhập từ khóa, chỉ lọc theo trạng thái
+//            if (tuKhoa.isEmpty() && trangThai != null && pm.getTrangThai() != trangThai) {
+//                match = false;
+//            }
+//
+//            if (match) ketQua.add(pm);
+//        }
+//
+//        // Đổ dữ liệu vào bảng
+//        DefaultTableModel model = (DefaultTableModel) tbPhieumuon.getModel();
+//        model.setRowCount(0);
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//
+//        for (PhieuMuonDTO pm : ketQua) {
+//            String ngayMuonStr = (pm.getNgayMuon() != null) ? pm.getNgayMuon().format(dtf) : "N/A";
+//            String hanTraStr = (pm.getHanTra() != null) ? pm.getHanTra().format(dtf) : "N/A";
+//            String ngayTraStr = (pm.getNgayTraThucTe() != null) ? pm.getNgayTraThucTe().format(dtf) : "Chưa trả";
+//
+//            model.addRow(new Object[]{
+//                pm.getMaPhieuMuon(),
+//                pm.getMaDocGia(),
+//                pm.getMaSach(),
+//                ngayMuonStr,
+//                hanTraStr,
+//                ngayTraStr,
+//                chuyenTrangThai(pm.getTrangThai()),
+//                pm.getTienPhat()
+//            });
+//        }
+//
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//        JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm: " + e.getMessage());
+//    }
 
-        if (!"Tất cả".equals(trangThaiStr)) {
-            switch (trangThaiStr) {
-                case "Đã trả" -> trangThai = 0;
-                case "Đang mượn" -> trangThai = 1;
-                case "Đặt trước" -> trangThai = 2;
-                case "Đã quá hạn" -> trangThai = 3;
-                case "Mất/ Hỏng" -> trangThai = 4;
-            }
+
+        try {
+    String tuKhoa = txtTimkiem.getText().trim();
+    String trangThaiStr = (String) cbLocTrangthai.getSelectedItem();
+    Integer trangThai = null;
+
+    // Chuyển chuỗi trạng thái thành số
+    if (!"Tất cả".equals(trangThaiStr)) {
+        switch (trangThaiStr) {
+            case "Đã trả" -> trangThai = 0;
+            case "Đang mượn" -> trangThai = 1;
+            case "Đặt trước" -> trangThai = 2;
+            case "Đã quá hạn" -> trangThai = 3;
+            case "Mất/ Hỏng" -> trangThai = 4;
         }
-
-        PhieuMuonDAO dao = new PhieuMuonDAO();
-        ArrayList<PhieuMuonDTO> danhSachGoc = dao.getAllPhieuMuonDTO();
-        ArrayList<PhieuMuonDTO> ketQua = new ArrayList<>();
-
-        for (PhieuMuonDTO pm : danhSachGoc) {
-            boolean match = true;
-
-            // Trường hợp 1: có nhập từ khóa
-            if (!tuKhoa.isEmpty()) {
-                boolean matchMaPM = pm.getMaPhieuMuon().toLowerCase().contains(tuKhoa.toLowerCase());
-                boolean matchMaDG = pm.getMaDocGia().toLowerCase().contains(tuKhoa.toLowerCase());
-                boolean matchMaSach = pm.getMaSach().toLowerCase().contains(tuKhoa.toLowerCase());
-
-                if (!(matchMaPM || matchMaDG || matchMaSach)) match = false;
-            }
-
-            // Trường hợp 2: không nhập từ khóa, chỉ lọc theo trạng thái
-            if (tuKhoa.isEmpty() && trangThai != null && pm.getTrangThai() != trangThai) {
-                match = false;
-            }
-
-            if (match) ketQua.add(pm);
-        }
-
-        // Đổ dữ liệu vào bảng
-        DefaultTableModel model = (DefaultTableModel) tbPhieumuon.getModel();
-        model.setRowCount(0);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        for (PhieuMuonDTO pm : ketQua) {
-            String ngayMuonStr = (pm.getNgayMuon() != null) ? pm.getNgayMuon().format(dtf) : "N/A";
-            String hanTraStr = (pm.getHanTra() != null) ? pm.getHanTra().format(dtf) : "N/A";
-            String ngayTraStr = (pm.getNgayTraThucTe() != null) ? pm.getNgayTraThucTe().format(dtf) : "Chưa trả";
-
-            model.addRow(new Object[]{
-                pm.getMaPhieuMuon(),
-                pm.getMaDocGia(),
-                pm.getMaSach(),
-                ngayMuonStr,
-                hanTraStr,
-                ngayTraStr,
-                chuyenTrangThai(pm.getTrangThai()),
-                pm.getTienPhat()
-            });
-        }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm: " + e.getMessage());
     }
 
+    PhieuMuonDAO dao = new PhieuMuonDAO();
+    ArrayList<PhieuMuonDTO> danhSachGoc = dao.getAllPhieuMuonDTO();
+    ArrayList<PhieuMuonDTO> ketQua = new ArrayList<>();
+
+    for (PhieuMuonDTO pm : danhSachGoc) {
+        boolean match = true;
+
+        // Lọc theo từ khóa nếu có
+        if (!tuKhoa.isEmpty()) {
+            boolean matchMaPM = pm.getMaPhieuMuon().toLowerCase().contains(tuKhoa.toLowerCase());
+            boolean matchMaDG = pm.getMaDocGia().toLowerCase().contains(tuKhoa.toLowerCase());
+            boolean matchMaSach = pm.getMaSach().toLowerCase().contains(tuKhoa.toLowerCase());
+
+            if (!(matchMaPM || matchMaDG || matchMaSach)) {
+                match = false;
+            }
+        }
+
+        // Lọc theo trạng thái nếu có chọn trạng thái
+        if (trangThai != null && pm.getTrangThai() != trangThai) {
+            match = false;
+        }
+
+        if (match) {
+            ketQua.add(pm);
+        }
+    }
+
+    // Hiển thị lên bảng
+    DefaultTableModel model = (DefaultTableModel) tbPhieumuon.getModel();
+    model.setRowCount(0);
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    for (PhieuMuonDTO pm : ketQua) {
+        String ngayMuonStr = (pm.getNgayMuon() != null) ? pm.getNgayMuon().format(dtf) : "N/A";
+        String hanTraStr = (pm.getHanTra() != null) ? pm.getHanTra().format(dtf) : "N/A";
+        String ngayTraStr = (pm.getNgayTraThucTe() != null) ? pm.getNgayTraThucTe().format(dtf) : "Chưa trả";
+
+        model.addRow(new Object[]{
+            pm.getMaPhieuMuon(),
+            pm.getMaDocGia(),
+            pm.getMaSach(),
+            ngayMuonStr,
+            hanTraStr,
+            ngayTraStr,
+            chuyenTrangThai(pm.getTrangThai()),
+            pm.getTienPhat()
+        });
+    }
+
+} catch (Exception e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm: " + e.getMessage());
+}
     }//GEN-LAST:event_btnTimkiemActionPerformed
+
+    private void btnXacnhanmuonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacnhanmuonActionPerformed
+            int row = tbPhieumuon.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một phiếu mượn.");
+        return;
+    }
+
+    String maPhieuMuon = tbPhieumuon.getValueAt(row, 0).toString();
+    String maSach = tbPhieumuon.getValueAt(row, 2).toString();
+    String trangThaiStr = tbPhieumuon.getValueAt(row, 6).toString().trim();
+
+    if (!trangThaiStr.equals("Đặt trước")) {
+        JOptionPane.showMessageDialog(this, "Chỉ có thể chuyển trạng thái từ 'Đặt trước' sang 'Đang mượn'.");
+        return;
+    }
+
+    SachDAO sachDAO = new SachDAO();
+    SachDTO sach = sachDAO.timSachTheoMa(maSach);
+
+    try {
+        sachDAO.capNhatSoLuong(sach);
+    } catch (SQLException ex) {
+        Logger.getLogger(PhieumuonGUI.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật số lượng sách.");
+        return;
+    }
+
+    PhieuMuonBUS phieuMuonBUS = new PhieuMuonBUS();
+    if (phieuMuonBUS.doiTrangThai(maPhieuMuon, 1)) {
+        JOptionPane.showMessageDialog(this, "Đã chuyển sang trạng thái 'Đang mượn'.");
+        loadTablePhieuMuon();
+    } else {
+        JOptionPane.showMessageDialog(this, "Cập nhật trạng thái thất bại.");
+    }
+    }//GEN-LAST:event_btnXacnhanmuonActionPerformed
 
 private void loadTablePhieuMuon() {
     DefaultTableModel model = (DefaultTableModel) tbPhieumuon.getModel();
@@ -1081,19 +1184,6 @@ private void loadTablePhieuMuon() {
 
     // Dùng formatter cho LocalDate
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-//for (PhieuMuonDTO pm : danhSach) {
-//    if (pm.getTrangThai() == 4) {
-//
-//        if (!phieuPhatDAO.daCoPhieuPhat(pm.getMaPhieuMuon())) {
-//            String maPhieuPhat = "PP" + System.currentTimeMillis();
-//            double tienPhat = tinhTienPhat(pm);
-//
-//            PhieuPhatDTO pp = new PhieuPhatDTO(maPhieuPhat, pm.getMaPhieuMuon(), tienPhat);
-//            phieuPhatDAO.Them(pp);
-//        }
-//    }
-//}
 
     for (PhieuMuonDTO pm : danhSach) {
         String ngayMuonStr = (pm.getNgayMuon() != null) ? pm.getNgayMuon().format(dtf) : "N/A";
@@ -1170,6 +1260,7 @@ private void loadTablePhieuMuon() {
     private javax.swing.JButton btnTimkiem2;
     private javax.swing.JButton btnTrangthai;
     private javax.swing.JButton btnTrangthai1;
+    private javax.swing.JButton btnXacnhanmuon;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbLocTrangthai;
     private javax.swing.JPanel jPanel1;
