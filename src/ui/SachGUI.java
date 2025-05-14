@@ -196,6 +196,8 @@ public class SachGUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel10 = new javax.swing.JLabel();
+        txtSoLuongLoaiSach = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         panThongtin = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -217,9 +219,7 @@ public class SachGUI extends javax.swing.JPanel {
         txtNhaXuatBan = new javax.swing.JTextField();
         txtNamXuatBan = new javax.swing.JTextField();
         txtFilePDF = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
         cbLoaiSach = new javax.swing.JComboBox<>();
-        txtSoLuongLoaiSach = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnCapnhat = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
@@ -230,6 +230,18 @@ public class SachGUI extends javax.swing.JPanel {
         btnReset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSach = new javax.swing.JTable();
+
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel10.setText("Số lượng thể loại sách:");
+
+        txtSoLuongLoaiSach.setEditable(false);
+        txtSoLuongLoaiSach.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtSoLuongLoaiSach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSoLuongLoaiSachActionPerformed(evt);
+            }
+        });
 
         setPreferredSize(new java.awt.Dimension(1210, 640));
 
@@ -298,22 +310,10 @@ public class SachGUI extends javax.swing.JPanel {
 
         txtFilePDF.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Số lượng thể loại sách:");
-
         cbLoaiSach.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cbLoaiSach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbLoaiSachActionPerformed(evt);
-            }
-        });
-
-        txtSoLuongLoaiSach.setEditable(false);
-        txtSoLuongLoaiSach.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtSoLuongLoaiSach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSoLuongLoaiSachActionPerformed(evt);
             }
         });
 
@@ -325,19 +325,16 @@ public class SachGUI extends javax.swing.JPanel {
                 .addContainerGap(110, Short.MAX_VALUE)
                 .addGroup(panThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panThongtinLayout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSoLuongLoaiSach, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                        .addGap(154, 154, 154)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
                         .addGroup(panThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cbDocFilePDF, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(cbMuonVe, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
                     .addGroup(panThongtinLayout.createSequentialGroup()
-                        .addGroup(panThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
@@ -399,20 +396,18 @@ public class SachGUI extends javax.swing.JPanel {
                     .addComponent(cbDocTaiCho, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(panThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panThongtinLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(panThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbMuonVe)
-                            .addComponent(jLabel10)
-                            .addComponent(txtSoLuongLoaiSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))
-                        .addGap(8, 8, 8)
+                        .addGap(9, 9, 9)
                         .addComponent(cbDocFilePDF)
                         .addGap(19, 19, 19))
                     .addGroup(panThongtinLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(panThongtinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
+                            .addComponent(jLabel8)
+                            .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 

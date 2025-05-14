@@ -156,5 +156,35 @@ public class PhieuNhapDAO {
         }
         return ds;
     }
+    
+    public ArrayList<Integer> layDanhSachNam() throws SQLException {
+        ArrayList<Integer> dsNam = new ArrayList<>();
+        String sql = "SELECT DISTINCT YEAR(ngay_nhap) AS nam FROM PhieuNhap ORDER BY nam";
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                dsNam.add(rs.getInt("nam"));
+            }
+        }
+        return dsNam;
+    }
+
+    public ArrayList<Integer> layTongSachTheoNam() throws SQLException {
+        ArrayList<Integer> dsTong = new ArrayList<>();
+        String sql = "SELECT SUM(so_luong_sach) AS tong_sach " +
+                     "FROM PhieuNhap " +
+                     "GROUP BY YEAR(ngay_nhap) " +
+                     "ORDER BY YEAR(ngay_nhap)";
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                dsTong.add(rs.getInt("tong_sach"));
+            }
+        }
+        return dsTong;
+    }
+    
+
+    
 }
 

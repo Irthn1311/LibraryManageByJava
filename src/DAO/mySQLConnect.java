@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
-public class mySQLConnect {
+    public class mySQLConnect {
     private String user = "root";
     private String password = "";
     private String url = "jdbc:mysql://localhost:3306/lbr?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
